@@ -7,5 +7,6 @@ class IconPaths {
   static const heart2 = "${_basePath}heart2.png";
   static const lock = "${_basePath}Lock.png";
   static const send = "${_basePath}send.png";
+  static const setting = "${_basePath}Setting.png";
   static const notification = "${_basePath}Notification.png";
 }
