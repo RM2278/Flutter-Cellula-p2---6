@@ -7,6 +7,4 @@ class ImagePaths {
   static const onboarding3 = '${_basePath}onboarding3.png';
   static const onboarding4 = '${_basePath}onboarding4.png';
 
-
-  
 }
