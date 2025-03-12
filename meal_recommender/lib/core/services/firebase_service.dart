@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:meal_recommender/core/errors/firebase_failure.dart';
 
 class FirebaseService{
   FirebaseAuth _auth;
@@ -9,7 +10,34 @@ class FirebaseService{
 
   }
   Future register(String email, String password) async{
+    try {
+      UserCredential credential = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      //return credential;
+        User? user = credential.user;
 
+        if (user != null && !user.emailVerified) {
+          await user.sendEmailVerification();
+         return false;
+        }
+        else{
+          return true;
+        }
+
+    }on FirebaseAuthException catch (e){
+      //FirebaseAuthFailure(e.code.toString(),errMessage: e.code.toString(), statusCode: '400');
+      if (e.code == 'invalid-email') {
+        throw Exception('Invalid email');
+      }
+      if (e.code == 'email-already-in-use') {
+        throw Exception('Hi, User not found');
+      } else if (e.code == 'weak-password') {
+        throw Exception ( "Your password is weak");
+      }
+      else{
+        throw Exception("email and password are not correct");
+      }
+    }
   }
 
 
@@ -21,11 +49,9 @@ class FirebaseService{
       throw Exception("Try Again");
     }
   }
-  User? getUser()  {
+  /*User? getUser()  {
       return _auth.currentUser;
-
-
-  }
+  }*/
 
 
 }
