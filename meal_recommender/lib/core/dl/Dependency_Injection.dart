@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:meal_recommender/features/auth/register/data/datasources/RegisterDataRemote.dart';
 import 'package:meal_recommender/features/auth/register/data/repositories/RegisterRepoImp.dart';
-import 'package:meal_recommender/features/auth/register/presentation/cubit/auth_cubit.dart';
+import 'package:meal_recommender/features/auth/register/presentation/cubit/register_cubit.dart';
 
 import '../../features/auth/register/domain/repositories/registerRepo.dart';
 import '../../features/auth/register/domain/usecases/Register_usecase.dart';
@@ -18,7 +18,7 @@ void intl() {
   sl.registerLazySingleton<RegisterRepo>(() =>RegisterRepoimp((sl<RegisterDataRemote>())));
 
   sl.registerLazySingleton(() =>RegisterUsecase(sl<RegisterRepo>()));
-  sl.registerFactory(() =>RegisterCubit(sl<RegisterUsecase>()));
+  sl.registerFactory(() =>RegisterCubit());
 
 
 }

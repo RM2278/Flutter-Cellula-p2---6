@@ -16,13 +16,7 @@ class FirebaseService{
       //return credential;
         User? user = credential.user;
 
-        if (user != null && !user.emailVerified) {
-          await user.sendEmailVerification();
-         return false;
-        }
-        else{
-          return true;
-        }
+        return user;
 
     }on FirebaseAuthException catch (e){
       //FirebaseAuthFailure(e.code.toString(),errMessage: e.code.toString(), statusCode: '400');
