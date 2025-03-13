@@ -5,6 +5,7 @@ import 'package:meal_recommender/core/constants/image_paths.dart';
 import 'package:meal_recommender/core/themes/color_palette.dart';
 import 'package:meal_recommender/features/auth/register/presentation/cubit/register_cubit.dart';
 
+import '../../../../../core/routes/page_route_name.dart';
 import '../../../../../core/widgets/custom_elevated_button.dart';
 import '../../../../../core/widgets/custom_text_form_filed.dart';
 import '../../../../../core/widgets/text_widget.dart';
@@ -35,11 +36,15 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
         if (state is RegisterLoading) {
           const Center(child: CircularProgressIndicator());
         } else if (state is RegisterNotValid) {
-        } else if (state is RegisterValid) {}
+          Navigator.pushNamed(context, PageRouteName.verificationView);
+
+        } else if (state is RegisterValid) {
+          const SnackBar(content: Text('Create account and valid'));
+        }
       },
       child: Scaffold(
         backgroundColor: BaseColorPalette.mainColor,
-        body: Column(
+        body: ListView(
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
@@ -140,10 +145,12 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                                       });
                                     }),
                               ),
-                              const TextWidget(
-                                text:
-                                    "By creating an account you agree to terms and conditions",
-                                size: 11,
+                              Expanded(
+                                child: const TextWidget(
+                                  text:
+                                      "By creating an account you agree to terms and conditions",
+                                  size: 11,
+                                ),
                               ),
                             ],
                           ),
@@ -156,10 +163,10 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                                 : Colors.grey,
                             onPressed: () async{
                               if (registerCubit.key.currentState!.validate())
-                                ();
+                                {
                               registerCubit.value
                                   ? await registerCubit.register()
-                                  : null;
+                                  : null;}
                             },
                             text: 'Register',
                           ),
