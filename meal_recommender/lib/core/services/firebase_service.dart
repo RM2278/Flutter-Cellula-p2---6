@@ -9,14 +9,22 @@ class FirebaseService{
   Future login(String email, String password) async{
 
   }
-  Future register(String email, String password) async{
+  Future register(String UserName,String email, String password) async{
     try {
       UserCredential credential = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       //return credential;
         User? user = credential.user;
-
-        return user;
+        print(UserName);
+        if(user!=null){
+          await user.updateDisplayName(UserName);
+          await user.reload();
+          user=await _auth.currentUser;
+        }
+      if (user != null && !user.emailVerified) {
+        await user.sendEmailVerification();
+      return user;
+      }
 
     }on FirebaseAuthException catch (e){
       //FirebaseAuthFailure(e.code.toString(),errMessage: e.code.toString(), statusCode: '400');
@@ -33,7 +41,16 @@ class FirebaseService{
       }
     }
   }
-
+  Future Reload() async{
+    try {
+      User? user=await _auth.currentUser;
+      await user!.reload();
+      user=await _auth.currentUser;
+return user;
+    }catch(e){
+      throw "Check your internet";
+    }
+  }
 
 
   Future sign_out() async {

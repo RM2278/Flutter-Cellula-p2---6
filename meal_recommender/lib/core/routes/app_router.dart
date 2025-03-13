@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meal_recommender/core/routes/app_views.dart';
 import 'package:meal_recommender/features/auth/register/presentation/pages/register_view.dart';
 import 'package:meal_recommender/features/auth/register/presentation/pages/verification_view.dart';
+import 'package:meal_recommender/features/main/presentation/pages/home.dart';
 
 class AppRouter {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -24,6 +25,11 @@ class AppRouter {
       case PageRouteName.verificationView:
         return MaterialPageRoute(
           builder: (context) => const VerificationView(),
+          settings: settings,
+        );
+      case PageRouteName.HomeView:
+        return MaterialPageRoute(
+          builder: (context) => const Home(),
           settings: settings,
         );
       default:

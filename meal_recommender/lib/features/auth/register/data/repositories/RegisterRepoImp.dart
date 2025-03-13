@@ -6,8 +6,14 @@ class RegisterRepoimp extends RegisterRepo{
   RegisterRepoimp(this.baseAuthDataRemote);
 
   @override
-  Future register(String email, String password) async{
-    return await baseAuthDataRemote.register(email, password);
+  Future register(String UserName,String email, String password) async{
+    return await baseAuthDataRemote.register(UserName ,email, password);
+  }
+
+  @override
+  Future reload() async{
+    // TODO: implement reload
+    return await baseAuthDataRemote.reload();
   }
 
 }

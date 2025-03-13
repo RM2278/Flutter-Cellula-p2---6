@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:meal_recommender/features/auth/register/domain/usecases/Register_usecase.dart';
+import 'package:meal_recommender/features/auth/register/domain/usecases/Reload_UseCase.dart';
 
 import '../../domain/repositories/registerRepo.dart';
 
@@ -18,6 +19,7 @@ class RegisterCubit extends Cubit<RegisterState> {
   final phoneController = TextEditingController();
   bool isVisible = true;
   final RegisterUsecase registerUseCase = GetIt.instance<RegisterUsecase>();
+  final ReloadUsecase reloadUsecase = GetIt.instance<ReloadUsecase>();
   User? user;
   RegisterCubit() : super(RegisterInitial());
 
@@ -25,11 +27,13 @@ class RegisterCubit extends Cubit<RegisterState> {
     try {
       emit(RegisterLoading());
       user = await registerUseCase.excute(
+        fullNameController.text,
         emailController.text,
         passwordController.text,
       );
       print(user);
       if (user != null && !user!.emailVerified) {
+        print("${user!.displayName}");
         emit(RegisterNotValid());
       }
       else if(user!.emailVerified){
@@ -42,8 +46,9 @@ class RegisterCubit extends Cubit<RegisterState> {
   Future<void> Reload() async {
     try {
       emit(RegisterLoading());
-      await user!.reload();
+      user =await reloadUsecase.excute();
       print(user);
+      print("${user!.emailVerified}");
       if (user != null && !user!.emailVerified) {
         emit(RegisterNotValid());
       }
