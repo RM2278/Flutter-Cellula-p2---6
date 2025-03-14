@@ -9,4 +9,6 @@ class IconPaths {
   static const send = "${_basePath}send.png";
   static const setting = "${_basePath}Setting.png";
   static const notification = "${_basePath}Notification.png";
+  static const facebook='${_basePath}Facebook.png';
+  static const google='${_basePath}Google.png';
 }
