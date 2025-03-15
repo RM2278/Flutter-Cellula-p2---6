@@ -15,6 +15,21 @@ class AppRouter {
           builder: (context) => const OnboardingView(),
           settings: settings,
         );
+      case PageRouteName.registerView:
+        return MaterialPageRoute(
+          builder: (context) => const RegisterView(),
+          settings: settings,
+        );
+      case PageRouteName.verificationView:
+        return MaterialPageRoute(
+          builder: (context) => const VerificationView(),
+          settings: settings,
+        );
+      case PageRouteName.HomeView:
+        return MaterialPageRoute(
+          builder: (context) => const Home(),
+          settings: settings,
+        );
       default:
         return MaterialPageRoute(
           builder: (context) => const OnboardingView(),
