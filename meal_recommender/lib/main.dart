@@ -9,6 +9,7 @@ import 'package:meal_recommender/core/themes/application_theme_manager.dart';
 import 'core/dl/Dependency_Injection.dart';
 import 'core/routes/app_views.dart';
 import 'core/services/cubit_observer.dart';
+import 'core/services/shared_preferences_storage_services.dart';
 import 'firebase_options.dart';
 
 void main() async{
@@ -18,6 +19,7 @@ void main() async{
   );
   intl();
   Bloc.observer = AppCubitObserver();
+  await SharedPreferencesHelper.init();
   runApp(const MyApp());
 }
 

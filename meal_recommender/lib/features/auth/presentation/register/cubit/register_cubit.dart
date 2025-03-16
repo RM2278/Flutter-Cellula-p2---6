@@ -2,11 +2,14 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get_it/get_it.dart';
-import 'package:meal_recommender/features/auth/register/domain/usecases/Register_usecase.dart';
-import 'package:meal_recommender/features/auth/register/domain/usecases/Reload_UseCase.dart';
 
-import '../../domain/repositories/registerRepo.dart';
+
+import '../../../domain/usecases/Register_usecase.dart';
+import '../../../domain/usecases/Reload_UseCase.dart';
+
+
 
 part 'register_state.dart';
 
@@ -26,6 +29,7 @@ class RegisterCubit extends Cubit<RegisterState> {
   Future<void> register() async {
     try {
       emit(RegisterLoading());
+      EasyLoading.show(status: 'loading...');
       user = await registerUseCase.excute(
         fullNameController.text,
         emailController.text,
@@ -33,26 +37,30 @@ class RegisterCubit extends Cubit<RegisterState> {
       );
       print(user);
       if (user != null && !user!.emailVerified) {
-        print("${user!.displayName}");
+        EasyLoading.dismiss();
         emit(RegisterNotValid());
       }
       else if(user!.emailVerified){
+        EasyLoading.dismiss();
         emit(RegisterValid());
       }
     } catch (e) {
+      EasyLoading.dismiss();
       emit(RegisterError(e.toString()));
     }
   }
   Future<void> Reload() async {
     try {
       emit(RegisterLoading());
+      EasyLoading.show(status: 'loading...');
       user =await reloadUsecase.excute();
-      print(user);
       print("${user!.emailVerified}");
       if (user != null && !user!.emailVerified) {
+        EasyLoading.dismiss();
         emit(RegisterNotValid());
       }
       else if(user!.emailVerified){
+        EasyLoading.dismiss();
         emit(RegisterValid());
       }
     } catch (e) {

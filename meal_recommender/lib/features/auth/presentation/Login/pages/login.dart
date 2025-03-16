@@ -5,10 +5,12 @@ import 'package:meal_recommender/core/constants/icon_paths.dart';
 import 'package:meal_recommender/core/constants/image_paths.dart';
 import 'package:meal_recommender/core/themes/color_palette.dart';
 import 'package:meal_recommender/core/widgets/customelevatedbutton.dart';
-import 'package:meal_recommender/features/auth/presentation/cubit/checkbox_cubit.dart';
-import 'package:meal_recommender/features/auth/presentation/widgets/customformfield.dart';
-import 'package:meal_recommender/features/auth/presentation/widgets/customtext.dart';
-import 'package:meal_recommender/features/auth/presentation/widgets/divider.dart';
+import 'package:meal_recommender/features/auth/presentation/Login/widgets/customformfield.dart';
+
+import '../../../../../core/widgets/text_widget.dart';
+import '../cubit/checkbox_cubit.dart';
+import '../widgets/divider.dart';
+
 
 class Login extends StatefulWidget {
   const Login({super.key});

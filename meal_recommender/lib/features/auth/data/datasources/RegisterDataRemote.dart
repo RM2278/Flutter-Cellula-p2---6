@@ -1,4 +1,4 @@
-import '../../../../../core/services/firebase_service.dart';
+import '../../../../core/services/firebase_service.dart';
 
 abstract class BaseAuthDataRemote{
   Future register(String UserName,String email,String password);

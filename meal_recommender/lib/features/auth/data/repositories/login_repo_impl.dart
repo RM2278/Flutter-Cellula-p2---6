@@ -6,12 +6,13 @@ import '../../../../core/errors/server_failure.dart';
 import '../../../../core/services/firebase_service.dart';
 import '../../domain/entities/login_user_entity.dart';
 import '../../domain/repositories/login_repo.dart';
+import '../datasources/RegisterDataRemote.dart';
 import '../models/login_user_model.dart';
 
-class LoginRepoImpl extends LoginRepo {
+class LoginRepoImpl extends AuthRepo {
   final FirebaseService firebaseAuthService;
-
-  LoginRepoImpl(this.firebaseAuthService);
+  BaseAuthDataRemote baseAuthDataRemote;
+  LoginRepoImpl(this.firebaseAuthService,this.baseAuthDataRemote);
 
   @override
   Future<Either<Failure, LoginUserEntity>> signinWithEmailAndPassword(
@@ -37,6 +38,16 @@ class LoginRepoImpl extends LoginRepo {
         errMessage: 'An unexpected error occurred. Please try again later.',
       ));
     }
+  }
+  @override
+  Future register(String UserName,String email, String password) async{
+    return await baseAuthDataRemote.register(UserName ,email, password);
+  }
+
+  @override
+  Future reload() async{
+    // TODO: implement reload
+    return await baseAuthDataRemote.reload();
   }
 
   String _mapFirebaseError(String errorCode) {

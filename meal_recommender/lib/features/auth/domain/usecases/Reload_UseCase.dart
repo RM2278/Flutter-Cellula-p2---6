@@ -1,7 +1,7 @@
-import 'package:meal_recommender/features/auth/register/domain/repositories/registerRepo.dart';
+import '../repositories/login_repo.dart';
 
 class ReloadUsecase{
-  RegisterRepo registerRepo;
+  AuthRepo registerRepo;
   ReloadUsecase(this.registerRepo);
   Future excute()async{
     return await registerRepo.reload();

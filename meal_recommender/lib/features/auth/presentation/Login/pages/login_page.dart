@@ -136,7 +136,8 @@ class _LoginState extends State<Login> {
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meal_recommender/features/auth/domain/repositories/login_repo.dart';
-import '../../../../core/dl/Dependency_Injection.dart';
+
+import '../../../../../core/dl/Dependency_Injection.dart';
 import '../cubit/login_cubit/login_cubit.dart';
 import 'login_widget/login_view_bloc_consumer.dart';
 
@@ -150,7 +151,7 @@ class LoginPage extends StatelessWidget {
     final screenHeight = MediaQuery.of(context).size.height;
 
     return BlocProvider(
-      create: (context) => LoginCubit(sl.get<LoginRepo>()),
+      create: (context) => LoginCubit(sl.get<AuthRepo>()),
       child: Scaffold(
         body: LoginViewBlocConsumer(screenWidth: screenWidth, screenHeight: screenHeight),
       ),

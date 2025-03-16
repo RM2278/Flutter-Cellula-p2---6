@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meal_recommender/core/constants/image_paths.dart';
 import 'package:meal_recommender/core/themes/color_palette.dart';
-import 'package:meal_recommender/features/auth/presentation/cubit/checkbox_cubit.dart';
 
+
+import '../../cubit/checkbox_cubit.dart';
 import 'login_form.dart';
 import 'register_text.dart';
 import 'social_login_buttons.dart';
