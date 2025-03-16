@@ -40,6 +40,12 @@ class VerificationViewBody extends StatelessWidget {
                   ),
                   const TextWidget(
                     align: TextAlign.center,
+                    text: "Verification Email",
+                    size: 26,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  const TextWidget(
+                    align: TextAlign.center,
                     text: "Check your inbox ",
                     size: 18,
                   ),
