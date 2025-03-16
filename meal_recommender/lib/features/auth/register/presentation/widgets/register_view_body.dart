@@ -11,6 +11,9 @@ import '../../../../../core/widgets/custom_text_form_filed.dart';
 import '../../../../../core/widgets/text_widget.dart';
 import '../../../../../core/widgets/validation/email_validation.dart';
 import '../../../../../core/widgets/validation/password_validation.dart';
+import '../../../presentation/pages/login_widget/social_login_buttons.dart';
+import '../../../presentation/widgets/divider.dart';
+import 'login_text.dart';
 
 class RegisterViewBody extends StatefulWidget {
   const RegisterViewBody({super.key});
@@ -44,161 +47,161 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
       },
       child: Scaffold(
         backgroundColor: BaseColorPalette.mainColor,
-        body: ListView(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.2,
-                      child: Image.asset(
-                        ImagePaths.logo,
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.2,
+                  child: Image.asset(
+                    ImagePaths.logo,
+                  ),
+                ),
+                Form(
+                  key: registerCubit.key,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.02,
                       ),
-                    ),
-                    Form(
-                      key: registerCubit.key,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                      CustomTextFormFiled(
+                        prefixIcon: Image.asset(IconPaths.account),
+                        hintText: 'Full Name',
+                        controller: registerCubit.fullNameController,
+                        validator: (text) {
+                          if (text == null || text.trim().isEmpty) {
+                            return "Please enter your full name";
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.02,
+                      ),
+                      CustomTextFormFiled(
+                        prefixIcon: Image.asset(IconPaths.account),
+                        hintText: 'Email Address',
+                        controller: registerCubit.emailController,
+                        validator: emailValidation,
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.02,
+                      ),
+                      CustomTextFormFiled(
+                        prefixIcon: Image.asset(IconPaths.account),
+                        hintText: 'Phone',
+                        controller: registerCubit.phoneController,
+                        keyBoardType: TextInputType.number,
+                        validator: (text) {
+                          if (text == null || text.trim().isEmpty) {
+                            return "Please enter your Password";
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.02,
+                      ),
+                      CustomTextFormFiled(
+                        prefixIcon: Image.asset(IconPaths.lock),
+                        hintText: 'Password',
+                        controller: registerCubit.passwordController,
+                        isObscure: registerCubit.isVisible,
+                        suffixIcon: IconButton(
+                          color: BaseColorPalette.white,
+                          onPressed: () {
+                            setState(() {
+                              registerCubit.isVisible =
+                                  !registerCubit.isVisible;
+                            });
+                          },
+                          icon: Icon(
+                            registerCubit.isVisible
+                                ? Icons.visibility_off_outlined
+                                : Icons.visibility_outlined,
+                          ),
+                        ),
+                        validator: passwordValidation,
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.01,
+                      ),
+                      Row(
                         children: [
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.02,
+                          Transform.scale(
+                            scale: 1.5,
+                            child: Checkbox(
+                                activeColor: BaseColorPalette.white,
+                                checkColor: BaseColorPalette.mainColor,
+                                side: const BorderSide(
+                                  color: BaseColorPalette.white,
+                                ),
+                                value: registerCubit.value,
+                                onChanged: (bool? newValue) {
+                                  setState(() {
+                                    registerCubit.value = newValue!;
+                                  });
+                                }),
                           ),
-                          CustomTextFormFiled(
-                            prefixIcon: Image.asset(IconPaths.account),
-                            hintText: 'Full Name',
-                            controller: registerCubit.fullNameController,
-                            validator: (text) {
-                              if (text == null || text.trim().isEmpty) {
-                                return "Please enter your full name";
-                              }
-                              return null;
-                            },
-                          ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.02,
-                          ),
-                          CustomTextFormFiled(
-                            prefixIcon: Image.asset(IconPaths.account),
-                            hintText: 'Email Address',
-                            controller: registerCubit.emailController,
-                            validator: emailValidation,
-                          ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.02,
-                          ),
-                          CustomTextFormFiled(
-                            prefixIcon: Image.asset(IconPaths.account),
-                            hintText: 'Phone',
-                            controller: registerCubit.phoneController,
-                            keyBoardType: TextInputType.number,
-                            validator: (text) {
-                              if (text == null || text.trim().isEmpty) {
-                                return "Please enter your Password";
-                              }
-                              return null;
-                            },
-                          ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.02,
-                          ),
-                          CustomTextFormFiled(
-                            prefixIcon: Image.asset(IconPaths.lock),
-                            hintText: 'Password',
-                            controller: registerCubit.passwordController,
-                            isObscure: registerCubit.isVisible,
-                            suffixIcon: IconButton(
-                              color: BaseColorPalette.white,
-                              onPressed: () {
-                                setState(() {
-                                  registerCubit.isVisible =
-                                      !registerCubit.isVisible;
-                                });
-                              },
-                              icon: Icon(
-                                registerCubit.isVisible
-                                    ? Icons.visibility_off_outlined
-                                    : Icons.visibility_outlined,
-                              ),
+                          Expanded(
+                            child: const TextWidget(
+                              text:
+                                  "By creating an account you agree to terms and conditions",
+                              size: 11,
                             ),
-                            validator: passwordValidation,
-                          ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.01,
-                          ),
-                          Row(
-                            children: [
-                              Transform.scale(
-                                scale: 1.5,
-                                child: Checkbox(
-                                    activeColor: BaseColorPalette.white,
-                                    checkColor: BaseColorPalette.mainColor,
-                                    side: const BorderSide(
-                                      color: BaseColorPalette.white,
-                                    ),
-                                    value: registerCubit.value,
-                                    onChanged: (bool? newValue) {
-                                      setState(() {
-                                        registerCubit.value = newValue!;
-                                      });
-                                    }),
-                              ),
-                              Expanded(
-                                child: const TextWidget(
-                                  text:
-                                      "By creating an account you agree to terms and conditions",
-                                  size: 11,
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.01,
-                          ),
-                          CustomElevatedButton(
-                            buttonColor: registerCubit.value
-                                ? BaseColorPalette.white
-                                : Colors.grey,
-                            onPressed: () async{
-                              if (registerCubit.key.currentState!.validate())
-                                {
-                              registerCubit.value
-                                  ? await registerCubit.register()
-                                  : null;}
-                            },
-                            text: 'Register',
-                          ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.01,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const TextWidget(
-                                text: "Do you have account ?",
-                                size: 18,
-                              ),
-                              InkWell(
-                                onTap: () {},
-                                child: const TextWidget(
-                                  text: 'Login now',
-                                  size: 18,
-                                  fontWeight: FontWeight.w600,
-                                  decoration: TextDecoration.underline,
-                                ),
-                              ),
-                            ],
                           ),
                         ],
                       ),
-                    ),
-                  ],
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.01,
+                      ),
+                      CustomElevatedButton(
+                        buttonColor: registerCubit.value
+                            ? BaseColorPalette.white
+                            : Colors.grey,
+                        onPressed: () async{
+                          if (registerCubit.key.currentState!.validate())
+                            {
+                          registerCubit.value
+                              ? await registerCubit.register()
+                              : null;}
+                        },
+                        text: 'Register',
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.01,
+                      ),
+                      customDivider(),
+                      SocialLoginButtons(),
+                      SizedBox(height: 15,),
+                      LoginText(),
+                      /*Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const TextWidget(
+                            text: "Do you have account ?",
+                            size: 18,
+                          ),
+                          InkWell(
+                            onTap: () {},
+                            child: const TextWidget(
+                              text: 'Login now',
+                              size: 18,
+                              fontWeight: FontWeight.w600,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ],
+                      ),*/
+                    ],
+                  ),
                 ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

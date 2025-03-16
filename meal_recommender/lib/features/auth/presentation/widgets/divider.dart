@@ -18,7 +18,7 @@ class customDivider extends StatelessWidget {
     ),
     Padding(
       padding: EdgeInsets.symmetric(horizontal: 10), 
-      child: TextWidget(text: 'or login with ', size: 18, color: BaseColorPalette.white,),
+      child: TextWidget(text: 'or login with ', size: 12, color: BaseColorPalette.white,),
     ),
     Expanded(
       child: Divider(
