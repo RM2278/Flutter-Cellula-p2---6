@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:meal_recommender/features/auth/presentation/widgets/customtext.dart';
-
+import '../../features/auth/presentation/Login/widgets/customtext.dart';
 import '../themes/color_palette.dart';
 
 class CustomElevatedButton extends StatelessWidget {

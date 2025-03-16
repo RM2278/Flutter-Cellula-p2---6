@@ -1,5 +1,6 @@
 
-import '../../../domain/entities/login_user_entity.dart';
+import '../../../../domain/entities/login_user_entity.dart';
+
 
 sealed class LoginState {}
 

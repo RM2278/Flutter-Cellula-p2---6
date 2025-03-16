@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meal_recommender/core/constants/icon_paths.dart';
 import 'package:meal_recommender/core/themes/color_palette.dart';
-import 'package:meal_recommender/features/auth/presentation/cubit/checkbox_cubit.dart';
-import 'package:meal_recommender/features/auth/presentation/widgets/divider.dart';
-import '../../../../../core/widgets/customelevatedbutton.dart';
+
+import '../../../../../../core/widgets/custom_elevated_button.dart';
+
+import '../../cubit/checkbox_cubit.dart';
 import '../../cubit/login_cubit/login_cubit.dart';
 import '../../widgets/customtext.dart';
+import '../../widgets/divider.dart';
 import 'custom_text_form_field.dart';
 
 class LoginForm extends StatefulWidget {
@@ -23,10 +25,9 @@ class _LoginFormState extends State<LoginForm> {
   String? _validateEmail(String? value) {
     if (value == null || value.isEmpty) {
       return 'Please enter your email';
-    }
-    if (!RegExp(r"^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]+")
+    } else if (!RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}")
         .hasMatch(value)) {
-      return 'Enter a valid email';
+      return 'Please enter a valid email';
     }
     return null;
   }

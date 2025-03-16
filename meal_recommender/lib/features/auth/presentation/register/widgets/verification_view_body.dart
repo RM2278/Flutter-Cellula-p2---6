@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meal_recommender/core/widgets/custom_elevated_button.dart';
 import 'package:meal_recommender/core/widgets/text_widget.dart';
-import 'package:meal_recommender/features/auth/register/presentation/cubit/register_cubit.dart';
+
 
 import '../../../../../core/constants/image_paths.dart';
 import '../../../../../core/routes/page_route_name.dart';
 import '../../../../../core/themes/color_palette.dart';
+import '../cubit/register_cubit.dart';
 
 class VerificationViewBody extends StatelessWidget {
    VerificationViewBody({super.key});

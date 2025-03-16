@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:meal_recommender/core/routes/app_views.dart';
-import 'package:meal_recommender/features/auth/register/presentation/pages/register_view.dart';
-import 'package:meal_recommender/features/auth/register/presentation/pages/verification_view.dart';
+
 import 'package:meal_recommender/features/main/presentation/pages/home.dart';
-import 'package:meal_recommender/features/auth/presentation/pages/login.dart';
+
+import '../../features/auth/presentation/Login/pages/login_page.dart';
+import '../../features/auth/presentation/register/pages/register_view.dart';
+import '../../features/auth/presentation/register/pages/verification_view.dart';
 
 class AppRouter {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case PageRouteName.initial:
         return MaterialPageRoute(
-          builder: (context) => const Login(),
+          builder: (context) => const LoginPage(),
           settings: settings,
         );
       case PageRouteName.onboardingView:
