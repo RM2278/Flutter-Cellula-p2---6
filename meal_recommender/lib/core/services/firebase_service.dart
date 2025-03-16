@@ -6,8 +6,12 @@ class FirebaseService{
 
   FirebaseService(this._auth);
 
-  Future login(String email, String password) async{
-
+  Future login({required String email, required String password}) async{
+    UserCredential credential = await _auth.signInWithEmailAndPassword(
+        email: email, password: password);
+    //return credential;
+    User? user = credential.user;
+    return user;
   }
   Future register(String UserName,String email, String password) async{
     try {
