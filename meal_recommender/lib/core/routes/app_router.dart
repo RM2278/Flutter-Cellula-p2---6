@@ -12,12 +12,17 @@ class AppRouter {
     switch (settings.name) {
       case PageRouteName.initial:
         return MaterialPageRoute(
-          builder: (context) => const LoginPage(),
+          builder: (context) => const SplashView(),
           settings: settings,
         );
       case PageRouteName.onboardingView:
         return MaterialPageRoute(
           builder: (context) => const OnboardingView(),
+          settings: settings,
+        );
+      case PageRouteName.LoginView:
+        return MaterialPageRoute(
+          builder: (context) => const LoginPage(),
           settings: settings,
         );
       case PageRouteName.registerView:
@@ -40,9 +45,6 @@ class AppRouter {
           builder: (context) => const OnboardingView(),
           settings: settings,
         );
-
     }
   }
 }
-
-
