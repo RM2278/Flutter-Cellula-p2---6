@@ -1,4 +1,5 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:meal_recommender/features/auth/data/datasources/RegisterDataRemote.dart';
@@ -13,9 +14,9 @@ final sl = GetIt.instance;
 
 void intl() {
   //Register
-
+  sl.registerLazySingleton(() => FirebaseFirestore.instance);
   sl.registerLazySingleton(() => FirebaseAuth.instance);
-  sl.registerLazySingleton<FirebaseService>(() => FirebaseService(sl<FirebaseAuth>()));
+  sl.registerLazySingleton<FirebaseService>(() => FirebaseService(sl<FirebaseAuth>(),sl<FirebaseFirestore>()));
   sl.registerLazySingleton(() => RegisterDataRemote(sl<FirebaseService>()));
   sl.registerSingleton<AuthRepo>(LoginRepoImpl(sl<FirebaseService>(),sl<RegisterDataRemote>()));
 

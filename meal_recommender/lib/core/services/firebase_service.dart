@@ -1,10 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meal_recommender/core/errors/firebase_failure.dart';
 
 class FirebaseService{
   FirebaseAuth _auth;
-
-  FirebaseService(this._auth);
+  FirebaseFirestore store;
+  FirebaseService(this._auth,this.store);
 
   Future login({required String email, required String password}) async{
     UserCredential credential = await _auth.signInWithEmailAndPassword(
@@ -13,7 +14,7 @@ class FirebaseService{
     User? user = credential.user;
     return user;
   }
-  Future register(String UserName,String email, String password) async{
+  Future register(String UserName,String email, String password, String phone) async{
     try {
       UserCredential credential = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
@@ -24,6 +25,24 @@ class FirebaseService{
           await user.updateDisplayName(UserName);
           await user.reload();
           user=await _auth.currentUser;
+          var userId=user!.uid;
+          try {
+            await store.collection('users').doc(userId).set({
+              'email': email,
+              'username': UserName,
+              'phone': phone,
+              'photoUrl': " ",
+              'createdAt': FieldValue.serverTimestamp(),
+            });
+            print("Done");
+            DocumentSnapshot userDoc = await store.collection('users').doc(userId).get();
+            var data=userDoc.data() as Map<String, dynamic>;
+            print("${data}");
+          } catch (e) {
+            print("-------------------------");
+            print("Error saving user data: $e");
+            print("-------------------------");
+          }
         }
       if (user != null && !user.emailVerified) {
         await user.sendEmailVerification();
