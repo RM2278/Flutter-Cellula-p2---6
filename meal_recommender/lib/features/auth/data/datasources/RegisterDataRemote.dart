@@ -1,7 +1,7 @@
 import '../../../../core/services/firebase_service.dart';
 
 abstract class BaseAuthDataRemote{
-  Future register(String UserName,String email,String password);
+  Future register(String UserName,String email,String password, String phone);
   Future reload();
 
 }
@@ -11,8 +11,8 @@ class RegisterDataRemote extends BaseAuthDataRemote{
 
 
   @override
-  Future register(String UserName,String email, String password) async{
-    return await firebaseService.register(UserName,email, password);
+  Future register(String UserName,String email, String password, String phone) async{
+    return await firebaseService.register(UserName,email, password,phone);
   }
 
   @override

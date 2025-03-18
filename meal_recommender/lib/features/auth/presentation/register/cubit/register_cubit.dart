@@ -34,6 +34,7 @@ class RegisterCubit extends Cubit<RegisterState> {
         fullNameController.text,
         emailController.text,
         passwordController.text,
+        phoneController.text
       );
       print(user);
       if (user != null && !user!.emailVerified) {
