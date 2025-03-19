@@ -12,7 +12,7 @@ import 'core/services/cubit_observer.dart';
 import 'core/services/shared_preferences_storage_services.dart';
 import 'firebase_options.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

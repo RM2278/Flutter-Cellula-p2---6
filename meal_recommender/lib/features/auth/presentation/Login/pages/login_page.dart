@@ -136,24 +136,30 @@ class _LoginState extends State<Login> {
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meal_recommender/features/auth/domain/repositories/login_repo.dart';
+import 'package:meal_recommender/features/auth/domain/usecases/signin_with_google.dart';
+import 'package:meal_recommender/features/auth/presentation/Login/cubit/google_cubit.dart';
 
 import '../../../../../core/dl/Dependency_Injection.dart';
 import '../cubit/login_cubit/login_cubit.dart';
 import 'login_widget/login_view_bloc_consumer.dart';
 
-
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
   @override
- Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-
-    return BlocProvider(
-      create: (context) => LoginCubit(sl.get<AuthRepo>()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+            create: (context) =>
+                LoginCubit(sl.get<AuthRepo>(), sl.get<SignInWithGoogle>())),
+        BlocProvider(create: (context) => sl<GoogleCubit>()),
+      ],
       child: Scaffold(
-        body: LoginViewBlocConsumer(screenWidth: screenWidth, screenHeight: screenHeight),
+        body: LoginViewBlocConsumer(
+            screenWidth: screenWidth, screenHeight: screenHeight),
       ),
     );
   }

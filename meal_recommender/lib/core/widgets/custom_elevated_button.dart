@@ -10,19 +10,19 @@ class CustomElevatedButton extends StatelessWidget {
     required this.text,
     this.buttonColor = BaseColorPalette.white,
     this.textColor = BaseColorPalette.mainColor,
-
   });
   final VoidCallback? onPressed;
   final String text;
   final Color buttonColor;
   final Color textColor;
 
-
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
+        fixedSize: Size(MediaQuery.of(context).size.width * 0.8,
+            MediaQuery.of(context).size.height * 0.08),
         backgroundColor: buttonColor,
         padding: const EdgeInsets.all(14),
         shape: RoundedRectangleBorder(

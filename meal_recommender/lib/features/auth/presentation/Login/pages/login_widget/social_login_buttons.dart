@@ -1,7 +1,9 @@
 // social_login_buttons.dart
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meal_recommender/core/constants/icon_paths.dart';
 import 'package:meal_recommender/core/themes/color_palette.dart';
+import 'package:meal_recommender/features/auth/presentation/Login/cubit/google_cubit.dart';
 
 class SocialLoginButtons extends StatelessWidget {
   @override
@@ -18,13 +20,18 @@ class SocialLoginButtons extends StatelessWidget {
             height: 35,
           ),
         ),
-        CircleAvatar(
-          radius: 30,
-          backgroundColor: BaseColorPalette.white,
-          child: Image.asset(
-            IconPaths.google,
-            width: 35,
-            height: 35,
+        GestureDetector(
+          onTap: () {
+            context.read<GoogleCubit>().loginWithGoogle();
+          },
+          child: CircleAvatar(
+            radius: 30,
+            backgroundColor: BaseColorPalette.white,
+            child: Image.asset(
+              IconPaths.google,
+              width: 35,
+              height: 35,
+            ),
           ),
         ),
       ],

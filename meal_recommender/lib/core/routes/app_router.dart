@@ -10,7 +10,7 @@ import '../../features/auth/presentation/register/pages/verification_view.dart';
 class AppRouter {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case PageRouteName.initial:
+      case PageRouteName.LoginView:
         return MaterialPageRoute(
           builder: (context) => const LoginPage(),
           settings: settings,
@@ -40,9 +40,6 @@ class AppRouter {
           builder: (context) => const OnboardingView(),
           settings: settings,
         );
-
     }
   }
 }
-
-
