@@ -1,137 +1,136 @@
-import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meal_recommender/core/constants/icon_paths.dart';
-import 'package:meal_recommender/core/constants/image_paths.dart';
-import 'package:meal_recommender/core/themes/color_palette.dart';
-import 'package:meal_recommender/core/widgets/customelevatedbutton.dart';
-import 'package:meal_recommender/features/auth/presentation/Login/widgets/customformfield.dart';
+// import 'package:flutter/gestures.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:meal_recommender/core/constants/icon_paths.dart';
+// import 'package:meal_recommender/core/constants/image_paths.dart';
+// import 'package:meal_recommender/core/themes/color_palette.dart';
+// import 'package:meal_recommender/core/widgets/customelevatedbutton.dart';
+// import 'package:meal_recommender/features/auth/presentation/Login/widgets/customformfield.dart';
 
-import '../../../../../core/widgets/text_widget.dart';
-import '../cubit/checkbox_cubit.dart';
-import '../widgets/divider.dart';
+// import '../../../../../core/widgets/text_widget.dart';
+// import '../cubit/checkbox_cubit.dart';
+// import '../widgets/divider.dart';
 
+// class Login extends StatefulWidget {
+//   const Login({super.key});
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+//   @override
+//   State<Login> createState() => _LoginState();
+// }
 
-  @override
-  State<Login> createState() => _LoginState();
-}
-
-class _LoginState extends State<Login> {
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => CheckboxCubit(),
-      child: Scaffold(
-        body: Stack(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/background.jpg'),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.all(15),
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              color: BaseColorPalette.mainColor.withOpacity(0.9),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Image.asset(ImagePaths.logo),
-                  CustomTextFormFiled(
-                    hintText: 'User Name',
-                    prefixIcon: Image.asset(IconPaths.account),
-                  ),
-                  CustomTextFormFiled(
-                    hintText: 'Password',
-                    prefixIcon: Image.asset(IconPaths.lock),
-                    suffixIcon: Image.asset(IconPaths.eye),
-                  ),
-                  BlocBuilder<CheckboxCubit, CheckboxState>(
-                    builder: (context, state) {
-                      return Row(
-                        children: [
-                          Transform.scale(
-                            scale: 1.5,
-                            child: Checkbox(
-                              value: state.isChecked,
-                              onChanged: (_) => context
-                                  .read<CheckboxCubit>()
-                                  .toggleCheckbox(),
-                              side: BorderSide(color: Colors.white, width: 1),
-                              checkColor: Colors.black,
-                              fillColor:
-                                  MaterialStateProperty.all(Colors.transparent),
-                            ),
-                          ),
-                          TextWidget(
-                            text: 'Remember me and keep me login',
-                            size: 13,
-                            color: BaseColorPalette.white,
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                  CustomElevatedButton(
-                      onPressed: () {},
-                      text: 'Login',
-                      buttonColor: BaseColorPalette.white,
-                      textColor: BaseColorPalette.mainColor),
-                  customDivider(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      CircleAvatar(
-                        radius: 30,
-                        backgroundColor: Colors.blue,
-                        child: Image.asset(
-                          IconPaths.facebook,
-                          width: 35,
-                          height: 35,
-                        ),
-                      ),
-                      CircleAvatar(
-                        radius: 30,
-                        backgroundColor: BaseColorPalette.white,
-                        child: Image.asset(
-                          IconPaths.google,
-                          width: 35,
-                          height: 35,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      TextWidget(
-                        text: 'Don\'t have an account? ',
-                        size: 18,
-                        color: BaseColorPalette.white,
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child: TextWidget(
-                          text: 'register',
-                          size: 18,
-                          color: BaseColorPalette.white,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+// class _LoginState extends State<Login> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return BlocProvider(
+//       create: (_) => CheckboxCubit(),
+//       child: Scaffold(
+//         body: Stack(
+//           children: [
+//             Container(
+//               decoration: BoxDecoration(
+//                 image: DecorationImage(
+//                   image: AssetImage('assets/images/background.jpg'),
+//                   fit: BoxFit.cover,
+//                 ),
+//               ),
+//             ),
+//             Container(
+//               padding: EdgeInsets.all(15),
+//               width: MediaQuery.of(context).size.width,
+//               height: MediaQuery.of(context).size.height,
+//               color: BaseColorPalette.mainColor.withOpacity(0.9),
+//               child: Column(
+//                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                 children: [
+//                   Image.asset(ImagePaths.logo),
+//                   CustomTextFormFiled(
+//                     hintText: 'User Name',
+//                     prefixIcon: Image.asset(IconPaths.account),
+//                   ),
+//                   CustomTextFormFiled(
+//                     hintText: 'Password',
+//                     prefixIcon: Image.asset(IconPaths.lock),
+//                     suffixIcon: Image.asset(IconPaths.eye),
+//                   ),
+//                   BlocBuilder<CheckboxCubit, CheckboxState>(
+//                     builder: (context, state) {
+//                       return Row(
+//                         children: [
+//                           Transform.scale(
+//                             scale: 1.5,
+//                             child: Checkbox(
+//                               value: state.isChecked,
+//                               onChanged: (_) => context
+//                                   .read<CheckboxCubit>()
+//                                   .toggleCheckbox(),
+//                               side: BorderSide(color: Colors.white, width: 1),
+//                               checkColor: Colors.black,
+//                               fillColor:
+//                                   MaterialStateProperty.all(Colors.transparent),
+//                             ),
+//                           ),
+//                           TextWidget(
+//                             text: 'Remember me and keep me login',
+//                             size: 13,
+//                             color: BaseColorPalette.white,
+//                           ),
+//                         ],
+//                       );
+//                     },
+//                   ),
+//                   CustomElevatedButton(
+//                       onPressed: () {},
+//                       text: 'Login',
+//                       buttonColor: BaseColorPalette.white,
+//                       textColor: BaseColorPalette.mainColor),
+//                   customDivider(),
+//                   Row(
+//                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//                     children: [
+//                       CircleAvatar(
+//                         radius: 30,
+//                         backgroundColor: Colors.blue,
+//                         child: Image.asset(
+//                           IconPaths.facebook,
+//                           width: 35,
+//                           height: 35,
+//                         ),
+//                       ),
+//                       CircleAvatar(
+//                         radius: 30,
+//                         backgroundColor: BaseColorPalette.white,
+//                         child: Image.asset(
+//                           IconPaths.google,
+//                           width: 35,
+//                           height: 35,
+//                         ),
+//                       ),
+//                     ],
+//                   ),
+//                   Row(
+//                     mainAxisAlignment: MainAxisAlignment.center,
+//                     children: [
+//                       TextWidget(
+//                         text: 'Don\'t have an account? ',
+//                         size: 18,
+//                         color: BaseColorPalette.white,
+//                       ),
+//                       InkWell(
+//                         onTap: () {},
+//                         child: TextWidget(
+//                           text: 'register',
+//                           size: 18,
+//                           color: BaseColorPalette.white,
+//                         ),
+//                       ),
+//                     ],
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }

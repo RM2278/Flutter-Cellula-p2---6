@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meal_recommender/core/constants/icon_paths.dart';
 import 'package:meal_recommender/core/themes/color_palette.dart';
+import 'package:meal_recommender/features/auth/presentation/Login/cubit/login_cubit/login_state.dart';
 
 import '../../../../../../core/widgets/custom_elevated_button.dart';
 
@@ -9,7 +10,7 @@ import '../../cubit/checkbox_cubit.dart';
 import '../../cubit/login_cubit/login_cubit.dart';
 import '../../widgets/customtext.dart';
 import '../../widgets/divider.dart';
-import 'custom_text_form_field.dart';
+import '../../widgets/custom_text_form_field.dart';
 
 class LoginForm extends StatefulWidget {
   @override
@@ -61,11 +62,14 @@ class _LoginFormState extends State<LoginForm> {
         children: [
           CustomTextFormField(
             controller: _emailController,
-            hintText: 'User Name',
+            hintText: 'Email',
             prefixIcon: Image.asset(IconPaths.account),
             validator: _validateEmail,
             onSaved: (value) {
               email = value!;
+            },
+            onChanged: (value) {
+              context.read<LoginCubit>().updateEmail(value);
             },
           ),
           SizedBox(height: screenHeight * 0.03),
@@ -87,6 +91,9 @@ class _LoginFormState extends State<LoginForm> {
                 });
               },
             ),
+            onChanged: (value) {
+              context.read<LoginCubit>().updatePassword(value);
+            },
             isPassword: !_isPasswordVisible,
             validator: _validatePassword,
           ),
@@ -116,20 +123,44 @@ class _LoginFormState extends State<LoginForm> {
             },
           ),
           SizedBox(height: screenHeight * 0.03),
-          CustomElevatedButton(
-            onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                _formKey.currentState!.save();
+          BlocBuilder<LoginCubit, LoginState>(
+            builder: (context, loginState) {
+              return BlocBuilder<CheckboxCubit, CheckboxState>(
+                builder: (context, checkboxState) {
+                  bool isFormValid =
+                      loginState is LoginFormUpdated && loginState.isFormValid;
+                  bool isCheckboxChecked = checkboxState.isChecked;
 
-                context.read<LoginCubit>().login(email, password);
-              } else {
-                autovalidateMode = AutovalidateMode.always;
-                setState(() {});
-              }
+                  return CustomElevatedButton(
+                    onPressed: (!isFormValid ||
+                            !isCheckboxChecked ||
+                            loginState is LoginLoading)
+                        ? null
+                        : () {
+                            if (_formKey.currentState!.validate()) {
+                              _formKey.currentState!.save();
+                              context.read<LoginCubit>().login(email, password);
+                            } else {
+                              setState(() {
+                                autovalidateMode = AutovalidateMode.always;
+                              });
+                            }
+                          },
+                    text: 'Login',
+                    buttonColor:
+                        context.watch<LoginCubit>().state is LoginLoading ||
+                                !context.watch<CheckboxCubit>().state.isChecked
+                            ? Colors.grey
+                            : BaseColorPalette.white,
+                    textColor:
+                        context.watch<LoginCubit>().state is LoginLoading ||
+                                !context.watch<CheckboxCubit>().state.isChecked
+                            ? BaseColorPalette.white
+                            : BaseColorPalette.mainColor,
+                  );
+                },
+              );
             },
-            text: 'Login',
-            buttonColor: BaseColorPalette.white,
-            textColor: BaseColorPalette.mainColor,
           ),
           SizedBox(height: screenHeight * 0.02),
           const customDivider(),

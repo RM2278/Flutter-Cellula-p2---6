@@ -16,8 +16,7 @@ class CustomTextFormFiled extends StatelessWidget {
     this.prefixIcon,
     this.isObscure = false,
     this.keyBoardType = TextInputType.text,
-   //required this.controller,
-   
+    //required this.controller,
   });
 
   @override

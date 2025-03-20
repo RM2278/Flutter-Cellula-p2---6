@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:meal_recommender/core/constants/icon_paths.dart';
 import 'package:meal_recommender/core/constants/image_paths.dart';
 import 'package:meal_recommender/core/themes/color_palette.dart';
-
+import 'package:meal_recommender/features/auth/data/repositories/google_auth_repo.dart';
+import 'package:meal_recommender/features/auth/presentation/Login/cubit/google_cubit/cubit/google_cubit.dart';
 
 import '../../cubit/checkbox_cubit.dart';
 import 'login_form.dart';
@@ -18,8 +20,15 @@ class LoginPageBody extends StatelessWidget {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
 
-    return BlocProvider(
-      create: (_) => CheckboxCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => CheckboxCubit(),
+        ),
+        BlocProvider(
+          create: (context) => GoogleAuthCubit(GoogleAuthRepository()),
+        ),
+      ],
       child: Scaffold(
         body: Stack(
           children: [
