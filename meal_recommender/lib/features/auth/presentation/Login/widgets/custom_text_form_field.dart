@@ -9,6 +9,8 @@ class CustomTextFormField extends StatelessWidget {
   final String? Function(String?)? validator;
   final void Function(String?)? onSaved;
 
+  final void Function(String)? onChanged;
+
   const CustomTextFormField({
     super.key,
     required this.hintText,
@@ -18,37 +20,34 @@ class CustomTextFormField extends StatelessWidget {
     this.isPassword = false,
     this.validator,
     this.onSaved,
+    this.onChanged,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onChanged: onChanged,
       controller: controller,
       obscureText: isPassword,
       validator: validator,
-       onSaved: onSaved,
-      style: const TextStyle(
-          color: Colors.white), 
+      onSaved: onSaved,
+      style: const TextStyle(color: Colors.white),
       decoration: InputDecoration(
         hintText: hintText,
-        hintStyle: const TextStyle(
-            color: Colors.white), 
+        hintStyle: const TextStyle(color: Colors.white),
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(
-              color: Colors.white),
+          borderSide: const BorderSide(color: Colors.white),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide:
-              const BorderSide(color: Colors.white), 
+          borderSide: const BorderSide(color: Colors.white),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(
-              color: Colors.white, width: 2),
+          borderSide: const BorderSide(color: Colors.white, width: 2),
         ),
       ),
     );

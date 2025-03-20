@@ -39,7 +39,6 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
           const Center(child: CircularProgressIndicator());
         } else if (state is RegisterNotValid) {
           Navigator.pushNamed(context, PageRouteName.verificationView);
-
         } else if (state is RegisterValid) {
           const SnackBar(content: Text('Create account and valid'));
         }
@@ -47,20 +46,19 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
       child: Scaffold(
         //backgroundColor: BaseColorPalette.mainColor,
         body: Container(
-          decoration:  BoxDecoration(
+          decoration: BoxDecoration(
             image: DecorationImage(
                 image: AssetImage(
                   ImagePaths.backGround,
                 ),
-                fit: BoxFit.fill
-            ),
+                fit: BoxFit.fill),
           ),
-
           child: Container(
             color: BaseColorPalette.mainColor.withOpacity(0.9),
             child: SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -173,12 +171,12 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                             buttonColor: registerCubit.value
                                 ? BaseColorPalette.white
                                 : Colors.grey,
-                            onPressed: () async{
-                              if (registerCubit.key.currentState!.validate())
-                                {
-                              registerCubit.value
-                                  ? await registerCubit.register()
-                                  : null;}
+                            onPressed: () async {
+                              if (registerCubit.key.currentState!.validate()) {
+                                registerCubit.value
+                                    ? await registerCubit.register()
+                                    : null;
+                              }
                             },
                             text: 'Register',
                           ),
@@ -187,7 +185,9 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                           ),
                           customDivider(),
                           SocialLoginButtons(),
-                          SizedBox(height: 15,),
+                          SizedBox(
+                            height: 15,
+                          ),
                           LoginText(),
                           /*Row(
                             mainAxisAlignment: MainAxisAlignment.center,
