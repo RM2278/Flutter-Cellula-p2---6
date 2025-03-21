@@ -48,7 +48,7 @@ dependencies:
   flutter_secure_storage: ^9.2.4
   shared_preferences: ^2.5.2
   cloud_firestore:
-  google_sign_in: ^6.3.0
+  google_sign_in: ^6.2.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
