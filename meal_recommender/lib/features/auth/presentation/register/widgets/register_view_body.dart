@@ -183,11 +183,14 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.01,
                           ),
+                          //-----or login ------
                           customDivider(),
+                          //Google
                           SocialLoginButtons(),
                           SizedBox(
                             height: 15,
                           ),
+                          //go to screen login
                           LoginText(),
                           /*Row(
                             mainAxisAlignment: MainAxisAlignment.center,
