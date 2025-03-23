@@ -46,7 +46,7 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
       child: Scaffold(
         //backgroundColor: BaseColorPalette.mainColor,
         body: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage(
                   ImagePaths.backGround,
@@ -155,8 +155,8 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                                       });
                                     }),
                               ),
-                              Expanded(
-                                child: const TextWidget(
+                              const Expanded(
+                                child: TextWidget(
                                   text:
                                       "By creating an account you agree to terms and conditions",
                                   size: 11,
@@ -183,13 +183,13 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.01,
                           ),
-                          customDivider(),
+                          const customDivider(),
                           SocialLoginButtons(),
-                          SizedBox(
+                          const SizedBox(
                             height: 15,
                           ),
                           LoginText(),
-                          /*Row(
+                          Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               const TextWidget(
@@ -197,7 +197,10 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                                 size: 18,
                               ),
                               InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, PageRouteName.loginView);
+                                },
                                 child: const TextWidget(
                                   text: 'Login now',
                                   size: 18,
@@ -206,7 +209,7 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                                 ),
                               ),
                             ],
-                          ),*/
+                          ),
                         ],
                       ),
                     ),

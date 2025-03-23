@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:meal_recommender/core/routes/page_route_name.dart';
 import 'package:meal_recommender/features/onboarding/presentation/widgets/curve.dart';
 
-class OnboardingScreen extends StatefulWidget {
-  const OnboardingScreen({Key? key}) : super(key: key);
+import 'onboarding_page.dart';
+
+class OnboardingBody extends StatefulWidget {
+  const OnboardingBody({Key? key}) : super(key: key);
 
   @override
-  State<OnboardingScreen> createState() => _OnboardingScreenState();
+  State<OnboardingBody> createState() => _OnboardingBodyState();
 }
 
-class _OnboardingScreenState extends State<OnboardingScreen> {
+class _OnboardingBodyState extends State<OnboardingBody> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
 
@@ -59,7 +61,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   void _navigateToLogin() {
     // Navigate to the log in screen
-    Navigator.pushNamed(context, PageRouteName.loginView);
+    Navigator.pushReplacementNamed(context, PageRouteName.loginView);
   }
 
   @override
@@ -240,22 +242,3 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 }
 
-class OnboardingPage {
-  final String image;
-  final String title;
-  final String description;
-
-  const OnboardingPage({
-    required this.image,
-    required this.title,
-    required this.description,
-  });
-
-  Widget buildImage() {
-    return Container(
-      width: 280,
-      height: 280,
-      child: Center(child: Image.asset(image)),
-    );
-  }
-}

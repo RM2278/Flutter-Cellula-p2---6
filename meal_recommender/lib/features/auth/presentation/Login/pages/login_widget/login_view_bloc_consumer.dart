@@ -33,7 +33,7 @@ class LoginViewBlocConsumer extends StatelessWidget {
       builder: (context, state) {
         return ModalProgressHUD(
           inAsyncCall: state is LoginLoading ? true : false,
-          child: LoginPageBody(
+          child: const LoginPageBody(
              ),
         );
       },
