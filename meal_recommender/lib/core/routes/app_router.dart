@@ -6,6 +6,7 @@ import 'package:meal_recommender/features/main/presentation/pages/home.dart';
 import '../../features/auth/presentation/Login/pages/login_page.dart';
 import '../../features/auth/presentation/register/pages/register_view.dart';
 import '../../features/auth/presentation/register/pages/verification_view.dart';
+import '../../features/profile/presentation/screens/profile_screen.dart';
 
 class AppRouter {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -35,11 +36,17 @@ class AppRouter {
           builder: (context) => const Home(),
           settings: settings,
         );
+      case PageRouteName.profile:
+        return MaterialPageRoute(
+          builder: (context) =>  ProfileScreen(),
+          settings: settings,
+        );
       default:
         return MaterialPageRoute(
           builder: (context) => const OnboardingView(),
           settings: settings,
         );
+
 
     }
   }

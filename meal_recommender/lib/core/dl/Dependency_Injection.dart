@@ -9,7 +9,6 @@ import '../../features/auth/domain/repositories/login_repo.dart';
 import '../../features/auth/domain/usecases/Register_usecase.dart';
 import '../../features/auth/domain/usecases/Reload_UseCase.dart';
 import '../../features/auth/presentation/register/cubit/register_cubit.dart';
-
 import '../../features/profile/data/datasource/profile_local_data_source.dart';
 import '../../features/profile/data/datasource/profile_remote_data_source.dart';
 import '../../features/profile/data/repositories/profile_repository_impl.dart';
@@ -19,6 +18,7 @@ import '../../features/profile/domain/usecase/update_profile_usecase.dart';
 import '../../features/profile/presentation/cubit/profile_cubit.dart';
 import '../services/firebase_service.dart';
 import '../services/shared_preferences_service.dart';
+
 final sl = GetIt.instance;
 
 Future<void> intl() async {
@@ -33,14 +33,13 @@ Future<void> intl() async {
   sl.registerLazySingleton(() =>ReloadUsecase(sl<AuthRepo>()));
   sl.registerFactory(() =>RegisterCubit());
 
-//Login
-//Profile
+  //Login
+
+  //Profile
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton(() => sharedPreferences);
   sl.registerLazySingleton(() => SharedPreferencesService());
 
-  // Services
-  sl.registerLazySingleton(() => FirebaseService(sl<FirebaseAuth>(), sl<FirebaseFirestore>()));
 
   // Data Sources
   sl.registerLazySingleton<ProfileRemoteDataSource>(

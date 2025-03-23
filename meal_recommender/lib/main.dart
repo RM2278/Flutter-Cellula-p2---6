@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ApplicationThemeManager.lightThemeData,
       onGenerateRoute: AppRouter.onGenerateRoute,
-      initialRoute: PageRouteName.registerView,
+      initialRoute: PageRouteName.profile,
       builder: EasyLoading.init(
         builder: BotToastInit(),
       ),
