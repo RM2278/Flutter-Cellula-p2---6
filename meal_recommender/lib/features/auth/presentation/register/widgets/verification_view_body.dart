@@ -22,7 +22,7 @@ class VerificationViewBody extends StatelessWidget {
     const SnackBar(content: Text('Create account but not valid')),
     );
     } else if (state is RegisterValid) {
-    Navigator.pushNamed(context, PageRouteName.HomeView);
+    Navigator.pushNamed(context, PageRouteName.homeView);
     }},
       child: Scaffold(
         backgroundColor: BaseColorPalette.mainColor,
