@@ -72,7 +72,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             top: 0,
             left: 0,
             right: 0,
-            child: Container(
+            child: SizedBox(
               height: MediaQuery.of(context).size.height * 0.6,
               child: CustomPaint(
                 size: Size(MediaQuery.of(context).size.width, 200),
