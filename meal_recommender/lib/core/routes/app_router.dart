@@ -6,6 +6,11 @@ class AppRouter {
     switch (settings.name) {
       case PageRouteName.initial:
         return MaterialPageRoute(
+          builder: (context) => const SplashView(),
+          settings: settings,
+        );
+        case PageRouteName.loginView:
+        return MaterialPageRoute(
           builder: (context) => const LoginPage(),
           settings: settings,
         );
