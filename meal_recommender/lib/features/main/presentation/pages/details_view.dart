@@ -1,9 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:meal_recommender/core/constants/icon_paths.dart';
-import '../widgets/build_direction_tab.dart';
-import '../widgets/build_ingredients_tab.dart';
-import '../widgets/build_summary_tab.dart';
 import '../widgets/details_body.dart';
 
 class DetailsView extends StatefulWidget {
