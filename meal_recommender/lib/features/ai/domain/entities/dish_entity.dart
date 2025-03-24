@@ -1,4 +1,6 @@
-class Dish {
+import 'package:equatable/equatable.dart';
+
+class Dish extends Equatable {
   final String name;
   final String summary;
   final String typeOfMeal;
@@ -8,7 +10,7 @@ class Dish {
   final Nutrition nutrition;
   final Directions directions;
 
-  Dish({
+  const Dish({
     required this.name,
     required this.summary,
     required this.typeOfMeal,
@@ -18,6 +20,9 @@ class Dish {
     required this.nutrition,
     required this.directions,
   });
+
+  @override
+  List<Object> get props => [name, summary, typeOfMeal, time, ingredients, nutrition, directions];
 }
 
 class Ingredient {
