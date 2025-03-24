@@ -10,7 +10,7 @@ class GetRecommendedDishes {
 
   GetRecommendedDishes(this.repository);
 
-  Future<Either<Failure, List<Dish>>> execute(int number) {
+  Future<Either<Failure, List<Dish>>> call(int number) {
     return repository.getRecommendedDishes(number);
   }
 }

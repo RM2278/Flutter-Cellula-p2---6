@@ -11,7 +11,7 @@ class GetDishByName   {
   GetDishByName(this.repository);
 
   
-  Future<Either<Failure, Dish>> execute(String dishName) {
+  Future<Either<Failure, Dish>> call(String dishName) {
     return repository.getDishByName(dishName);
   }
 }
