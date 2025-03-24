@@ -50,6 +50,7 @@ dependencies:
   cloud_firestore:
   google_sign_in: ^6.2.2
   cached_network_image: ^3.4.1
+  google_generative_ai: ^0.4.6
 dev_dependencies:
   flutter_test:
     sdk: flutter
