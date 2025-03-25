@@ -100,6 +100,7 @@ class _DetailsViewState extends State<DetailsView>
             onPressed: () => _toggleFavorite(context),
           ),
           const SizedBox(width: 10),
+          
         ],
       ),
       body: FadeInDown(

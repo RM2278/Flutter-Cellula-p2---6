@@ -24,72 +24,88 @@ class DetailsBody extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        FadeInLeftBig(
-          child: CachedNetworkImage(
-            imageUrl: dish.imageUrl,
-            width: double.infinity,
-            height: 250,
-            fit: BoxFit.cover,
-            placeholder: (context, url) =>
-                const Center(child: CircularProgressIndicator()),
-            errorWidget: (context, url, error) => const Icon(Icons.error),
-          ),
-        ),
+        _mealCachedImage(),
         const SizedBox(height: 15),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              FadeInLeftBig(
-                child: Text(
-                  dish.name,
-                  style: theme.textTheme.titleLarge,
-                ),
-              ),
-              const SizedBox(height: 5),
-              FadeInLeftBig(
-                child: Text(
-                  "${dish.typeOfMeal} • ${dish.time} min • 1 serving",
-                  style:
-                      theme.textTheme.bodyMedium?.copyWith(color: Colors.grey),
-                ),
-              ),
-              FadeInLeftBig(
-                child: Text(
-                  "Diffeculty: ${dish.diffeculty}",
-                  style:
-                      theme.textTheme.bodyMedium?.copyWith(color: Colors.grey),
-                ),
-              ),
-            ],
-          ),
-        ),
+        _mealMainContent(),
         const SizedBox(height: 10),
-        FadeInRightBig(
-          child: TabBar(
-            controller: _tabController,
-            labelColor: theme.primaryColor,
-            unselectedLabelColor: Colors.grey,
-            indicatorColor: theme.primaryColor,
-            tabs: const [
-              Tab(text: "Summary"),
-              Tab(text: "Ingredients"),
-              Tab(text: "Direction"),
-            ],
-          ),
-        ),
-        Expanded(
-          child: TabBarView(
-            controller: _tabController,
-            children: [
-              buildSummaryTab(theme,dish),
-              buildIngredientsTab(theme,dish),
-              buildDirectionTab(theme,dish),
-            ],
-          ),
-        ),
+        _tabBar(),
+        _tabBarView(),
       ],
     );
+  }
+
+  FadeInLeftBig _mealCachedImage() {
+    return FadeInLeftBig(
+        child: CachedNetworkImage(
+          imageUrl: dish.imageUrl,
+          width: double.infinity,
+          height: 250,
+          fit: BoxFit.cover,
+          placeholder: (context, url) =>
+              const Center(child: CircularProgressIndicator()),
+          errorWidget: (context, url, error) => const Icon(Icons.error),
+        ),
+      );
+  }
+
+  Padding _mealMainContent() {
+    return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            FadeInLeftBig(
+              child: Text(
+                dish.name,
+                style: theme.textTheme.titleLarge,
+              ),
+            ),
+            const SizedBox(height: 5),
+            FadeInLeftBig(
+              child: Text(
+                "${dish.typeOfMeal} • ${dish.time} min • 1 serving",
+                style:
+                    theme.textTheme.bodyMedium?.copyWith(color: Colors.grey),
+              ),
+            ),
+            FadeInLeftBig(
+              child: Text(
+                "Diffeculty: ${dish.diffeculty}",
+                style:
+                    theme.textTheme.bodyMedium?.copyWith(color: Colors.grey),
+              ),
+            ),
+          ],
+        ),
+      );
+  }
+
+  Expanded _tabBarView() {
+    return Expanded(
+        child: TabBarView(
+          controller: _tabController,
+          children: [
+            buildSummaryTab(theme,dish),
+            buildIngredientsTab(theme,dish),
+            buildDirectionTab(theme,dish),
+          ],
+        ),
+      );
+  }
+
+  FadeInRightBig _tabBar() {
+    return FadeInRightBig(
+        child: TabBar(
+          controller: _tabController,
+          labelColor: theme.primaryColor,
+          unselectedLabelColor: Colors.grey,
+          indicatorColor: theme.primaryColor,
+          tabs: const [
+            Tab(text: "Summary"),
+            Tab(text: "Ingredients"),
+            Tab(text: "Direction"),
+          ],
+        ),
+      );
   }
 }
