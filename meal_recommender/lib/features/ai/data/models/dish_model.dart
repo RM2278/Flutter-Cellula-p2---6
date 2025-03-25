@@ -9,6 +9,7 @@ class DishModel extends Dish {
     required super.typeOfMeal,
     required super.time,
     required super.imageUrl,
+    required super.diffeculty,
     required List<IngredientModel> super.ingredients,
     required NutritionModel super.nutrition,
     required DirectionsModel super.directions,
@@ -18,6 +19,7 @@ class DishModel extends Dish {
     return DishModel(
       name: json['name'],
       summary: json['summary'],
+      diffeculty: json['Diffeculty'],
       typeOfMeal: json['typeOfMeal'],
       time: json['time'],
       imageUrl: json['imageUrl'],
@@ -33,6 +35,7 @@ class DishModel extends Dish {
     return {
       'name': name,
       'summary': summary,
+      "Diffeculty": diffeculty,
       'typeOfMeal': typeOfMeal,
       'time': time,
       'imageUrl': imageUrl,

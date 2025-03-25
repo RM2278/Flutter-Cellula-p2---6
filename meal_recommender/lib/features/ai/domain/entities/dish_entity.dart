@@ -4,6 +4,7 @@ class Dish extends Equatable {
   final String name;
   final String summary;
   final String typeOfMeal;
+  final String diffeculty;
   final int time;
   final String imageUrl;
   final List<Ingredient> ingredients;
@@ -14,6 +15,7 @@ class Dish extends Equatable {
     required this.name,
     required this.summary,
     required this.typeOfMeal,
+    required this.diffeculty,
     required this.time,
     required this.imageUrl,
     required this.ingredients,
@@ -22,7 +24,9 @@ class Dish extends Equatable {
   });
 
   @override
-  List<Object> get props => [name, summary, typeOfMeal, time, ingredients, nutrition, directions];
+  List<Object> get props =>
+      [name, summary, typeOfMeal, diffeculty, time, ingredients, nutrition, directions];
+     
 }
 
 class Ingredient {
