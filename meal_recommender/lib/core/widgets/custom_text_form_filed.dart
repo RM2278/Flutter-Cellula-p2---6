@@ -11,6 +11,7 @@ class CustomTextFormFiled extends StatelessWidget {
   final TextInputType keyBoardType;
   final String? Function(String?)? validator;
   final TextEditingController controller;
+  final Color color;
   const CustomTextFormFiled({
     super.key,
     required this.hintText,
@@ -20,6 +21,7 @@ class CustomTextFormFiled extends StatelessWidget {
     this.keyBoardType = TextInputType.text,
     required this.controller,
     required this.validator,
+    this.color=BaseColorPalette.white
   });
 
   @override
@@ -30,24 +32,24 @@ class CustomTextFormFiled extends StatelessWidget {
         suffixIcon: suffixIcon,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(
-            color: BaseColorPalette.white,
+          borderSide:  BorderSide(
+            color: color,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(
-            color: BaseColorPalette.white,
+          borderSide:  BorderSide(
+            color: color,
           ),
         ),
         hintText: hintText,
-        hintStyle: const TextStyle(fontSize: 18, color: BaseColorPalette.white),
+        hintStyle:  TextStyle(fontSize: 18, color: color),
         filled: true,
         fillColor: Colors.transparent,
       ),
-      style: const TextStyle(
+      style:  TextStyle(
         fontSize: 18,
-        color: BaseColorPalette.white,
+        color: color,
       ),
       keyboardType: keyBoardType,
       obscureText: isObscure,

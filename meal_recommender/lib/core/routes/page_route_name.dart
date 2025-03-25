@@ -6,4 +6,5 @@ class PageRouteName {
   static const String verificationView = '/verificationView';
   static const String homeView = '/Home';
   static const String detailsView = '/Details';
+  static const String AiView= '/Ai';
 }
