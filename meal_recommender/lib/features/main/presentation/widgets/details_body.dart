@@ -1,16 +1,19 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:meal_recommender/features/ai/data/models/dish_model.dart';
 import 'package:meal_recommender/features/main/presentation/widgets/build_direction_tab.dart';
 
 import 'build_ingredients_tab.dart';
 import 'build_summary_tab.dart';
 
 class DetailsBody extends StatelessWidget {
+  final DishModel dish;
   const DetailsBody({
     super.key,
     required this.theme,
     required TabController tabController,
+    required this.dish,
   }) : _tabController = tabController;
 
   final ThemeData theme;
@@ -23,8 +26,7 @@ class DetailsBody extends StatelessWidget {
       children: [
         FadeInLeftBig(
           child: CachedNetworkImage(
-            imageUrl:
-                'https://playswellwithbutter.com/wp-content/uploads/2021/03/Shawarma-Marinade-12.jpg',
+            imageUrl: dish.imageUrl,
             width: double.infinity,
             height: 250,
             fit: BoxFit.cover,
@@ -41,21 +43,23 @@ class DetailsBody extends StatelessWidget {
             children: [
               FadeInLeftBig(
                 child: Text(
-                  "Shawerma",
+                  dish.name,
                   style: theme.textTheme.titleLarge,
                 ),
               ),
               const SizedBox(height: 5),
               FadeInLeftBig(
                 child: Text(
-                  "meat • 14 min • 1 serving",
-                  style: theme.textTheme.bodyMedium?.copyWith(color: Colors.grey),
+                  "${dish.typeOfMeal} • ${dish.time} min • 1 serving",
+                  style:
+                      theme.textTheme.bodyMedium?.copyWith(color: Colors.grey),
                 ),
               ),
               FadeInLeftBig(
                 child: Text(
-                  "Diffeculty: Easy",
-                  style: theme.textTheme.bodyMedium?.copyWith(color: Colors.grey),
+                  "Diffeculty: ${dish.diffeculty}",
+                  style:
+                      theme.textTheme.bodyMedium?.copyWith(color: Colors.grey),
                 ),
               ),
             ],
@@ -79,9 +83,9 @@ class DetailsBody extends StatelessWidget {
           child: TabBarView(
             controller: _tabController,
             children: [
-              buildSummaryTab(theme),
-              buildIngredientsTab(theme),
-              buildDirectionTab(theme),
+              buildSummaryTab(theme,dish),
+              buildIngredientsTab(theme,dish),
+              buildDirectionTab(theme,dish),
             ],
           ),
         ),
