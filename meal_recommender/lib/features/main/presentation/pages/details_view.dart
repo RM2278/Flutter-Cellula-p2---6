@@ -82,33 +82,41 @@ class _DetailsViewState extends State<DetailsView>
     );
     var theme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
-        ),
-        centerTitle: true,
-        title: Text(
-          testDish.name,
-          style: theme.textTheme.titleLarge,
-        ),
-        actions: [
-          IconButton(
-            icon: Image.asset(
-              _isFavorite ? IconPaths.heart2 : IconPaths.heart1,
-            ),
-            onPressed: () => _toggleFavorite(context),
-          ),
-          const SizedBox(width: 10),
-          
-        ],
+      appBar: _appBar(context, testDish, theme),
+      body: _mealDetailsBody(theme, testDish),
+    );
+  }
+
+  FadeInDown _mealDetailsBody(ThemeData theme, DishModel testDish) {
+    return FadeInDown(
+        child: DetailsBody(
+      theme: theme,
+      tabController: _tabController,
+      dish: testDish,
+    ));
+  }
+
+  AppBar _appBar(BuildContext context, DishModel testDish, ThemeData theme) {
+    return AppBar(
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back),
+        onPressed: () => Navigator.pop(context),
       ),
-      body: FadeInDown(
-          child: DetailsBody(
-        theme: theme,
-        tabController: _tabController,
-        dish: testDish,
-      )),
+      centerTitle: true,
+      title: Text(
+        testDish.name,
+        style: theme.textTheme.titleLarge,
+      ),
+      actions: [
+        IconButton(
+          icon: Image.asset(
+            _isFavorite ? IconPaths.heart2 : IconPaths.heart1,
+          ),
+          onPressed: () => _toggleFavorite(context),
+        ),
+        const SizedBox(width: 10),
+        
+      ],
     );
   }
 }
