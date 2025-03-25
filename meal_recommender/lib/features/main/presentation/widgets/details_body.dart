@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:meal_recommender/features/main/presentation/widgets/build_direction_tab.dart';
@@ -20,15 +21,17 @@ class DetailsBody extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CachedNetworkImage(
-          imageUrl:
-              'https://playswellwithbutter.com/wp-content/uploads/2021/03/Shawarma-Marinade-12.jpg',
-          width: double.infinity,
-          height: 250,
-          fit: BoxFit.cover,
-          placeholder: (context, url) =>
-              const Center(child: CircularProgressIndicator()),
-          errorWidget: (context, url, error) => const Icon(Icons.error),
+        FadeInLeftBig(
+          child: CachedNetworkImage(
+            imageUrl:
+                'https://playswellwithbutter.com/wp-content/uploads/2021/03/Shawarma-Marinade-12.jpg',
+            width: double.infinity,
+            height: 250,
+            fit: BoxFit.cover,
+            placeholder: (context, url) =>
+                const Center(child: CircularProgressIndicator()),
+            errorWidget: (context, url, error) => const Icon(Icons.error),
+          ),
         ),
         const SizedBox(height: 15),
         Padding(
@@ -36,33 +39,41 @@ class DetailsBody extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "Shawerma",
-                style: theme.textTheme.titleLarge,
+              FadeInLeftBig(
+                child: Text(
+                  "Shawerma",
+                  style: theme.textTheme.titleLarge,
+                ),
               ),
               const SizedBox(height: 5),
-              Text(
-                "meat • 14 min • 1 serving",
-                style: theme.textTheme.bodyMedium?.copyWith(color: Colors.grey),
+              FadeInLeftBig(
+                child: Text(
+                  "meat • 14 min • 1 serving",
+                  style: theme.textTheme.bodyMedium?.copyWith(color: Colors.grey),
+                ),
               ),
-              Text(
-                "Diffeculty: Easy",
-                style: theme.textTheme.bodyMedium?.copyWith(color: Colors.grey),
+              FadeInLeftBig(
+                child: Text(
+                  "Diffeculty: Easy",
+                  style: theme.textTheme.bodyMedium?.copyWith(color: Colors.grey),
+                ),
               ),
             ],
           ),
         ),
         const SizedBox(height: 10),
-        TabBar(
-          controller: _tabController,
-          labelColor: theme.primaryColor,
-          unselectedLabelColor: Colors.grey,
-          indicatorColor: theme.primaryColor,
-          tabs: const [
-            Tab(text: "Summary"),
-            Tab(text: "Ingredients"),
-            Tab(text: "Direction"),
-          ],
+        FadeInRightBig(
+          child: TabBar(
+            controller: _tabController,
+            labelColor: theme.primaryColor,
+            unselectedLabelColor: Colors.grey,
+            indicatorColor: theme.primaryColor,
+            tabs: const [
+              Tab(text: "Summary"),
+              Tab(text: "Ingredients"),
+              Tab(text: "Direction"),
+            ],
+          ),
         ),
         Expanded(
           child: TabBarView(

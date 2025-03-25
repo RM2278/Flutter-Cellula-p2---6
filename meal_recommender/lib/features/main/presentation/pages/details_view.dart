@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:meal_recommender/core/constants/icon_paths.dart';
 import 'package:meal_recommender/core/services/snackbar_service.dart';
@@ -61,7 +62,8 @@ class _DetailsViewState extends State<DetailsView>
           const SizedBox(width: 10),
         ],
       ),
-      body: DetailsBody(theme: theme, tabController: _tabController),
+      body: FadeInDown(
+          child: DetailsBody(theme: theme, tabController: _tabController)),
     );
   }
 }
