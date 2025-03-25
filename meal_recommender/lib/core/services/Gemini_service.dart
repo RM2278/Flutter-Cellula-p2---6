@@ -19,6 +19,7 @@ Provide ${number} different recipes for meals in JSON format with this structure
     "name": "Dish name",
     "summary": "A summary of the dish",
     "typeOfMeal": "Meal type (e.g., Breakfast, Lunch, Dinner, Snack)",
+    "Diffeculty": "Diffeculty type (e.g. , biggener, medium , cheff)",
     "time": "Preparation time in minutes",
     "imageUrl": "",
     "ingredients": [

@@ -16,6 +16,7 @@ import '../../features/auth/domain/usecases/Reload_UseCase.dart';
 import '../../features/auth/presentation/register/cubit/register_cubit.dart';
 
 import '../services/Gemini_service.dart';
+import '../services/RecipeApiService.dart';
 import '../services/firebase_service.dart';
 
 final sl = GetIt.instance;
@@ -34,7 +35,7 @@ void intl() {
   sl.registerLazySingleton(() => ReloadUsecase(sl<AuthRepo>()));
   sl.registerFactory(() => RegisterCubit());
 //Login
-
+  sl.registerLazySingleton(() =>RecipeApiService(apiKey: Constants.RecipeKey));
   sl.registerLazySingleton(() => GeminiApiService(apiKey: Constants.geminKey));
   sl.registerLazySingleton<DishRemoteDataSource>(
       () => DishRemoteDataSourceImpl(apiService: sl()));
