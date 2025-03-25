@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../../../core/constants/icon_paths.dart';
 import '../../../../core/themes/color_palette.dart';
 import '../../../../core/widgets/custom_text_form_filed.dart';
@@ -15,13 +14,13 @@ class AiBody extends StatelessWidget {
             child: ListView.builder(
                 itemCount: 1,
                 itemBuilder: (context,index){
-                  return Text("");
+                  return const Text("");
                 })
         ),
-        SizedBox(height: 32),
-        Spacer(),
+        const SizedBox(height: 32),
+        const Spacer(),
         Padding(
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           child: CustomTextFormFiled(
             color: BaseColorPalette.mainColor,
             hintText: "Enter your ingredients and your goal",
