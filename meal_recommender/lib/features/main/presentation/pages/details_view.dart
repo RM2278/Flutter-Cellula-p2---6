@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meal_recommender/core/constants/icon_paths.dart';
+import 'package:meal_recommender/core/services/snackbar_service.dart';
 import '../widgets/details_body.dart';
 
 class DetailsView extends StatefulWidget {
@@ -12,6 +13,7 @@ class DetailsView extends StatefulWidget {
 class _DetailsViewState extends State<DetailsView>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  bool _isFavorite = false;
 
   @override
   void initState() {
@@ -23,6 +25,16 @@ class _DetailsViewState extends State<DetailsView>
   void dispose() {
     _tabController.dispose();
     super.dispose();
+  }
+
+  void _toggleFavorite(BuildContext context) {
+    setState(() {
+      _isFavorite = !_isFavorite;
+    });
+
+    _isFavorite
+        ? SnackBarService.showSuccessMessage("Added to Favorites! ❤️")
+        : SnackBarService.showErrorMessage("remove from Favorites! 💔");
   }
 
   @override
@@ -41,8 +53,10 @@ class _DetailsViewState extends State<DetailsView>
         ),
         actions: [
           IconButton(
-            icon: Image.asset(IconPaths.heart1),
-            onPressed: () {},
+            icon: Image.asset(
+              _isFavorite ? IconPaths.heart2 : IconPaths.heart1,
+            ),
+            onPressed: () => _toggleFavorite(context),
           ),
           const SizedBox(width: 10),
         ],
