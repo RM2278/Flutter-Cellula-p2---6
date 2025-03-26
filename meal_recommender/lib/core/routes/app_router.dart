@@ -6,12 +6,12 @@ import '../../features/ai/presentation/pages/ai_view.dart';
 class AppRouter {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
-      /*case PageRouteName.initial:
+      case PageRouteName.initial:
         return MaterialPageRoute(
           builder: (context) => const SplashView(),
           settings: settings,
-        );*/
-        case PageRouteName.loginView:
+        );
+      case PageRouteName.loginView:
         return MaterialPageRoute(
           builder: (context) => const LoginPage(),
           settings: settings,
@@ -38,7 +38,7 @@ class AppRouter {
         );
       case PageRouteName.AiView:
         return MaterialPageRoute(
-          builder: (context) =>  AiView(),
+          builder: (context) => AiView(),
           settings: settings,
         );
       default:
@@ -46,10 +46,6 @@ class AppRouter {
           builder: (context) => const DetailsView(),
           settings: settings,
         );
-
     }
   }
 }
-
-
-
