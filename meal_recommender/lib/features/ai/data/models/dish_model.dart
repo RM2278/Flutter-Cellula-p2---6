@@ -21,7 +21,7 @@ class DishModel extends Dish {
       summary: json['summary'],
       diffeculty: json['Diffeculty'],
       typeOfMeal: json['typeOfMeal'],
-      time: json['time'],
+      time: int.parse(json['time'].toString()),
       imageUrl: json['imageUrl'],
       ingredients: (json['ingredients'] as List)
           .map((i) => IngredientModel.fromJson(i))
