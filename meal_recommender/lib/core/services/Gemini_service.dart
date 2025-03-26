@@ -72,6 +72,7 @@ Provide a recipe for "$dishName" in JSON format with this structure:
   "name": "Dish name",
   "summary": "A summary of the dish",
   "typeOfMeal": "Meal type (e.g., Breakfast, Lunch)",
+  "Diffeculty": "Diffeculty type (e.g. , biggener, medium , cheff)",
   "time": "Preparation time in minutes",
   "imageUrl": "",
   "ingredients": [
