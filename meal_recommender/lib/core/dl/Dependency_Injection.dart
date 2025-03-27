@@ -52,11 +52,17 @@ Future<void> intl() async {
           () => ProfileRepositoryImpl(sl(), sl()));
 
   // Use Cases
-  sl.registerLazySingleton(() => GetProfileUseCase(sl()));
-  sl.registerLazySingleton(() => UpdateProfile(sl()));
+  sl.registerFactory(() => GetProfileUseCase(sl()));
+  sl.registerFactory(() => UpdateProfileUseCase(sl()));
+
+
 
   // Cubit
-  sl.registerFactory(() => ProfileCubit(sl(), sl<SharedPreferencesService>()));
+  sl.registerFactory(() => ProfileCubit(
+    sl<GetProfileUseCase>(),
+    sl<UpdateProfileUseCase>(),
+
+  ));
 
 
 }

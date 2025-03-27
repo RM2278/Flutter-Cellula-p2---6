@@ -2,46 +2,24 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meal_recommender/core/constants/constants.dart';
 import 'package:meal_recommender/features/profile/presentation/cubit/profile_state.dart';
 
-import '../../../../core/services/firebase_service.dart';
-import '../../../../core/services/shared_preferences_service.dart';
-import '../../data/models/profile_model.dart';
 import '../../domain/entities/profile_entity.dart';
+import '../../domain/usecase/get_profile_usecase.dart';
+import '../../domain/usecase/update_profile_usecase.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
-  final FirebaseService firebaseService;
-  final SharedPreferencesService sharedPreferencesService;
+  final GetProfileUseCase fetchProfileUseCase;
+  final UpdateProfileUseCase updateProfileUseCase;
 
-  ProfileCubit(this.firebaseService, this.sharedPreferencesService) : super(ProfileInitial());
+  ProfileCubit(this.fetchProfileUseCase, this.updateProfileUseCase) : super(ProfileInitial());
 
   Future<void> fetchProfile() async {
     try {
       emit(ProfileLoading());
 
-      final localProfileData = await sharedPreferencesService.getUser();
-      if (localProfileData[Constants.name] != null) {
-        final localProfile = ProfileModel(
-          name: localProfileData[Constants.name]!,
-          email: localProfileData[Constants.email]!,
-          password: localProfileData[Constants.password] ?? '',
-          phone: localProfileData[Constants.phone]!,
-          profileImageUrl: localProfileData[Constants.profileImageUrl]!,
-        );
-        emit(ProfileLoaded(localProfile));
-        return;
-      }
-
-      final profile = await firebaseService.getProfile();
+      final profile = await fetchProfileUseCase.call();
 
       if (profile != null) {
         emit(ProfileLoaded(profile));
-
-        await sharedPreferencesService.saveUser(
-            profile.name,
-            profile.email,
-            profile.profileImageUrl,
-            profile.password,
-          profile.phone
-        );
       } else {
         emit(ProfileError(Constants.profileNotFound));
       }
@@ -55,26 +33,10 @@ class ProfileCubit extends Cubit<ProfileState> {
     try {
       emit(ProfileLoading());
 
-      final profileModel = ProfileModel(
-        name: updatedProfile.name,
-        email: updatedProfile.email,
-        phone: updatedProfile.phone,
-        password: updatedProfile.password,
-        profileImageUrl: updatedProfile.profileImageUrl,
-      );
-
-      await firebaseService.updateUserProfile(profileModel);
-
-      await sharedPreferencesService.saveUser(
-          profileModel.name,
-          profileModel.email,
-          profileModel.profileImageUrl,
-          profileModel.password,
-        profileModel.phone
-      );
+      await updateProfileUseCase.call(updatedProfile);
 
       emit(ProfileUpdated());
-      emit(ProfileLoaded(profileModel));
+      await fetchProfile();
     } catch (e) {
       print("${Constants.errorUpdateProfile} $e");
       emit(ProfileError('${Constants.errorUpdateProfile} $e'));
@@ -86,20 +48,17 @@ class ProfileCubit extends Cubit<ProfileState> {
       emit(ProfileLoading());
       final currentState = state;
       if (currentState is ProfileLoaded) {
-        final updatedProfile = currentState.profile.copyWith(
+        final updatedProfile = ProfileEntity(
+          name: currentState.profile.name,
+          email: currentState.profile.email,
+          phone: currentState.profile.phone,
+          password: currentState.profile.password,
           profileImageUrl: imageUrl,
         );
 
-        await firebaseService.updateUserProfile(updatedProfile);
-        await sharedPreferencesService.saveUser(
-            updatedProfile.name,
-            updatedProfile.email,
-            updatedProfile.profileImageUrl,
-            updatedProfile.password,
-          updatedProfile.phone
-        );
-
-        emit(ProfileLoaded(updatedProfile));
+        await updateProfileUseCase.call(updatedProfile);
+        emit(ProfileUpdated());
+        await fetchProfile();
       }
     } catch (e) {
       emit(ProfileError('${Constants.errorUpdateProfileImage} $e'));

@@ -1,17 +1,13 @@
-import '../../../../core/constants/constants.dart';
-import '../../domain/repositories/profile_repository.dart';
-import '../../data/models/profile_model.dart';
 
-class UpdateProfile {
+import '../entities/profile_entity.dart';
+import '../repositories/profile_repository.dart';
+
+class UpdateProfileUseCase {
   final ProfileRepository repository;
 
-  UpdateProfile(this.repository);
+  UpdateProfileUseCase(this.repository);
 
-  Future<void> call(ProfileModel updatedProfile) async {
-    try {
-      await repository.updateProfile(updatedProfile.name, updatedProfile);
-    } catch (e) {
-      throw Exception('${Constants.failedUpdate} $e');
-    }
+  Future<void> call(ProfileEntity profile) async {
+    return await repository.updateProfile(profile);
   }
 }
