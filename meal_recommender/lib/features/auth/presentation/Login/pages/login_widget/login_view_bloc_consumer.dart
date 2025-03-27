@@ -22,7 +22,7 @@ class LoginViewBlocConsumer extends StatelessWidget {
     return BlocConsumer<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state is LoginSuccess) {
-          Navigator.pushNamed(context, PageRouteName.homeView);
+          Navigator.pushNamed(context, PageRouteName.detailsView);
           //navigate
         }
 

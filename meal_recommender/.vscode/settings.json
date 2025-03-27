@@ -1,3 +1,4 @@
 {
-    "cmake.sourceDirectory": "C:/projects/Flutter-Cellula-p2---6/meal_recommender/linux"
+    "cmake.sourceDirectory": "C:/projects/Flutter-Cellula-p2---6/meal_recommender/linux",
+    "java.configuration.updateBuildConfiguration": "interactive"
 }
