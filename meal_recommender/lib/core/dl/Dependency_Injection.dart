@@ -6,6 +6,9 @@ import 'package:meal_recommender/features/ai/data/datasources/dish_remote_data_s
 import 'package:meal_recommender/features/ai/data/repositories/dish_repository_impl.dart';
 import 'package:meal_recommender/features/ai/presentation/manager/dish_bloc.dart';
 import 'package:meal_recommender/features/auth/data/datasources/RegisterDataRemote.dart';
+import 'package:meal_recommender/features/main/data/repositories/favorite_meals_repository_impl.dart';
+import 'package:meal_recommender/features/main/domain/usecases/add_meal_to_favorites_use_case.dart';
+import 'package:meal_recommender/features/main/domain/usecases/remove_meal_from_favorites_use_case.dart';
 import '../../features/ai/domain/repositories/dish_repository.dart';
 import '../../features/ai/domain/usecases/get_dish_by_name.dart';
 import '../../features/ai/domain/usecases/get_recommended_dishes.dart';
@@ -15,6 +18,10 @@ import '../../features/auth/domain/usecases/Register_usecase.dart';
 import '../../features/auth/domain/usecases/Reload_UseCase.dart';
 import '../../features/auth/presentation/register/cubit/register_cubit.dart';
 
+import '../../features/main/data/datasources/favorite_meal_data_source.dart';
+import '../../features/main/domain/repositories/favorite_meals_repository.dart';
+import '../../features/main/domain/usecases/get_favorite_meals_use_case.dart';
+import '../../features/main/presentation/manager/favorite_meals_bloc.dart';
 import '../services/Gemini_service.dart';
 import '../services/RecipeApiService.dart';
 import '../services/firebase_service.dart';
@@ -45,4 +52,20 @@ void intl() {
   sl.registerLazySingleton(() => GetDishByName(sl()));
   sl.registerFactory(
       () => DishBloc(getRecommendedDishes: sl(), getDishByName: sl()));
+
+      sl.registerLazySingleton<FavoriteMealsDataSource>(
+    () => FavoriteMealsDataSourceImpl(firestore: sl<FirebaseFirestore>()));
+
+sl.registerLazySingleton<FavoriteMealsRepository>(
+    () => FavoriteMealsRepositoryImpl(dataSource: sl()));
+
+sl.registerLazySingleton(() => AddMealToFavoritesUseCase(repository: sl()));
+sl.registerLazySingleton(() => RemoveMealFromFavoritesUseCase(repository: sl()));
+sl.registerLazySingleton(() => GetFavoriteMealsUseCase(repository: sl()));
+
+sl.registerFactory(() => FavoriteMealsBloc(
+      addMealToFavoritesUseCase: sl(),
+      removeMealFromFavoritesUseCase: sl(),
+      getFavoriteMealsUseCase: sl(),
+    ));
 }

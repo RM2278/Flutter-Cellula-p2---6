@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:meal_recommender/core/routes/app_views.dart';
 
@@ -6,11 +7,11 @@ import '../../features/ai/presentation/pages/ai_view.dart';
 class AppRouter {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case PageRouteName.initial:
-        return MaterialPageRoute(
-          builder: (context) => const SplashView(),
-          settings: settings,
-        );
+      // case PageRouteName.initial:
+      //   return MaterialPageRoute(
+      //     builder: (context) => const SplashView(),
+      //     settings: settings,
+      //   );
       case PageRouteName.loginView:
         return MaterialPageRoute(
           builder: (context) => const LoginPage(),
@@ -43,7 +44,7 @@ class AppRouter {
         );
       default:
         return MaterialPageRoute(
-          builder: (context) => const DetailsView(),
+          builder: (context) =>  DetailsView(userId: FirebaseAuth.instance.currentUser!.uid,),
           settings: settings,
         );
     }
