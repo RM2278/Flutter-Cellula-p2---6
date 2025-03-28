@@ -74,7 +74,63 @@ return user;
       throw "Check your internet";
     }
   }
+  Future addFavorites(Map<String, dynamic> meal) async {
+    print("🚀 addFavorites استُدعيت بنجاح!");
 
+    User? user = _auth.currentUser;
+    if (user == null) {
+      UserCredential credential = await _auth.signInWithEmailAndPassword(
+        email: "ahmeddarwesh317@yahoo.com",
+        password: "Ahmed@123",
+      );
+      user = credential.user;
+    }
+
+    if (user == null) {
+      print("❌ فشل في تسجيل الدخول أو جلب المستخدم!");
+      return;
+    }
+
+    var userId = user.uid;
+
+    // **🔹 التأكد من أن المعرف موجود وإذا لم يكن موجودًا يتم تعيينه**
+    if (meal['id'] == null || meal['id'].toString().isEmpty) {
+      meal['id'] = DateTime.now().millisecondsSinceEpoch.toString();
+      print("⚠️ لم يكن هناك معرف، تم تعيين ID جديد: ${meal['id']}");
+    }
+
+    print("📌 البيانات المراد حفظها: $meal");
+
+    try {
+      var favDocRef = store.collection('users').doc(userId).collection('favorites').doc(meal['id']);
+      await favDocRef.set(meal);
+      print("✅ تمت إضافة الوجبة للمفضلة بنجاح!");
+    } catch (e) {
+      print("❌ خطأ أثناء الحفظ: $e");
+    }
+  }
+
+  Future<void> removeFavorite(String mealId) async {
+    User? user = await _auth.currentUser;
+    if (user == null) {
+      UserCredential credential = await _auth.signInWithEmailAndPassword(
+        email: "ahmeddarwesh317@yahoo.com",
+        password: "Ahmed@123",
+      );
+      user = credential.user;
+    }
+
+    if (user == null) {
+      throw Exception("Failed to authenticate user");
+    }
+    var userId = user!.uid;
+    await store
+        .collection('users')
+        .doc(userId)
+        .collection('favorites')
+        .doc(mealId)
+        .delete();
+  }
 
   Future sign_out() async {
     try{

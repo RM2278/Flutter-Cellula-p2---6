@@ -3,14 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:meal_recommender/core/constants/icon_paths.dart';
 import 'package:meal_recommender/core/services/snackbar_service.dart';
 import '../../../ai/data/models/dish_model.dart';
+import '../../../ai/domain/entities/dish_entity.dart';
 import '../widgets/details_body.dart';
 
 class DetailsView extends StatefulWidget {
   // final DishModel dish;
-  const DetailsView({
+   DetailsView({
     super.key,
+    required this.data
   });
-
+Dish data;
   @override
   State<DetailsView> createState() => _DetailsViewState();
 }
@@ -44,42 +46,7 @@ class _DetailsViewState extends State<DetailsView>
 
   @override
   Widget build(BuildContext context) {
-    DishModel testDish = DishModel(
-      name: "Shawerma",
-      summary: "A delicious meat-based dish wrapped in soft bread.",
-      diffeculty: "Easy",
-      typeOfMeal: "Dinner",
-      time: 14,
-      imageUrl:
-          "https://playswellwithbutter.com/wp-content/uploads/2021/03/Shawarma-Marinade-12.jpg",
-      ingredients: [
-        IngredientModel(
-            name: "Bread", quantity: "2", unit: "pcs", imageUrl: ""),
-        IngredientModel(
-            name: "Tomato", quantity: "2", unit: "pcs", imageUrl: ""),
-        IngredientModel(
-            name: "Carrot", quantity: "2", unit: "pcs", imageUrl: ""),
-        IngredientModel(name: "Meat", quantity: "200", unit: "g", imageUrl: ""),
-        IngredientModel(name: "Meat", quantity: "200", unit: "g", imageUrl: ""),
-      ],
-      nutrition: NutritionModel(
-        calories: "400 kcal",
-        protein: "40g",
-        carbs: "40g",
-        fat: "40g",
-        vitamins: ["Vitamin A", "Vitamin C", "Vitamin D"],
-      ),
-      directions: DirectionsModel(
-        firstStep: "Marinate the meat for at least 2 hours.",
-        secondStep: "Grill the meat until fully cooked.",
-        additionalSteps: [
-          "Slice the meat into thin strips.",
-          "Toast the bread slightly.",
-          "Add vegetables and sauce to the wrap.",
-          "Roll and serve hot."
-        ],
-      ),
-    );
+    Dish testDish = widget.data;
     var theme = Theme.of(context);
     return Scaffold(
       appBar: _appBar(context, testDish, theme),
@@ -87,7 +54,7 @@ class _DetailsViewState extends State<DetailsView>
     );
   }
 
-  FadeInDown _mealDetailsBody(ThemeData theme, DishModel testDish) {
+  FadeInDown _mealDetailsBody(ThemeData theme, Dish testDish) {
     return FadeInDown(
         child: DetailsBody(
       theme: theme,
@@ -96,7 +63,7 @@ class _DetailsViewState extends State<DetailsView>
     ));
   }
 
-  AppBar _appBar(BuildContext context, DishModel testDish, ThemeData theme) {
+  AppBar _appBar(BuildContext context, Dish testDish, ThemeData theme) {
     return AppBar(
       leading: IconButton(
         icon: const Icon(Icons.arrow_back),

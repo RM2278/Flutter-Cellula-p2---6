@@ -5,4 +5,6 @@ import '../entities/dish_entity.dart';
 abstract class DishRepository {
   Future<Either<Failure, List<Dish>>> getRecommendedDishes(int number);
   Future<Either<Failure, Dish>> getDishByName(String name);
+  Future addFavorite(Dish dish) ;
+  Future removeFavorite(String mealId);
 }

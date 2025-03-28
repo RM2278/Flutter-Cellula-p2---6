@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import '../../../ai/data/models/dish_model.dart';
+import '../../../ai/domain/entities/dish_entity.dart';
 import 'build_nutrition_item.dart';
 
-Widget buildSummaryTab(ThemeData theme, DishModel dish) {
+Widget buildSummaryTab(ThemeData theme, Dish dish) {
   return Padding(
     padding: const EdgeInsets.all(16),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    child: ListView(
+
       children: [
         Text(
           dish.summary,

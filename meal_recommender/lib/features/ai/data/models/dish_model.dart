@@ -4,6 +4,7 @@ import '../../domain/entities/dish_entity.dart';
 
 class DishModel extends Dish {
   DishModel({
+    required super.id,
     required super.name,
     required super.summary,
     required super.typeOfMeal,
@@ -14,9 +15,40 @@ class DishModel extends Dish {
     required NutritionModel super.nutrition,
     required DirectionsModel super.directions,
   });
+  factory DishModel.fromEntity(Dish dish) {
+    return DishModel(
+      id: dish.id,
+      name: dish.name,
+      summary: dish.summary,
+      typeOfMeal: dish.typeOfMeal,
+      time: dish.time,
+      imageUrl: dish.imageUrl,
+      diffeculty: dish.diffeculty,
+      ingredients: dish.ingredients.map((i) => IngredientModel(
+        name: i.name,
+        quantity: i.quantity,
+        unit: i.unit,
+        imageUrl: i.imageUrl,
+      )).toList(),
+      nutrition: NutritionModel(
+        calories: dish.nutrition.calories,
+        protein: dish.nutrition.protein,
+        carbs: dish.nutrition.carbs,
+        fat: dish.nutrition.fat,
+        vitamins: dish.nutrition.vitamins,
+      ),
+      directions: DirectionsModel(
+        firstStep: dish.directions.firstStep,
+        secondStep: dish.directions.secondStep,
+        additionalSteps: dish.directions.additionalSteps,
+      ),
+    );
+  }
+
 
   factory DishModel.fromJson(Map<String, dynamic> json) {
     return DishModel(
+      id: json['id'],
       name: json['name'],
       summary: json['summary'],
       diffeculty: json['Diffeculty'],
@@ -33,6 +65,7 @@ class DishModel extends Dish {
 
   Map<String, dynamic> toJson() {
     return {
+      'id':id,
       'name': name,
       'summary': summary,
       "Diffeculty": diffeculty,

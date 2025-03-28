@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class Dish extends Equatable {
+  String? id;
   final String name;
   final String summary;
   final String typeOfMeal;
@@ -11,7 +12,8 @@ class Dish extends Equatable {
   final Nutrition nutrition;
   final Directions directions;
 
-  const Dish({
+   Dish({
+    this.id,
     required this.name,
     required this.summary,
     required this.typeOfMeal,
@@ -30,10 +32,10 @@ class Dish extends Equatable {
 }
 
 class Ingredient {
-  final String name;
-  final String quantity;
-  final String unit;
-  final String imageUrl;
+  final String? name;
+  final String? quantity;
+  final String? unit;
+  final String? imageUrl;
 
   Ingredient({
     required this.name,

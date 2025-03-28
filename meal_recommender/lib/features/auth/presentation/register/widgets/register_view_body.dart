@@ -189,27 +189,6 @@ class _RegisterViewBodyState extends State<RegisterViewBody> {
                             height: 15,
                           ),
                           LoginText(),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const TextWidget(
-                                text: "Do you have account ?",
-                                size: 18,
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  Navigator.pushNamed(
-                                      context, PageRouteName.loginView);
-                                },
-                                child: const TextWidget(
-                                  text: 'Login now',
-                                  size: 18,
-                                  fontWeight: FontWeight.w600,
-                                  decoration: TextDecoration.underline,
-                                ),
-                              ),
-                            ],
-                          ),
                         ],
                       ),
                     ),

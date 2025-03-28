@@ -8,6 +8,7 @@ Widget AiItemBuilder(
     String ingredients,
     String time,
     var onPressFav,
+    var icon,
     )
 {
   return Container(
@@ -44,11 +45,7 @@ Widget AiItemBuilder(
               ),
               IconButton(
                   onPressed: onPressFav,
-                  icon: const Icon(
-                    Icons.favorite_border_outlined,
-                    color: Colors.white,
-                    size: 28,
-                  ))
+                  icon: icon)
             ],
           ),
           const SizedBox(height: 4,),
