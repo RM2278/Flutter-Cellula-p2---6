@@ -52,7 +52,7 @@ class AppRouter {
         if (settings.name == PageRouteName.detailsView && settings.arguments is Dish) {
           final Dish args = settings.arguments as Dish;
           return MaterialPageRoute(
-            builder: (context) => DetailsView(data: args),
+            builder: (context) => DetailsView(data: args, userId: '',),
             settings: settings, // Keep settings to preserve arguments
           );
         }
