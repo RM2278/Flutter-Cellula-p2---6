@@ -7,25 +7,36 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../../../../core/constants/constants.dart';
 
 class ProfileImagePicker {
+  static bool _isPicking = false;
+
   static Future<File?> pickImage(BuildContext context) async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (_isPicking) return null;
+    _isPicking = true;
 
-    if (pickedFile != null) {
-      File imageFile = File(pickedFile.path);
-      String? downloadUrl = await _uploadImageToFirebase(imageFile);
+    try {
+      final picker = ImagePicker();
+      final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
-      if (downloadUrl != null) {
-        await _saveImageUrlToFirestore(downloadUrl);
+      if (pickedFile != null) {
+        File imageFile = File(pickedFile.path);
+        String? downloadUrl = await _uploadImageToFirebase(imageFile);
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(Constants.imageUploadSuccess)),
-        );
-        //if exist file return imagefile
-        return imageFile;
+        if (downloadUrl != null) {
+          await _saveImageUrlToFirestore(downloadUrl);
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(Constants.imageUploadSuccess)),
+          );
+          _isPicking = false;
+          return imageFile;
+        }
       }
+    } catch (e) {
+      print(e);
+    } finally {
+      _isPicking = false;
     }
-    //if not file return null
+
     return null;
   }
 
@@ -37,11 +48,9 @@ class ProfileImagePicker {
       String fileName = 'profile_images/${user.uid}.jpg';
       firebase_storage.Reference ref = firebase_storage.FirebaseStorage.instance.ref().child(fileName);
       firebase_storage.UploadTask uploadTask = ref.putFile(image);
-
       firebase_storage.TaskSnapshot snapshot = await uploadTask;
       return await snapshot.ref.getDownloadURL();
     } catch (e) {
-      print("${Constants.imageUploadError} $e");
       return null;
     }
   }
@@ -52,13 +61,10 @@ class ProfileImagePicker {
       if (user == null) return;
 
       await FirebaseFirestore.instance.collection(Constants.user).doc(user.uid).update({
-        Constants.profileImageUrl : imageUrl,
+        Constants.profileImageUrl: imageUrl,
       });
-
-      print("${Constants.imageUrlSaved} $imageUrl");
     } catch (e) {
       print("${Constants.imageSaveFirestoreError} $e");
     }
   }
 }
-

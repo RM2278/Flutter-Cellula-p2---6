@@ -104,6 +104,7 @@ class _ProfileScreenContentState extends State<ProfileScreenContent> {
     }
   }
 
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -129,7 +130,9 @@ class _ProfileScreenContentState extends State<ProfileScreenContent> {
           imageFile: _image,
           onEditPressed: () async {
             _image = await ProfileImagePicker.pickImage(context);
-            setState(() {});
+            if (_image != null) {
+              setState(() {});
+            }
           },
           nameController: nameController,
           emailController: emailController,

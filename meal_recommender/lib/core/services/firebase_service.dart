@@ -84,7 +84,6 @@ return user;
         email: "ahmeddarwesh317@yahoo.com", password: 'Ahmed@123');
     //return credential;
     User? user = credential.user;
-
     if (user != null) {
       DocumentSnapshot userProfile = await store.collection(Constants.user).doc(user.uid).get();
       if (userProfile.exists) {

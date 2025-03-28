@@ -22,12 +22,16 @@ class ProfileAvatar extends StatelessWidget {
     double avatarRadius = screenWidth * 0.18;
     double editIconRadius = screenWidth * 0.05;
 
-    ImageProvider? imageProvider;
+   ImageProvider? imageProvider;
     if (imageFile != null) {
       imageProvider = FileImage(imageFile!);
-    } else if (profileImageUrl.isNotEmpty) {
+    } else if (profileImageUrl.isNotEmpty && profileImageUrl.startsWith("http")) {
       imageProvider = NetworkImage(profileImageUrl);
-    } else {
+    } else if(profileImageUrl.isNotEmpty){
+      imageProvider = FileImage(File(profileImageUrl));
+    }
+
+    else {
       imageProvider = null;
     }
 

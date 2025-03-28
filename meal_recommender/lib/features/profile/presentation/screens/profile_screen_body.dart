@@ -10,17 +10,16 @@ import '../cubit/profile_cubit.dart';
 import '../cubit/profile_state.dart';
 
 class ProfileBody extends StatelessWidget {
-  final File? imageFile;
+   File? imageFile;
   final VoidCallback onEditPressed;
   final VoidCallback onChangePressed;
   final TextEditingController nameController;
   final TextEditingController emailController;
   final TextEditingController phoneController;
   final VoidCallback onSavePressed;
-  final String profileImageUrl;
+   String profileImageUrl;
 
-  const ProfileBody({
-    Key? key,
+   ProfileBody({
     required this.imageFile,
     required this.onEditPressed,
     required this.onChangePressed,
@@ -29,7 +28,7 @@ class ProfileBody extends StatelessWidget {
     required this.phoneController,
     required this.onSavePressed,
     required this.profileImageUrl,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -60,8 +59,9 @@ class ProfileBody extends StatelessWidget {
           if (state is ProfileLoaded) {
             nameController.text = state.profile.name;
             emailController.text = state.profile.email;
-            phoneController.text = state.profile.phone;
             phoneController.text=state.profile.phone;
+            profileImageUrl = state.profile.profileImageUrl;
+
           } else if (state is ProfileLoading) {
             return const Center(child: CircularProgressIndicator());
           }
