@@ -5,13 +5,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:meal_recommender/core/routes/app_router.dart';
 import 'package:meal_recommender/core/themes/application_theme_manager.dart';
+import 'package:meal_recommender/features/ai/presentation/manager/dish_bloc.dart';
+import 'package:meal_recommender/features/main/presentation/manager/bloc/meals_bloc.dart';
 import 'core/dl/Dependency_Injection.dart';
 import 'core/routes/app_views.dart';
 import 'core/services/cubit_observer.dart';
 import 'core/services/shared_preferences_storage_services.dart';
 import 'firebase_options.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -27,14 +29,23 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ApplicationThemeManager.lightThemeData,
-      onGenerateRoute: AppRouter.onGenerateRoute,
-      initialRoute: PageRouteName.initial,
-      builder: EasyLoading.init(
-        builder: BotToastInit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => sl<DishBloc>(),
+        ),
+       
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: ApplicationThemeManager.lightThemeData,
+       // onGenerateRoute: AppRouter.onGenerateRoute,
+      //  initialRoute: PageRouteName.loginView,
+      home: const LoginPage(),
+        builder: EasyLoading.init(
+          builder: BotToastInit(),
+        ),
       ),
     );
   }

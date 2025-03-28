@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meal_recommender/core/themes/color_palette.dart';
 import 'package:meal_recommender/features/main/data/models/meal_model.dart';
 import 'package:meal_recommender/features/main/domain/entities/meals.dart';
-import '../../data/models/DishModel.dart';
 import '../manager/bloc/favorite_bloc.dart';
 import '../manager/bloc/favorite_event.dart';
 import '../manager/bloc/favorite_state.dart';

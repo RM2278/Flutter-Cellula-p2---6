@@ -3,27 +3,20 @@ import 'dart:math';
 
 import 'package:dartz/dartz.dart';
 import 'package:meal_recommender/core/errors/failure.dart';
+import 'package:meal_recommender/features/ai/data/models/dish_model.dart';
 import 'package:meal_recommender/features/main/data/datasources/FavoriteDataRemote.dart';
 import 'package:meal_recommender/features/main/domain/repositories/favorite_repository.dart';
 
 import '../../../../core/errors/server_failure.dart';
+import '../../../ai/domain/entities/dish_entity.dart';
 import '../../domain/entities/meals.dart';
 
 
 class FavoritesRepositoryImpl implements FavoritesRepository {
   BaseFavoriteDataRemote favoriteDataRemote;
   FavoritesRepositoryImpl(this.favoriteDataRemote);
-  @override
-  Future<void> addFavorite(Map<String, dynamic> meal) async {
-    // TODO: implement addFavorite
-    try {
-      await favoriteDataRemote.add(meal);
-
-    } catch (e) {
-       Left(ServerFailure(statusCode: "500", errMessage: e.toString()));
-    }
-  }
-
+  
+  
   @override
   Future<Either<Failure, List<Meal>>> getFavorites() async {
     try {
@@ -35,13 +28,25 @@ class FavoritesRepositoryImpl implements FavoritesRepository {
   }
 
  @override
-Future<void> removeFavorite(String mealId) async {
-  try {
-    await favoriteDataRemote.remove(mealId);
-  } catch (e) {
-    Left(ServerFailure(statusCode: "500", errMessage: e.toString()));
+  Future<void> addFavorite(Dish dish) async {
+    try {
+      DishModel dishModel=DishModel.fromEntity(dish);
+      await favoriteDataRemote.add(dishModel);
+
+    } catch (e) {
+      Left(ServerFailure(statusCode: "500", errMessage: e.toString()));
+    }
   }
-}
+
+
+  @override
+  Future<void> removeFavorite(String mealId) async {
+    try {
+      await favoriteDataRemote.remove(mealId);
+    } catch (e) {
+      Left(ServerFailure(statusCode: "500", errMessage: e.toString()));
+    }
+  }
   
   /*final FirebaseFirestore firestore;
 

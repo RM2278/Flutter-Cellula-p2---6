@@ -8,7 +8,6 @@ import 'package:meal_recommender/features/main/presentation/manager/bloc/favorit
 import 'package:meal_recommender/features/main/presentation/manager/bloc/favorite_state.dart';
 
 import '../../../../../core/services/firebase_service.dart';
-import '../../../data/models/DishModel.dart';
 import '../../../domain/entities/meals.dart';
 import '../../../domain/repositories/meals_repository.dart';
 

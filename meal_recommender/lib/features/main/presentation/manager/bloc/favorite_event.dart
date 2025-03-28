@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:meal_recommender/features/main/data/models/meal_model.dart';
 
-import '../../../data/models/DishModel.dart';
 import '../../../domain/entities/meals.dart';
 
 

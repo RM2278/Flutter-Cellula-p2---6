@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 
-import '../../../data/models/DishModel.dart';
 import '../../../data/models/meal_model.dart';
 import '../../../domain/entities/meals.dart';
 

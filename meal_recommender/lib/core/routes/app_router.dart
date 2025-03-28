@@ -13,11 +13,11 @@ class AppRouter {
           builder: (context) => const SplashView(),
           settings: settings,
         );*/
-      case PageRouteName.initial:
-        return MaterialPageRoute(
-          builder: (context) => const MainView(),
-          settings: settings,
-        );
+      // case PageRouteName.initial:
+      //   return MaterialPageRoute(
+      //     builder: (context) => const MainView(),
+      //     settings: settings,
+      //   );
       case PageRouteName.loginView:
         return MaterialPageRoute(
           builder: (context) => const LoginPage(),
@@ -52,7 +52,7 @@ class AppRouter {
         if (settings.name == PageRouteName.detailsView && settings.arguments is Dish) {
           final Dish args = settings.arguments as Dish;
           return MaterialPageRoute(
-            builder: (context) => DetailsView(data: args, userId: '',),
+            builder: (context) => DetailsView(),
             settings: settings, // Keep settings to preserve arguments
           );
         }
