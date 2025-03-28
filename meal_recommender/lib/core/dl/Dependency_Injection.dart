@@ -17,6 +17,11 @@ import '../../features/auth/domain/usecases/Register_usecase.dart';
 import '../../features/auth/domain/usecases/Reload_UseCase.dart';
 import '../../features/auth/presentation/register/cubit/register_cubit.dart';
 
+import '../../features/main/data/datasources/FavoriteDataRemote.dart';
+import '../../features/main/data/repositories/favorite_repo_impl.dart';
+import '../../features/main/domain/repositories/favorite_repository.dart';
+import '../../features/main/domain/usecases/GetMeals_Usecase.dart';
+import '../../features/main/presentation/manager/bloc/favorite_bloc.dart';
 import '../services/Gemini_service.dart';
 import '../services/RecipeApiService.dart';
 import '../services/firebase_service.dart';
@@ -49,4 +54,11 @@ void intl() {
   sl.registerLazySingleton(() => AddFavoriteUseCase(sl()));
   sl.registerFactory(
       () => DishBloc(getRecommendedDishes: sl(), getDishByName: sl(),addFavoriteUseCase: sl(),removeFavoriteUseCase: sl()));
+  ///// Favourite
+  sl.registerLazySingleton(() => FavoriteDataRemote(sl<FirebaseService>()));
+  sl.registerSingleton<FavoritesRepository>(FavoritesRepositoryImpl(sl<FavoriteDataRemote>()));
+  sl.registerLazySingleton(() =>GetMealsUseCase(sl<FavoritesRepository>()));
+  sl.registerFactory(() =>FavoritesBloc(firebaseService: sl(), getMealsUseCase: sl()));
+
+
 }

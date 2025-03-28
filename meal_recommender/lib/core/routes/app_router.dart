@@ -3,6 +3,7 @@ import 'package:meal_recommender/core/routes/app_views.dart';
 
 import '../../features/ai/domain/entities/dish_entity.dart';
 import '../../features/ai/presentation/pages/ai_view.dart';
+import '../../features/main/presentation/pages/main_view.dart';
 
 class AppRouter {
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
@@ -12,6 +13,11 @@ class AppRouter {
           builder: (context) => const SplashView(),
           settings: settings,
         );*/
+      case PageRouteName.initial:
+        return MaterialPageRoute(
+          builder: (context) => const MainView(),
+          settings: settings,
+        );
       case PageRouteName.loginView:
         return MaterialPageRoute(
           builder: (context) => const LoginPage(),

@@ -132,6 +132,29 @@ return user;
         .delete();
   }
 
+  Future<List<Map<String, dynamic>>> getFavorites() async {
+
+    User? user = await _auth.currentUser;
+    if (user == null) {
+      UserCredential credential = await _auth.signInWithEmailAndPassword(
+        email: "ahmeddarwesh317@yahoo.com",
+        password: "Ahmed@123",
+      );
+      user = credential.user;
+    }
+
+    if (user == null) {
+      throw Exception("Failed to authenticate user");
+    }
+    var userId = user!.uid;
+    final snapshot = await store
+        .collection('users')
+        .doc(userId)
+        .collection('favorites')
+        .get();
+    return snapshot.docs.map((doc) => doc.data()).toList();
+  }
+
   Future sign_out() async {
     try{
       await _auth.signOut();

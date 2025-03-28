@@ -4,7 +4,8 @@ class BaseColorPalette {
   static const Color mainColor = Color(0xFF001A3F);
   static const Color white = Color.fromARGB(255, 255, 255, 255);
   static const Color black = Color.fromARGB(255, 0, 0, 0);
- 
+  static const Color border = Color(0xffDEDEDE);
+  static const Color gray = Color(0xff8A8A8A);
 }
 
 

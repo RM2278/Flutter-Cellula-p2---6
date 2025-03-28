@@ -1,0 +1,77 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../core/dl/Dependency_Injection.dart';
+import '../../../../core/services/firebase_service.dart';
+import '../../data/repositories/meals_repository_impl.dart';
+import '../../domain/repositories/meals_repository.dart';
+import '../../domain/usecases/get_meals.dart';
+import '../manager/bloc/favorite_bloc.dart';
+import '../manager/bloc/meals_bloc.dart';
+import '../manager/bloc/meals_event.dart';
+import 'favorite_view.dart';
+import '../pages/home.dart';
+import '../widgets/custom_nav_bar.dart';
+
+class MainView extends StatefulWidget {
+  const MainView({super.key});
+
+  @override
+  _MainViewState createState() => _MainViewState();
+}
+
+class _MainViewState extends State<MainView> {
+  int _currentIndex = 0;
+
+  final List<Widget> _pages = [
+    Home(),
+    FavoriteView(),
+    Scaffold(
+        body: Center(child: Text("Profile Page (Coming Soon)"))), // صفحة مؤقتة
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return  MultiRepositoryProvider(
+      providers: [
+
+        RepositoryProvider<FirebaseService>(
+          create: (context) => sl<FirebaseService>(), // ✅ استرجاع `FirebaseService` من GetIt
+        ),
+
+        RepositoryProvider<MealsRepository>(
+          create: (context) => MealsRepositoryImpl(FirebaseFirestore.instance),
+        ),
+
+      ],
+
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<MealsBloc>(
+            create: (context) => MealsBloc(
+              getMeals: GetMeals(context.read<MealsRepository>()), // ✅ تمرير GetMeals
+              repository: context.read<MealsRepository>(),
+            )..add(LoadMeals()), // ✅ تحميل الوجبات عند بدء التطبيق
+          ),
+          BlocProvider<FavoritesBloc>(
+            create: (context) => sl<FavoritesBloc>(),),
+        ],
+        child:Scaffold(
+          body: _pages[_currentIndex],
+          bottomNavigationBar: CustomBottomNavBar(
+            currentIndex: _currentIndex,
+            onTap: _onItemTapped,
+          ),
+        )
+        ,
+      ),
+    );
+
+  }
+}
