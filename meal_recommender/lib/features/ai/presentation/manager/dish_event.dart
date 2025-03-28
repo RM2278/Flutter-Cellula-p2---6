@@ -1,3 +1,5 @@
+import 'package:meal_recommender/features/ai/domain/entities/dish_entity.dart';
+
 abstract class DishEvent {}
 
 class GetRecommendedDishesEvent extends DishEvent {
@@ -10,4 +12,14 @@ class GetDishByNameEvent extends DishEvent {
   final String name;
 
   GetDishByNameEvent(this.name);
+}
+class AddFavoriteDishEvent extends DishEvent {
+  final Dish dish;
+
+  AddFavoriteDishEvent(this.dish);
+}
+class RemoveFavoriteDishEvent extends DishEvent {
+  final String id;
+
+  RemoveFavoriteDishEvent(this.id);
 }

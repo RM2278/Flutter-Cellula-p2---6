@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../../ai/data/models/dish_model.dart';
+import '../../../ai/domain/entities/dish_entity.dart';
 
-Widget buildIngredientsTab(ThemeData theme, DishModel dish) {
+Widget buildIngredientsTab(ThemeData theme, Dish dish) {
   return Padding(
     padding: const EdgeInsets.all(16),
     child: Column(
@@ -24,17 +25,8 @@ Widget buildIngredientsTab(ThemeData theme, DishModel dish) {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: ListTile(
-                  leading: ingredient.imageUrl.isNotEmpty
-                      ? Image.network(
-                          ingredient.imageUrl,
-                          width: 40,
-                          height: 40,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) =>
-                              const Icon(Icons.broken_image),
-                        )
-                      : const Icon(Icons.fastfood, color: Colors.grey),
-                  title: Text(ingredient.name),
+                  leading: const Icon(Icons.fastfood, color: Colors.grey),
+                  title: Text(ingredient.name!),
                   subtitle: Text("${ingredient.quantity} ${ingredient.unit}"),
                   trailing: const Icon(Icons.check_circle_outline,
                       color: Colors.blue),

@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:meal_recommender/core/routes/app_views.dart';
 
+import '../../features/ai/domain/entities/dish_entity.dart';
 import '../../features/ai/presentation/pages/ai_view.dart';
 
 class AppRouter {
-  static Route<dynamic> onGenerateRoute(RouteSettings settings) {
+  static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case PageRouteName.initial:
+      /*case PageRouteName.initial:
         return MaterialPageRoute(
           builder: (context) => const SplashView(),
           settings: settings,
-        );
+        );*/
       case PageRouteName.loginView:
         return MaterialPageRoute(
           builder: (context) => const LoginPage(),
@@ -42,10 +43,14 @@ class AppRouter {
           settings: settings,
         );
       default:
-        return MaterialPageRoute(
-          builder: (context) => const DetailsView(),
-          settings: settings,
-        );
+        if (settings.name == PageRouteName.detailsView && settings.arguments is Dish) {
+          final Dish args = settings.arguments as Dish;
+          return MaterialPageRoute(
+            builder: (context) => DetailsView(data: args),
+            settings: settings, // Keep settings to preserve arguments
+          );
+        }
+        return null;
     }
   }
 }

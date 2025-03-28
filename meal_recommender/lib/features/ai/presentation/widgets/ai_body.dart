@@ -5,6 +5,8 @@ import 'package:meal_recommender/features/ai/presentation/manager/dish_bloc.dart
 import 'package:meal_recommender/features/ai/presentation/manager/dish_state.dart';
 import 'package:meal_recommender/features/ai/presentation/widgets/ai_list_view_item.dart';
 import '../../../../core/constants/icon_paths.dart';
+import '../../../../core/routes/page_route_name.dart';
+import '../../../../core/services/snackbar_service.dart';
 import '../../../../core/themes/color_palette.dart';
 import '../../../../core/widgets/custom_text_form_filed.dart';
 import '../manager/dish_event.dart';
@@ -18,9 +20,9 @@ class AiBody extends StatefulWidget {
 
 class _AiBodyState extends State<AiBody> {
   TextEditingController controller = TextEditingController();
-
+ bool _isFavorite=false;
   List<Dish> allDishes = [];
-
+  Set<String> favoriteDishes = {};
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -40,16 +42,42 @@ class _AiBodyState extends State<AiBody> {
                 child: ListView.builder(
               itemCount: allDishes.length,
               itemBuilder: (context, index) {
+                final isFavorite = favoriteDishes.contains(allDishes[index].id);
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: AiItemBuilder(
-                      MediaQuery.of(context).size.width,
-                      allDishes[index].imageUrl,
-                      allDishes[index].name,
-                      "${allDishes[index].ingredients.length.toString()} ingredients",
-                      "${allDishes[index].time.toString()} min",
-                      () {} // add to fav,
+                  child: InkWell(
+                    onTap: (){
+                      Navigator.pushNamed(
+                        context,
+                        PageRouteName.detailsView,
+                        arguments: allDishes[index],
+                      );
+                    },
+                    child: AiItemBuilder(
+                        MediaQuery.of(context).size.width,
+                        allDishes[index].imageUrl,
+                        allDishes[index].name,
+                        "${allDishes[index].ingredients.length.toString()} ingredients",
+                        "${allDishes[index].time.toString()} min",
+                          () {
+                          print(isFavorite);
+                        setState(() {
+                          if (isFavorite) {
+                            favoriteDishes.remove(allDishes[index].id);
+                            BlocProvider.of<DishBloc>(context).add(RemoveFavoriteDishEvent(allDishes[index].id!));
+                            SnackBarService.showErrorMessage("Removed from Favorites! 💔");
+                          } else {
+                            favoriteDishes.add(allDishes[index].id!);
+                            BlocProvider.of<DishBloc>(context).add(AddFavoriteDishEvent(allDishes[index]));
+                            SnackBarService.showSuccessMessage("Added to Favorites! ❤️");
+                          }
+                        });
+                      },
+                      Image.asset(
+                        isFavorite ? IconPaths.heart2 : IconPaths.heart1,
                       ),
+                        ),
+                  ),
                 );
               },
             ))

@@ -19,7 +19,7 @@ class LoginText extends StatelessWidget {
         ),
         InkWell(
           onTap: () {
-            Navigator.pushNamed(context, PageRouteName.initial);
+            Navigator.pushNamed(context, PageRouteName.loginView);
           },
           child: const TextWidget(
             text: 'Login',

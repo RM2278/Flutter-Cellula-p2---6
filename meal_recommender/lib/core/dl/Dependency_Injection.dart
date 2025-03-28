@@ -4,6 +4,8 @@ import 'package:get_it/get_it.dart';
 import 'package:meal_recommender/core/constants/constants.dart';
 import 'package:meal_recommender/features/ai/data/datasources/dish_remote_data_source.dart';
 import 'package:meal_recommender/features/ai/data/repositories/dish_repository_impl.dart';
+import 'package:meal_recommender/features/ai/domain/usecases/addFavourite_usecase.dart';
+import 'package:meal_recommender/features/ai/domain/usecases/removeFavourite_usecase.dart';
 import 'package:meal_recommender/features/ai/presentation/manager/dish_bloc.dart';
 import 'package:meal_recommender/features/auth/data/datasources/RegisterDataRemote.dart';
 import '../../features/ai/domain/repositories/dish_repository.dart';
@@ -38,11 +40,13 @@ void intl() {
   sl.registerLazySingleton(() =>RecipeApiService(apiKey: Constants.recipeKey));
   sl.registerLazySingleton(() => GeminiApiService(apiKey: Constants.geminKey));
   sl.registerLazySingleton<DishRemoteDataSource>(
-      () => DishRemoteDataSourceImpl(apiService: sl()));
+      () => DishRemoteDataSourceImpl(apiService: sl(), firebaseService: sl<FirebaseService>(),));
   sl.registerLazySingleton<DishRepository>(
       () => DishRepositoryImpl(remoteDataSource: sl()));
   sl.registerLazySingleton(() => GetRecommendedDishes(sl()));
   sl.registerLazySingleton(() => GetDishByName(sl()));
+  sl.registerLazySingleton(() => RemoveFavoriteUseCase(sl()));
+  sl.registerLazySingleton(() => AddFavoriteUseCase(sl()));
   sl.registerFactory(
-      () => DishBloc(getRecommendedDishes: sl(), getDishByName: sl()));
+      () => DishBloc(getRecommendedDishes: sl(), getDishByName: sl(),addFavoriteUseCase: sl(),removeFavoriteUseCase: sl()));
 }

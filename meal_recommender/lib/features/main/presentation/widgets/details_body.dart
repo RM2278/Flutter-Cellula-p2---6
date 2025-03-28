@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:meal_recommender/features/ai/data/models/dish_model.dart';
 import 'package:meal_recommender/features/main/presentation/widgets/build_direction_tab.dart';
 
+import '../../../ai/domain/entities/dish_entity.dart';
 import 'build_ingredients_tab.dart';
 import 'build_summary_tab.dart';
 
 class DetailsBody extends StatelessWidget {
-  final DishModel dish;
+  final Dish dish;
   const DetailsBody({
     super.key,
     required this.theme,
