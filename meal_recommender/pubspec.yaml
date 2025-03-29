@@ -54,6 +54,10 @@ dependencies:
   pexels_client:
   lottie: ^3.2.0
   animate_do: ^4.2.0
+  image_picker: ^1.1.2
+  firebase_storage:
+  firebase_app_check:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
