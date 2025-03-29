@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/constants/icon_paths.dart';
 import '../../../../core/dl/Dependency_Injection.dart';
+import '../../../../core/routes/page_route_name.dart';
 import '../../../../core/services/snackbar_service.dart';
 import '../../../../core/themes/color_palette.dart';
 import '../manager/bloc/see_all_events.dart';
@@ -81,13 +82,22 @@ class _SeeAllScreenState extends State<SeeAllScreen> {
                             final dish = state.trendingMeals[index];
                             return Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: TrendingItemBuilder(
-                                  MediaQuery.of(context).size.height,
-                                MediaQuery.of(context).size.width,
-                                dish.imageUrl,
-                                dish.name,
-                                '${dish.ingredients.length} ingredients',
-                                '${dish.time} min'
+                              child: InkWell(
+                                onTap: (){
+                                  Navigator.pushNamed(
+                                    context,
+                                    PageRouteName.detailsView,
+                                    arguments: dish,
+                                  );
+                                },
+                                child: TrendingItemBuilder(
+                                    MediaQuery.of(context).size.height,
+                                  MediaQuery.of(context).size.width,
+                                  dish.imageUrl,
+                                  dish.name,
+                                  '${dish.ingredients.length} ingredients',
+                                  '${dish.time} min'
+                                ),
                               ),
                             );
                           },
@@ -105,27 +115,36 @@ class _SeeAllScreenState extends State<SeeAllScreen> {
                           final isFavorite = favoriteDishes.contains(dish.id);
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: RecommendedItemBuilder(
-                              MediaQuery.of(context).size.width,
-                              dish.imageUrl,
-                              dish.name,
-                              '${dish.ingredients.length} ingredients',
-                              '${dish.time} min',
-                                  () {
-                                setState(() {
-                                  if (isFavorite) {
-                                    favoriteDishes.remove(dish.id);
-                                    BlocProvider.of<SeeAllBloc>(context).add(RemoveFavoriteDishEvent(dish.id));
-                                    SnackBarService.showErrorMessage("Removed from Favorites! 💔");
-                                  } else {
-                                    favoriteDishes.add(dish.id!);
-                                    BlocProvider.of<SeeAllBloc>(context).add(AddFavoriteDishEvent(dish));
-                                    SnackBarService.showSuccessMessage("Added to Favorites! ❤️");
-                                  }
-                                });
+                            child: InkWell(
+                              onTap: (){
+                                Navigator.pushNamed(
+                                  context,
+                                  PageRouteName.detailsView,
+                                  arguments: dish,
+                                );
                               },
-                              Image.asset(
-                                isFavorite ? IconPaths.heart2 : IconPaths.heart1,
+                              child: RecommendedItemBuilder(
+                                MediaQuery.of(context).size.width,
+                                dish.imageUrl,
+                                dish.name,
+                                '${dish.ingredients.length} ingredients',
+                                '${dish.time} min',
+                                    () {
+                                  setState(() {
+                                    if (isFavorite) {
+                                      favoriteDishes.remove(dish.id);
+                                      BlocProvider.of<SeeAllBloc>(context).add(RemoveFavoriteDishEvent(dish.id));
+                                      SnackBarService.showErrorMessage("Removed from Favorites! 💔");
+                                    } else {
+                                      favoriteDishes.add(dish.id!);
+                                      BlocProvider.of<SeeAllBloc>(context).add(AddFavoriteDishEvent(dish));
+                                      SnackBarService.showSuccessMessage("Added to Favorites! ❤️");
+                                    }
+                                  });
+                                },
+                                Image.asset(
+                                  isFavorite ? IconPaths.heart2 : IconPaths.heart1,
+                                ),
                               ),
                             ),
                           );

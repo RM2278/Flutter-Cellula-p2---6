@@ -54,6 +54,7 @@ class FavoriteViewBody extends StatelessWidget {
                         },
                         child: FadeInLeft(
                           child: MealCard(
+                            isFavorite: true,
                             dish: dish,
                             onLike: () {
                               context.read<MealsBloc>().add(LikeMeal(dish.id));

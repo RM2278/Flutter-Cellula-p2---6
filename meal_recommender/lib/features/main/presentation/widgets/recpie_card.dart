@@ -167,8 +167,9 @@ class MealCard extends StatefulWidget {
 
   final VoidCallback onLike;
   final Function(double) onRate;
-
-  const MealCard({
+  var isFavorite ;
+   MealCard({
+    this.isFavorite=false,
     super.key,
     required this.dish,
     required this.onLike,
@@ -181,7 +182,14 @@ class MealCard extends StatefulWidget {
 
 class _MealCardState extends State<MealCard> {
   Set<String> favoriteDishes = {};
-  var isFavorite = false;
+  late var isFavorite ;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    isFavorite=widget.isFavorite;
+  }
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
