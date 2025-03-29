@@ -3,11 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meal_recommender/core/constants/icon_paths.dart';
+import 'package:meal_recommender/core/dl/Dependency_Injection.dart';
 import 'package:meal_recommender/core/services/snackbar_service.dart';
 
-
 import 'package:meal_recommender/features/main/domain/entities/dish_entity.dart';
-
 
 import '../ai/manager/dish_bloc.dart';
 import '../ai/manager/dish_event.dart';
@@ -44,13 +43,16 @@ class _DetailsViewState extends State<DetailsView>
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     widget.dish = ModalRoute.of(context)!.settings.arguments as Dish;
-    return Scaffold(
-      appBar: _appBar(context, theme),
-      body: FadeInDown(
-        child: DetailsBody(
-          theme: theme,
-          tabController: _tabController,
-          dish: widget.dish,
+    return BlocProvider(
+      create: (context) => sl<DishBloc>(),
+      child: Scaffold(
+        appBar: _appBar(context, theme),
+        body: FadeInDown(
+          child: DetailsBody(
+            theme: theme,
+            tabController: _tabController,
+            dish: widget.dish,
+          ),
         ),
       ),
     );
@@ -75,7 +77,7 @@ class _DetailsViewState extends State<DetailsView>
 
             return IconButton(
               icon:
-              Image.asset(isFavorite ? IconPaths.heart2 : IconPaths.heart1),
+                  Image.asset(isFavorite ? IconPaths.heart2 : IconPaths.heart1),
               onPressed: () {
                 final user = FirebaseAuth.instance.currentUser;
                 if (user == null) return;

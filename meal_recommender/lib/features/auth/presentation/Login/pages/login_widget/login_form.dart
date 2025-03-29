@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meal_recommender/core/constants/icon_paths.dart';
@@ -56,116 +57,121 @@ class _LoginFormState extends State<LoginForm> {
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
 
-    return Form(
-      key: _formKey,
-      child: Column(
-        children: [
-          CustomTextFormField(
-            controller: _emailController,
-            hintText: 'Email',
-            prefixIcon: Image.asset(IconPaths.account),
-            validator: _validateEmail,
-            onSaved: (value) {
-              email = value!;
-            },
-            onChanged: (value) {
-              context.read<LoginCubit>().updateEmail(value);
-            },
-          ),
-          SizedBox(height: screenHeight * 0.03),
-          CustomTextFormField(
-            onSaved: (value) {
-              password = value!;
-            },
-            controller: _passwordController,
-            hintText: 'Password',
-            prefixIcon: Image.asset(IconPaths.lock),
-            suffixIcon: IconButton(
-              icon: Icon(
-                _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                setState(() {
-                  _isPasswordVisible = !_isPasswordVisible;
-                });
+    return FadeInLeftBig(
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            CustomTextFormField(
+              controller: _emailController,
+              hintText: 'Email',
+              prefixIcon: Image.asset(IconPaths.account),
+              validator: _validateEmail,
+              onSaved: (value) {
+                email = value!;
+              },
+              onChanged: (value) {
+                context.read<LoginCubit>().updateEmail(value);
               },
             ),
-            onChanged: (value) {
-              context.read<LoginCubit>().updatePassword(value);
-            },
-            isPassword: !_isPasswordVisible,
-            validator: _validatePassword,
-          ),
-          SizedBox(height: screenHeight * 0.01),
-          BlocBuilder<CheckboxCubit, CheckboxState>(
-            builder: (context, state) {
-              return Row(
-                children: [
-                  Transform.scale(
-                    scale: 1.5,
-                    child: Checkbox(
-                      value: state.isChecked,
-                      onChanged: (_) =>
-                          context.read<CheckboxCubit>().toggleCheckbox(),
-                      side: BorderSide(color: Colors.white, width: 1),
-                      checkColor: Colors.black,
-                      fillColor: MaterialStateProperty.all(Colors.transparent),
-                    ),
-                  ),
-                  const TextWidget(
-                    text: 'Remember me and keep me login',
-                    size: 13,
-                    color: BaseColorPalette.white,
-                  ),
-                ],
-              );
-            },
-          ),
-          SizedBox(height: screenHeight * 0.03),
-          BlocBuilder<LoginCubit, LoginState>(
-            builder: (context, loginState) {
-              return BlocBuilder<CheckboxCubit, CheckboxState>(
-                builder: (context, checkboxState) {
-                  bool isFormValid =
-                      loginState is LoginFormUpdated && loginState.isFormValid;
-                  bool isCheckboxChecked = checkboxState.isChecked;
-
-                  return CustomElevatedButton(
-                    onPressed: (!isFormValid ||
-                            !isCheckboxChecked ||
-                            loginState is LoginLoading)
-                        ? null
-                        : () {
-                            if (_formKey.currentState!.validate()) {
-                              _formKey.currentState!.save();
-                              context.read<LoginCubit>().login(email, password);
-                            } else {
-                              setState(() {
-                                autovalidateMode = AutovalidateMode.always;
-                              });
-                            }
-                          },
-                    text: 'Login',
-                    buttonColor:
-                        context.watch<LoginCubit>().state is LoginLoading ||
-                                !context.watch<CheckboxCubit>().state.isChecked
-                            ? Colors.grey
-                            : BaseColorPalette.white,
-                    textColor:
-                        context.watch<LoginCubit>().state is LoginLoading ||
-                                !context.watch<CheckboxCubit>().state.isChecked
-                            ? BaseColorPalette.white
-                            : BaseColorPalette.mainColor,
-                  );
+            SizedBox(height: screenHeight * 0.03),
+            CustomTextFormField(
+              onSaved: (value) {
+                password = value!;
+              },
+              controller: _passwordController,
+              hintText: 'Password',
+              prefixIcon: Image.asset(IconPaths.lock),
+              suffixIcon: IconButton(
+                icon: Icon(
+                  _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _isPasswordVisible = !_isPasswordVisible;
+                  });
                 },
-              );
-            },
-          ),
-          SizedBox(height: screenHeight * 0.02),
-          const customDivider(),
-          SizedBox(height: screenHeight * 0.03),
-        ],
+              ),
+              onChanged: (value) {
+                context.read<LoginCubit>().updatePassword(value);
+              },
+              isPassword: !_isPasswordVisible,
+              validator: _validatePassword,
+            ),
+            SizedBox(height: screenHeight * 0.01),
+            BlocBuilder<CheckboxCubit, CheckboxState>(
+              builder: (context, state) {
+                return Row(
+                  children: [
+                    Transform.scale(
+                      scale: 1.5,
+                      child: Checkbox(
+                        value: state.isChecked,
+                        onChanged: (_) =>
+                            context.read<CheckboxCubit>().toggleCheckbox(),
+                        side: BorderSide(color: Colors.white, width: 1),
+                        checkColor: Colors.black,
+                        fillColor:
+                            MaterialStateProperty.all(Colors.transparent),
+                      ),
+                    ),
+                    const TextWidget(
+                      text: 'Remember me and keep me login',
+                      size: 13,
+                      color: BaseColorPalette.white,
+                    ),
+                  ],
+                );
+              },
+            ),
+            SizedBox(height: screenHeight * 0.03),
+            BlocBuilder<LoginCubit, LoginState>(
+              builder: (context, loginState) {
+                return BlocBuilder<CheckboxCubit, CheckboxState>(
+                  builder: (context, checkboxState) {
+                    bool isFormValid = loginState is LoginFormUpdated &&
+                        loginState.isFormValid;
+                    bool isCheckboxChecked = checkboxState.isChecked;
+
+                    return CustomElevatedButton(
+                      onPressed: (!isFormValid ||
+                              !isCheckboxChecked ||
+                              loginState is LoginLoading)
+                          ? null
+                          : () {
+                              if (_formKey.currentState!.validate()) {
+                                _formKey.currentState!.save();
+                                context
+                                    .read<LoginCubit>()
+                                    .login(email, password);
+                              } else {
+                                setState(() {
+                                  autovalidateMode = AutovalidateMode.always;
+                                });
+                              }
+                            },
+                      text: 'Login',
+                      buttonColor: context.watch<LoginCubit>().state
+                                  is LoginLoading ||
+                              !context.watch<CheckboxCubit>().state.isChecked
+                          ? Colors.grey
+                          : BaseColorPalette.white,
+                      textColor: context.watch<LoginCubit>().state
+                                  is LoginLoading ||
+                              !context.watch<CheckboxCubit>().state.isChecked
+                          ? BaseColorPalette.white
+                          : BaseColorPalette.mainColor,
+                    );
+                  },
+                );
+              },
+            ),
+            SizedBox(height: screenHeight * 0.02),
+            const customDivider(),
+            SizedBox(height: screenHeight * 0.03),
+          ],
+        ),
       ),
     );
   }

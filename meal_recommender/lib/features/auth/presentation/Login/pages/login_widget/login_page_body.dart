@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -50,9 +51,11 @@ class LoginPageBody extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           SizedBox(height: screenHeight * 0.05),
-                          Image.asset(
-                            ImagePaths.logo,
-                            height: screenHeight * 0.15,
+                          FadeInRightBig(
+                            child: Image.asset(
+                              ImagePaths.logo,
+                              height: screenHeight * 0.15,
+                            ),
                           ),
                           SizedBox(height: screenHeight * 0.1),
                           LoginForm(),
