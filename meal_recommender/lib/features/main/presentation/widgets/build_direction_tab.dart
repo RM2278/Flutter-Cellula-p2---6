@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../ai/data/models/dish_model.dart';
-import '../../../ai/domain/entities/dish_entity.dart';
+import '../../domain/entities/dish_entity.dart';
+
+
 
 Widget buildDirectionTab(ThemeData theme, Dish dish) {
   final List<String> steps = [

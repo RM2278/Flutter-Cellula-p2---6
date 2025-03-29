@@ -1,7 +1,7 @@
-import '../repositories/favorite_repository.dart';
+import '../repositories/dish_repository.dart';
 
 class GetMealsUseCase{
-  FavoritesRepository favoritesRepository;
+  DishRepository favoritesRepository;
   GetMealsUseCase(this.favoritesRepository);
 
   Future excute() async {

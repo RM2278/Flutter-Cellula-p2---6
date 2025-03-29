@@ -149,16 +149,18 @@
 //   }
 // }
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meal_recommender/core/themes/color_palette.dart';
-import 'package:meal_recommender/features/ai/data/models/dish_model.dart'; // Ensure you're using the AI data model
+
+import '../../domain/entities/dish_entity.dart';
 import '../manager/bloc/favorite_bloc.dart';
 import '../manager/bloc/favorite_event.dart';
 import '../manager/bloc/favorite_state.dart';
 
 class MealCard extends StatelessWidget {
-  final DishModel dish;
+  final Dish dish;
 
   final VoidCallback onLike;
   final Function(double) onRate;
@@ -194,11 +196,15 @@ class MealCard extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(screenWidth * 0.09),
-            child: Image.network(
-              dish.imageUrl,
+
+            child: CachedNetworkImage(
+              imageUrl: dish.imageUrl,
               width: screenWidth * 0.21,
               height: screenWidth * 0.22,
               fit: BoxFit.cover,
+              placeholder: (context, url) =>
+              const Center(child: CircularProgressIndicator()),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
             ),
           ),
           SizedBox(width: screenWidth * 0.03),
@@ -241,7 +247,7 @@ class MealCardDetails extends StatelessWidget {
     required this.screenHeight,
   });
 
-  final DishModel dish;
+  final Dish dish;
 
   final double screenWidth;
   final double screenHeight;

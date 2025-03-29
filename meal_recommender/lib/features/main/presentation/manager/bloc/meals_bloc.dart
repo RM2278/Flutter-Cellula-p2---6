@@ -1,6 +1,6 @@
 // import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:meal_recommender/features/main/domain/repositories/meals_repository.dart';
-// import 'package:meal_recommender/features/main/domain/usecases/get_meals.dart';
+// import 'package:meal_recommender/features/main/domain/usecases/Recommend_meals.dart';
 // import 'meals_event.dart';
 // import 'meals_state.dart';
 
@@ -36,15 +36,19 @@
 //   }
 // }
 
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meal_recommender/features/main/domain/repositories/meals_repository.dart';
-import 'package:meal_recommender/features/main/domain/usecases/get_meals.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:meal_recommender/features/main/domain/repositories/dish_repository.dart';
+
+import 'package:meal_recommender/features/main/domain/usecases/Recommend_meals.dart';
+
 import 'meals_event.dart';
 import 'meals_state.dart';
 
 class MealsBloc extends Bloc<MealsEvent, MealsState> {
-  final GetMeals getMeals;
-  final MealsRepository repository;
+  final RecommendMeals getMeals;
+  final DishRepository repository;
 
   MealsBloc({required this.getMeals, required this.repository})
       : super(MealsInitial()) {
@@ -52,11 +56,20 @@ class MealsBloc extends Bloc<MealsEvent, MealsState> {
   }
   Future<void> _onLoadMeals(LoadMeals event, Emitter<MealsState> emit) async {
     emit(MealsLoading());
-    try {
-      final recommendedDishes = await repository.getRecommendedDishes(10);
-      emit(MealsLoaded(recommendedDishes));
-    } catch (e) {
-      emit(MealsError("$e: Failed to load meals"));
+      final recommendedDishes = await repository.getRecommendedDishes(7);
+      recommendedDishes.fold(
+            (failure) {
+          EasyLoading.instance
+            ..backgroundColor = Colors.red
+            ..textColor = Colors.white
+            ..indicatorColor = Colors.white;
+          emit(MealsError("$failure: Failed to load meals"));
+        },
+            (data) {
+              emit(MealsLoaded(data));
+        },
+      );
+
     }
-  }
+
 }

@@ -1,8 +1,9 @@
 import 'package:equatable/equatable.dart';
-import 'package:meal_recommender/features/ai/data/models/dish_model.dart';
-import 'package:meal_recommender/features/main/data/models/meal_model.dart';
 
-import '../../../domain/entities/meals.dart';
+
+
+import '../../../domain/entities/dish_entity.dart';
+
 
 /*abstract class FavoritesEvent extends Equatable {
   @override
@@ -25,7 +26,7 @@ abstract class FavoritesEvent {}
 class LoadFavorites extends FavoritesEvent {}
 
 class AddFavorite extends FavoritesEvent {
-  final DishModel dishModel;
+  final Dish dishModel;
   AddFavorite(this.dishModel);
 }
 

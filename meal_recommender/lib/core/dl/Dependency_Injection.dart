@@ -2,29 +2,27 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:meal_recommender/core/constants/constants.dart';
-import 'package:meal_recommender/features/ai/data/datasources/dish_remote_data_source.dart';
-import 'package:meal_recommender/features/ai/data/repositories/dish_repository_impl.dart';
-import 'package:meal_recommender/features/ai/domain/usecases/addFavourite_usecase.dart';
-import 'package:meal_recommender/features/ai/domain/usecases/removeFavourite_usecase.dart';
-import 'package:meal_recommender/features/ai/presentation/manager/dish_bloc.dart';
+
+
 import 'package:meal_recommender/features/auth/data/datasources/RegisterDataRemote.dart';
-import 'package:meal_recommender/features/main/data/repositories/meals_repository_impl.dart';
+
 import 'package:meal_recommender/features/main/presentation/manager/bloc/meals_bloc.dart';
-import '../../features/ai/domain/repositories/dish_repository.dart';
-import '../../features/ai/domain/usecases/get_dish_by_name.dart';
-import '../../features/ai/domain/usecases/get_recommended_dishes.dart';
+import 'package:meal_recommender/features/main/presentation/manager/bloc/see_all_bloc.dart';
+
 import '../../features/auth/data/repositories/login_repo_impl.dart';
 import '../../features/auth/domain/repositories/login_repo.dart';
 import '../../features/auth/domain/usecases/Register_usecase.dart';
 import '../../features/auth/domain/usecases/Reload_UseCase.dart';
 import '../../features/auth/presentation/register/cubit/register_cubit.dart';
-
-import '../../features/main/data/datasources/FavoriteDataRemote.dart';
-import '../../features/main/data/repositories/favorite_repo_impl.dart';
-import '../../features/main/domain/repositories/favorite_repository.dart';
-import '../../features/main/domain/repositories/meals_repository.dart';
+import '../../features/main/data/datasources/dish_remote_data_source.dart';
+import '../../features/main/data/repositories/dish_repository_impl.dart';
+import '../../features/main/domain/repositories/dish_repository.dart';
+import '../../features/main/domain/usecases/GetDishByName.dart';
 import '../../features/main/domain/usecases/GetMeals_Usecase.dart';
-import '../../features/main/domain/usecases/get_meals.dart';
+import '../../features/main/domain/usecases/Recommend_meals.dart';
+import '../../features/main/domain/usecases/addFavourite_usecase.dart';
+import '../../features/main/domain/usecases/removeFavourite_usecase.dart';
+import '../../features/main/presentation/ai/manager/dish_bloc.dart';
 import '../../features/main/presentation/manager/bloc/favorite_bloc.dart';
 import '../services/Gemini_service.dart';
 import '../services/RecipeApiService.dart';
@@ -54,7 +52,7 @@ void intl() {
       ));
   sl.registerLazySingleton<DishRepository>(
       () => DishRepositoryImpl(remoteDataSource: sl()));
-  sl.registerLazySingleton(() => GetRecommendedDishes(sl()));
+  sl.registerLazySingleton(() => GetMealsUseCase(sl()));
   sl.registerLazySingleton(() => GetDishByName(sl()));
   sl.registerLazySingleton(() => RemoveFavoriteUseCase(sl()));
   sl.registerLazySingleton(() => AddFavoriteUseCase(sl()));
@@ -64,7 +62,7 @@ void intl() {
       addFavoriteUseCase: sl(),
       removeFavoriteUseCase: sl()));
   ///// Favourite
-  sl.registerLazySingleton(() => FavoriteDataRemote(sl<FirebaseService>()));
+  /*sl.registerLazySingleton(() => FavoriteDataRemote(sl<FirebaseService>()));
   sl.registerSingleton<FavoritesRepository>(
       FavoritesRepositoryImpl(sl<FavoriteDataRemote>()));
   sl.registerLazySingleton(() => GetMealsUseCase(sl<FavoritesRepository>()));
@@ -72,7 +70,10 @@ void intl() {
       () => FavoritesBloc(firebaseService: sl(), getMealsUseCase: sl()));
 
   sl.registerLazySingleton<MealsRepository>(
-      () => MealsRepositoryImpl(sl<GeminiApiService>()));
-  sl.registerLazySingleton(() => GetMeals(sl()));
+      () => MealsRepositoryImpl(sl<GeminiApiService>()));*/
+  sl.registerFactory(
+          () => FavoritesBloc(firebaseService: sl(), getMealsUseCase: sl()));
+  sl.registerLazySingleton(() => RecommendMeals(sl()));
   sl.registerFactory(() => MealsBloc(getMeals: sl(), repository: sl()));
+  sl.registerFactory(() => SeeAllBloc( getRecommendedDishes: sl(), addFavoriteUseCase: sl(), removeFavoriteUseCase: sl()));
 }

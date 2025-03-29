@@ -19,15 +19,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meal_recommender/core/themes/color_palette.dart';
-import 'package:meal_recommender/features/main/data/repositories/meals_repository_impl.dart';
-import 'package:meal_recommender/features/main/domain/usecases/get_meals.dart';
-import 'package:meal_recommender/features/main/domain/repositories/meals_repository.dart';
+
+import 'package:meal_recommender/features/main/domain/usecases/Recommend_meals.dart';
+
 import 'package:meal_recommender/features/main/presentation/manager/bloc/meals_bloc.dart';
 import 'package:meal_recommender/features/main/presentation/manager/bloc/meals_event.dart';
 import 'package:meal_recommender/features/main/presentation/widgets/home_view_body.dart';
 
 import '../../../../core/dl/Dependency_Injection.dart';
 import '../../../../core/services/firebase_service.dart';
+import '../../domain/repositories/dish_repository.dart';
 import '../manager/bloc/favorite_bloc.dart';
 
 class Home extends StatelessWidget {
@@ -39,8 +40,8 @@ class Home extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => MealsBloc(
-            repository: context.read<MealsRepository>(),
-            getMeals: GetMeals(context.read<MealsRepository>()),
+            repository: context.read<DishRepository>(),
+            getMeals: RecommendMeals(context.read<DishRepository>()),
           )..add(LoadMeals()),
         ),
         BlocProvider(

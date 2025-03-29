@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 
 import '../../../../core/themes/color_palette.dart';
 import '../widgets/recommened.dart';
@@ -112,4 +112,4 @@ class SeeAllScreen extends StatelessWidget {
       ),
     );
   }
-}
+}*/

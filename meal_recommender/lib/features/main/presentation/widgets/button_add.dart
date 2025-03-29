@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meal_recommender/core/routes/app_views.dart';
 
 import '../../../../core/themes/color_palette.dart';
 
@@ -25,7 +26,9 @@ class Button_Add extends StatelessWidget {
             borderRadius: BorderRadius.circular(24),
           ),
         ),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(context, PageRouteName.AiView);
+        },
         child: Text(
           "add your ingredients",
           style: TextStyle(

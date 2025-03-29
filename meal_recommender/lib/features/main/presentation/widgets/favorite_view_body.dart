@@ -1,10 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meal_recommender/features/ai/domain/entities/dish_entity.dart';
+
+import 'package:meal_recommender/features/main/presentation/manager/bloc/favorite_state.dart';
 import '../../../../core/routes/page_route_name.dart';
-import '../../domain/entities/meals.dart';
-import '../../domain/repositories/meals_repository.dart';
+
+import '../manager/bloc/favorite_bloc.dart';
 import '../manager/bloc/meals_bloc.dart';
 import '../manager/bloc/meals_event.dart';
 import '../manager/bloc/meals_state.dart';
@@ -29,19 +30,19 @@ class FavoriteViewBody extends StatelessWidget {
           AppBarHome(screenWidth: screenWidth),
           SizedBox(height: screenHeight * 0.02),
           Expanded(
-            child: BlocBuilder<MealsBloc, MealsState>(
+            child: BlocBuilder<FavoritesBloc, FavoritesState>(
               builder: (context, state) {
-                if (state is MealsLoading) {
+                if (state is FavoritesLoading) {
                   return const Center(child: CircularProgressIndicator());
-                } else if (state is MealsLoaded) {
-                  if (state.dishes.isEmpty) {
-                    return const Center(child: Text("No meals found!"));
+                } else if (state is FavoritesLoaded) {
+                  if (state.favorites.isEmpty) {
+                    return const Center(child: Text("No meals Favourite found!"));
                   }
 
                   return ListView.builder(
-                    itemCount: state.dishes.length,
+                    itemCount: state.favorites.length,
                     itemBuilder: (context, index) {
-                      final dish = state.dishes[index];
+                      final dish = state.favorites[index];
                       return InkWell(
                         onTap: () {
                           Navigator.pushNamed(
@@ -64,7 +65,11 @@ class FavoriteViewBody extends StatelessWidget {
                       );
                     },
                   );
-                } else {
+                }
+                else if(state is FavoritesInitial){
+                  return const Center(child: Text(""));
+                }
+                else {
                   return const Center(child: Text("Error loading meals"));
                 }
               },
