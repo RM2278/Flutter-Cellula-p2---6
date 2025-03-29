@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:meal_recommender/core/routes/app_views.dart';
 
@@ -13,26 +14,28 @@ class Recipes_Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          "Top Recipes",
-          style: TextStyle(
-              color: BaseColorPalette.mainColor,
-              fontSize: screenWidth * 0.05,
-              fontWeight: FontWeight.bold),
-        ),
-        InkWell(
-          onTap: () => Navigator.pushNamed(context, PageRouteName.seeAllView),
-          child: Text(
-            "see all",
+    return FadeInLeftBig(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            "Top Recipes",
             style: TextStyle(
                 color: BaseColorPalette.mainColor,
-                fontSize: screenWidth * 0.04),
+                fontSize: screenWidth * 0.05,
+                fontWeight: FontWeight.bold),
           ),
-        ),
-      ],
+          InkWell(
+            onTap: () => Navigator.pushNamed(context, PageRouteName.seeAllView),
+            child: Text(
+              "see all",
+              style: TextStyle(
+                  color: BaseColorPalette.mainColor,
+                  fontSize: screenWidth * 0.04),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
