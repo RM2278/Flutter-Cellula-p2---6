@@ -6,6 +6,7 @@ class BaseColorPalette {
   static const Color black = Color.fromARGB(255, 0, 0, 0);
   static const Color border = Color(0xffDEDEDE);
   static const Color gray = Color(0xff8A8A8A);
+  static const Color Rest_filter = Color(0xFF023884);
 }
 
 

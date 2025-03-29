@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 
+import '../../../domain/entities/dish_entity.dart';
+
 abstract class MealsEvent extends Equatable {
   const MealsEvent();
 
@@ -8,6 +10,19 @@ abstract class MealsEvent extends Equatable {
 }
 
 class LoadMeals extends MealsEvent {}
+
+
+class AddFavoriteDishEvent extends MealsEvent {
+  final Dish dish;
+
+  AddFavoriteDishEvent(this.dish);
+}
+class RemoveFavoriteDishEvent extends MealsEvent {
+  final String id;
+
+  RemoveFavoriteDishEvent(this.id);
+}
+
 
 class LikeMeal extends MealsEvent {
   final String mealId;

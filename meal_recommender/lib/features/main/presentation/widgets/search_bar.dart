@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/themes/color_palette.dart';
+import 'filter.dart';
 
 class Search_Bar extends StatelessWidget {
   const Search_Bar({
@@ -38,11 +39,17 @@ class Search_Bar extends StatelessWidget {
               color: BaseColorPalette.mainColor,
               size: screenWidth * 0.07,
             ),
-            suffixIcon: Icon(
+            suffixIcon: IconButton(onPressed: (){
+              showModalBottomSheet(
+                  isScrollControlled: true,
+                  context: context, builder: (context)=>FractionallySizedBox(
+                  heightFactor:0.85,
+                  child: Filter()));
+            }, icon: Icon(
               Icons.filter_list,
               color: BaseColorPalette.mainColor,
               size: screenWidth * 0.06,
-            ),
+            )),
             hintText: "Search Recipes",
             hintStyle: TextStyle(
               fontSize: screenWidth * 0.05,

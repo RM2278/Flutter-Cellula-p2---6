@@ -39,9 +39,7 @@ class Home extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => MealsBloc(
-            repository: context.read<DishRepository>(),
-            getMeals: RecommendMeals(context.read<DishRepository>()),
+          create: (context) => sl<MealsBloc>(
           )..add(LoadMeals()),
         ),
         BlocProvider(

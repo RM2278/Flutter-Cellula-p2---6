@@ -74,6 +74,6 @@ void intl() {
   sl.registerFactory(
           () => FavoritesBloc(firebaseService: sl(), getMealsUseCase: sl()));
   sl.registerLazySingleton(() => RecommendMeals(sl()));
-  sl.registerFactory(() => MealsBloc(getMeals: sl(), repository: sl()));
+  sl.registerFactory(() => MealsBloc(getMeals: sl(), repository: sl(), addFavoriteUseCase: sl(), removeFavoriteUseCase: sl(),));
   sl.registerFactory(() => SeeAllBloc( getRecommendedDishes: sl(), addFavoriteUseCase: sl(), removeFavoriteUseCase: sl()));
 }

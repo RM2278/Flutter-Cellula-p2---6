@@ -43,16 +43,23 @@ import 'package:meal_recommender/features/main/domain/repositories/dish_reposito
 
 import 'package:meal_recommender/features/main/domain/usecases/Recommend_meals.dart';
 
+import '../../../domain/entities/dish_entity.dart';
+import '../../../domain/usecases/addFavourite_usecase.dart';
+import '../../../domain/usecases/removeFavourite_usecase.dart';
 import 'meals_event.dart';
 import 'meals_state.dart';
 
 class MealsBloc extends Bloc<MealsEvent, MealsState> {
   final RecommendMeals getMeals;
   final DishRepository repository;
-
-  MealsBloc({required this.getMeals, required this.repository})
+  final AddFavoriteUseCase addFavoriteUseCase;
+  final RemoveFavoriteUseCase removeFavoriteUseCase;
+  List<Dish> dishes = [];
+  MealsBloc({required this.getMeals, required this.repository,required this.addFavoriteUseCase,required this.removeFavoriteUseCase})
       : super(MealsInitial()) {
     on<LoadMeals>(_onLoadMeals);
+    on<AddFavoriteDishEvent>(_onAddFavoriteDish);
+    on<RemoveFavoriteDishEvent>(_onRemoveFavoriteDish);
   }
   Future<void> _onLoadMeals(LoadMeals event, Emitter<MealsState> emit) async {
     emit(MealsLoading());
@@ -71,5 +78,38 @@ class MealsBloc extends Bloc<MealsEvent, MealsState> {
       );
 
     }
+
+  Future<void> _onAddFavoriteDish(AddFavoriteDishEvent event, Emitter<MealsState> emit) async {
+    final result = await addFavoriteUseCase.execute(event.dish);
+    result.fold(
+          (failure) {
+        EasyLoading.instance
+          ..backgroundColor = Colors.red
+          ..textColor = Colors.white
+          ..indicatorColor = Colors.white;
+        emit(MealsError(failure.errMessage));
+      },
+          (_) {
+        EasyLoading.showSuccess('Added to favorites!');
+      },
+    );
+  }
+  Future<void> _onRemoveFavoriteDish(RemoveFavoriteDishEvent event, Emitter<MealsState> emit) async {
+
+    final result = await removeFavoriteUseCase.execute(event.id);
+    result.fold(
+          (failure) {
+        EasyLoading.instance
+          ..backgroundColor = Colors.red
+          ..textColor = Colors.white
+          ..indicatorColor = Colors.white;
+        emit(MealsError(failure.errMessage));
+      },
+          (_) {
+        EasyLoading.showSuccess('remove to favorites!');
+
+      },
+    );
+  }
 
 }

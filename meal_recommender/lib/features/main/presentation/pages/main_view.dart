@@ -52,9 +52,7 @@ class _MainViewState extends State<MainView> {
       child: MultiBlocProvider(
         providers: [
           BlocProvider<MealsBloc>(
-            create: (context) => MealsBloc(
-              getMeals: RecommendMeals(context.read<DishRepository>()),
-              repository: context.read<DishRepository>(),
+            create: (context) => sl<MealsBloc>(
             )..add(LoadMeals()),
           ),
           BlocProvider<FavoritesBloc>(
