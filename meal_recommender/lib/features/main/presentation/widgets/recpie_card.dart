@@ -152,6 +152,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:meal_recommender/core/routes/app_views.dart';
 import 'package:meal_recommender/core/themes/color_palette.dart';
 import 'package:meal_recommender/features/main/presentation/manager/bloc/meals_bloc.dart';
 import 'package:meal_recommender/features/main/presentation/manager/bloc/meals_event.dart';
@@ -194,64 +195,75 @@ class _MealCardState extends State<MealCard> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-    return Container(
-      margin: EdgeInsets.only(bottom: screenHeight * 0.015),
-      padding: EdgeInsets.all(screenWidth * 0.03),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(screenWidth * 0.03),
-        boxShadow: const [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 5,
-            spreadRadius: 2,
-          ),
-        ],
+    return InkWell(
+      onTap: () => Navigator.pushNamed(
+        context,
+        PageRouteName.detailsView,
+        arguments: widget.dish,
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(screenWidth * 0.09),
-            child: CachedNetworkImage(
-              imageUrl: widget.dish.imageUrl,
-              width: screenWidth * 0.21,
-              height: screenWidth * 0.22,
-              fit: BoxFit.cover,
-              placeholder: (context, url) =>
-                  const Center(child: CircularProgressIndicator()),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
+      child: Container(
+        margin: EdgeInsets.only(bottom: screenHeight * 0.015),
+        padding: EdgeInsets.all(screenWidth * 0.03),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(screenWidth * 0.03),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 5,
+              spreadRadius: 2,
             ),
-          ),
-          SizedBox(width: screenWidth * 0.03),
-          MealCardDetails(
-              dish: widget.dish, screenWidth: screenWidth, screenHeight: screenHeight),
-          IconButton(
-            icon: Icon(
-              isFavorite ? Icons.favorite : Icons.favorite_border,
-              color: isFavorite ? Colors.red : Colors.grey,
-              size: screenWidth * 0.07,
+          ],
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(screenWidth * 0.09),
+              child: CachedNetworkImage(
+                imageUrl: widget.dish.imageUrl,
+                width: screenWidth * 0.21,
+                height: screenWidth * 0.22,
+                fit: BoxFit.cover,
+                placeholder: (context, url) =>
+                    const Center(child: CircularProgressIndicator()),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+              ),
             ),
-            onPressed: () {
-              final favoritesBloc = context.read<MealsBloc>();
-              setState(() {
-                if (isFavorite) {
-                  favoriteDishes.remove(widget.dish.id);
-                  favoritesBloc.add(RemoveFavoriteDishEvent(widget.dish.id));
-                  SnackBarService.showErrorMessage("Removed from Favorites! 💔");
-                  isFavorite = favoriteDishes.contains(widget.dish.id);
-                  print(isFavorite);
-                } else {
-                  favoriteDishes.add(widget.dish.id);
-                  favoritesBloc.add(AddFavoriteDishEvent(widget.dish));
-                  SnackBarService.showSuccessMessage("Added to Favorites! ❤️");
-                  isFavorite = favoriteDishes.contains(widget.dish.id);
-                  print(isFavorite);
-                }
-              });
-            },
-          ),
-        ],
+            SizedBox(width: screenWidth * 0.03),
+            MealCardDetails(
+                dish: widget.dish,
+                screenWidth: screenWidth,
+                screenHeight: screenHeight),
+            IconButton(
+              icon: Icon(
+                isFavorite ? Icons.favorite : Icons.favorite_border,
+                color: isFavorite ? Colors.red : Colors.grey,
+                size: screenWidth * 0.07,
+              ),
+              onPressed: () {
+                final favoritesBloc = context.read<MealsBloc>();
+                setState(() {
+                  if (isFavorite) {
+                    favoriteDishes.remove(widget.dish.id);
+                    favoritesBloc.add(RemoveFavoriteDishEvent(widget.dish.id));
+                    SnackBarService.showErrorMessage(
+                        "Removed from Favorites! 💔");
+                    isFavorite = favoriteDishes.contains(widget.dish.id);
+                    print(isFavorite);
+                  } else {
+                    favoriteDishes.add(widget.dish.id);
+                    favoritesBloc.add(AddFavoriteDishEvent(widget.dish));
+                    SnackBarService.showSuccessMessage(
+                        "Added to Favorites! ❤️");
+                    isFavorite = favoriteDishes.contains(widget.dish.id);
+                    print(isFavorite);
+                  }
+                });
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
