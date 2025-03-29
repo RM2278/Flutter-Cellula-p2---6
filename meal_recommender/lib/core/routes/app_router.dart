@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meal_recommender/core/routes/app_views.dart';
+import 'package:meal_recommender/features/main/presentation/pages/see_all_view.dart';
 
 import '../../features/ai/domain/entities/dish_entity.dart';
 import '../../features/ai/presentation/pages/ai_view.dart';
@@ -46,6 +47,11 @@ class AppRouter {
       case PageRouteName.AiView:
         return MaterialPageRoute(
           builder: (context) => AiView(),
+          settings: settings,
+        );
+        case PageRouteName.seeAllView:
+        return MaterialPageRoute(
+          builder: (context) => SeeAllScreen(),
           settings: settings,
         );
       default:
