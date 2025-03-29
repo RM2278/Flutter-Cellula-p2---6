@@ -35,6 +35,7 @@
 //   }
 // }
 
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meal_recommender/features/main/presentation/manager/bloc/meals_bloc.dart';
@@ -55,12 +56,15 @@ class MealsPage extends StatelessWidget {
             itemCount: state.dishes.length,
             itemBuilder: (context, index) {
               final dish = state.dishes[index];
-              return MealCard(
-                dish: dish,
-                onLike: () => context.read<MealsBloc>().add(LikeMeal(dish.id)),
-                onRate: (rating) => context.read<MealsBloc>().add(
-                      RateMeal(dish.id, rating),
-                    ),
+              return FadeInLeftBig(
+                child: MealCard(
+                  dish: dish,
+                  onLike: () =>
+                      context.read<MealsBloc>().add(LikeMeal(dish.id)),
+                  onRate: (rating) => context.read<MealsBloc>().add(
+                        RateMeal(dish.id, rating),
+                      ),
+                ),
               );
             },
           );
