@@ -183,7 +183,7 @@ class MealCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(screenWidth * 0.03),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: Colors.black12,
             blurRadius: 5,
@@ -288,7 +288,7 @@ class MealCardDetails extends StatelessWidget {
             ],
           ),
           SizedBox(height: screenHeight * 0.005),
-          Row(
+          const Row(
               // children: List.generate(
               //   5,
               //   (index) => Icon(

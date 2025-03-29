@@ -27,9 +27,9 @@ class _MainViewState extends State<MainView> {
   int _currentIndex = 0;
 
   final List<Widget> _pages = [
-    Home(),
-    FavoriteView(),
-    Scaffold(body: Center(child: Text("Profile Page (Coming Soon)"))),
+    const Home(),
+    const FavoriteView(),
+    const Scaffold(body: Center(child: Text("Profile Page (Coming Soon)"))),
   ];
 
   void _onItemTapped(int index) {

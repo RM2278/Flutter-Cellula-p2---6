@@ -53,7 +53,7 @@ class Home extends StatelessWidget {
         body: SafeArea(
           child: BlocProvider.value(
             value: context.read<MealsBloc>(),
-            child: HomePageBody(),
+            child: const HomePageBody(),
           ),
         ),
       ),
