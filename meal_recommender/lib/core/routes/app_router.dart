@@ -8,16 +8,16 @@ import '../../features/main/presentation/pages/main_view.dart';
 class AppRouter {
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
-      /*case PageRouteName.initial:
+      case PageRouteName.initial:
         return MaterialPageRoute(
           builder: (context) => const SplashView(),
           settings: settings,
-        );*/
-      // case PageRouteName.initial:
-      //   return MaterialPageRoute(
-      //     builder: (context) => const MainView(),
-      //     settings: settings,
-      //   );
+        );
+      case PageRouteName.mainView:
+        return MaterialPageRoute(
+          builder: (context) => const MainView(),
+          settings: settings,
+        );
       case PageRouteName.loginView:
         return MaterialPageRoute(
           builder: (context) => const LoginPage(),

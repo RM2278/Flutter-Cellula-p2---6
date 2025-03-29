@@ -40,8 +40,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ApplicationThemeManager.lightThemeData,
         onGenerateRoute: AppRouter.onGenerateRoute,
-        initialRoute: PageRouteName.homeView,
-        home: const LoginPage(),
+        initialRoute: PageRouteName.initial,
         builder: EasyLoading.init(
           builder: BotToastInit(),
         ),
