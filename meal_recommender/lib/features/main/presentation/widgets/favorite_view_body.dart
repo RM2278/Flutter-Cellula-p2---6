@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -50,16 +51,18 @@ class FavoriteViewBody extends StatelessWidget {
                             arguments: dish,
                           );
                         },
-                        child: MealCard(
-                          dish: dish,
-                          onLike: () {
-                            context.read<MealsBloc>().add(LikeMeal(dish.id));
-                          },
-                          onRate: (rating) {
-                            context
-                                .read<MealsBloc>()
-                                .add(RateMeal(dish.id, rating));
-                          },
+                        child: FadeInLeft(
+                          child: MealCard(
+                            dish: dish,
+                            onLike: () {
+                              context.read<MealsBloc>().add(LikeMeal(dish.id));
+                            },
+                            onRate: (rating) {
+                              context
+                                  .read<MealsBloc>()
+                                  .add(RateMeal(dish.id, rating));
+                            },
+                          ),
                         ),
                       );
                     },
