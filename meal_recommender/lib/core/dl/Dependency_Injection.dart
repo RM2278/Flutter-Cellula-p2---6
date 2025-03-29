@@ -46,32 +46,33 @@ void intl() {
   sl.registerLazySingleton(() => ReloadUsecase(sl<AuthRepo>()));
   sl.registerFactory(() => RegisterCubit());
 //Login
-  sl.registerLazySingleton(() =>RecipeApiService(apiKey: Constants.recipeKey));
+  sl.registerLazySingleton(() => RecipeApiService(apiKey: Constants.recipeKey));
   sl.registerLazySingleton(() => GeminiApiService(apiKey: Constants.geminKey));
-  sl.registerLazySingleton<DishRemoteDataSource>(
-      () => DishRemoteDataSourceImpl(apiService: sl(), firebaseService: sl<FirebaseService>(),));
+  sl.registerLazySingleton<DishRemoteDataSource>(() => DishRemoteDataSourceImpl(
+        apiService: sl(),
+        firebaseService: sl<FirebaseService>(),
+      ));
   sl.registerLazySingleton<DishRepository>(
       () => DishRepositoryImpl(remoteDataSource: sl()));
   sl.registerLazySingleton(() => GetRecommendedDishes(sl()));
   sl.registerLazySingleton(() => GetDishByName(sl()));
   sl.registerLazySingleton(() => RemoveFavoriteUseCase(sl()));
   sl.registerLazySingleton(() => AddFavoriteUseCase(sl()));
-  sl.registerFactory(
-      () => DishBloc(getRecommendedDishes: sl(), getDishByName: sl(),addFavoriteUseCase: sl(),removeFavoriteUseCase: sl()));
+  sl.registerFactory(() => DishBloc(
+      getRecommendedDishes: sl(),
+      getDishByName: sl(),
+      addFavoriteUseCase: sl(),
+      removeFavoriteUseCase: sl()));
   ///// Favourite
   sl.registerLazySingleton(() => FavoriteDataRemote(sl<FirebaseService>()));
-  sl.registerSingleton<FavoritesRepository>(FavoritesRepositoryImpl(sl<FavoriteDataRemote>()));
-  sl.registerLazySingleton(() =>GetMealsUseCase(sl<FavoritesRepository>()));
-  sl.registerFactory(() =>FavoritesBloc(firebaseService: sl(), getMealsUseCase: sl()));
+  sl.registerSingleton<FavoritesRepository>(
+      FavoritesRepositoryImpl(sl<FavoriteDataRemote>()));
+  sl.registerLazySingleton(() => GetMealsUseCase(sl<FavoritesRepository>()));
+  sl.registerFactory(
+      () => FavoritesBloc(firebaseService: sl(), getMealsUseCase: sl()));
 
-
-
-sl.registerLazySingleton<MealsRepository>(() => MealsRepositoryImpl(FirebaseFirestore.instance));
-sl.registerLazySingleton(() => GetMeals(sl())); 
-sl.registerFactory(() => MealsBloc(getMeals: sl(), repository: sl()));
-
-
-
-
-
+  sl.registerLazySingleton<MealsRepository>(
+      () => MealsRepositoryImpl(sl<GeminiApiService>()));
+  sl.registerLazySingleton(() => GetMeals(sl()));
+  sl.registerFactory(() => MealsBloc(getMeals: sl(), repository: sl()));
 }

@@ -34,15 +34,14 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => sl<DishBloc>(),
         ),
-       
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         theme: ApplicationThemeManager.lightThemeData,
-       // onGenerateRoute: AppRouter.onGenerateRoute,
-      //  initialRoute: PageRouteName.loginView,
-      home: const LoginPage(),
+        onGenerateRoute: AppRouter.onGenerateRoute,
+        initialRoute: PageRouteName.homeView,
+        home: const LoginPage(),
         builder: EasyLoading.init(
           builder: BotToastInit(),
         ),

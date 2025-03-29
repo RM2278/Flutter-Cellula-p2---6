@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:meal_recommender/features/main/data/models/meal_model.dart';
-import 'package:meal_recommender/features/main/domain/entities/meals.dart';
+import 'package:meal_recommender/features/ai/data/models/dish_model.dart';
 
 abstract class MealsState extends Equatable {
   const MealsState();
@@ -14,12 +13,9 @@ class MealsInitial extends MealsState {}
 class MealsLoading extends MealsState {}
 
 class MealsLoaded extends MealsState {
-  final List<MealDishModel> meals;
+  final List<DishModel> dishes;
 
-  const MealsLoaded(this.meals);
-
-  @override
-  List<Object?> get props => [meals];
+  MealsLoaded(this.dishes);
 }
 
 class MealsError extends MealsState {

@@ -39,11 +39,11 @@ class Home extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => MealsBloc(
-            repository: context.read<MealsRepositoryImpl>(),
-            getMeals: GetMeals(context.read<MealsRepositoryImpl>()),
+            repository: context.read<MealsRepository>(),
+            getMeals: GetMeals(context.read<MealsRepository>()),
           )..add(LoadMeals()),
         ),
-       BlocProvider(
+        BlocProvider(
           create: (context) => sl<FavoritesBloc>(),
         ),
       ],
@@ -51,7 +51,7 @@ class Home extends StatelessWidget {
         backgroundColor: BaseColorPalette.white,
         body: SafeArea(
           child: BlocProvider.value(
-            value: context.read<MealsBloc>(), // ✅ توفير الـ Bloc لكامل الصفحة
+            value: context.read<MealsBloc>(),
             child: HomePageBody(),
           ),
         ),

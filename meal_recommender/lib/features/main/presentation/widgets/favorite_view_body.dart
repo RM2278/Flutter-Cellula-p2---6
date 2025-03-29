@@ -1,12 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:meal_recommender/features/ai/domain/entities/dish_entity.dart';
 import '../../../../core/routes/page_route_name.dart';
 import '../../domain/entities/meals.dart';
 import '../../domain/repositories/meals_repository.dart';
-import '../manager/bloc/favorite_bloc.dart';
-import '../manager/bloc/favorite_event.dart';
-import '../manager/bloc/favorite_state.dart';
+import '../manager/bloc/meals_bloc.dart';
+import '../manager/bloc/meals_event.dart';
+import '../manager/bloc/meals_state.dart';
 import 'recpie_card.dart';
 import 'app_bar.dart';
 
@@ -28,45 +29,43 @@ class FavoriteViewBody extends StatelessWidget {
           AppBarHome(screenWidth: screenWidth),
           SizedBox(height: screenHeight * 0.02),
           Expanded(
-            child: BlocBuilder<FavoritesBloc, FavoritesState>(
+            child: BlocBuilder<MealsBloc, MealsState>(
               builder: (context, state) {
-                if (state is FavoritesLoading) {
-                  // ✅ استخدام حالة التحميل الصحيحة
+                if (state is MealsLoading) {
                   return const Center(child: CircularProgressIndicator());
-                } else if (state is FavoritesLoaded) {
-                  if (state.favorites.isEmpty) {
-                    return const Center(child: Text("No favorites yet!"));
+                } else if (state is MealsLoaded) {
+                  if (state.dishes.isEmpty) {
+                    return const Center(child: Text("No meals found!"));
                   }
 
-
-
                   return ListView.builder(
-                    itemCount: state.favorites.length,
+                    itemCount: state.dishes.length,
                     itemBuilder: (context, index) {
-                      final meal = state.favorites[index];
-                          return InkWell(
-                            onTap: (){
-                              //Move to details
-
-                              /*Navigator.pushNamed(
-                                context,
-                                PageRouteName.detailsView,
-                                arguments: meal,
-                              );*/
-                            },
-                            child: MealCard(
-                              meal: meal,
-                              onLike: () {
-
-                              },
-                              onRate: (rating) {},
-                            ),
+                      final dish = state.dishes[index];
+                      return InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(
+                            context,
+                            PageRouteName.detailsView,
+                            arguments: dish,
                           );
                         },
+                        child: MealCard(
+                          dish: dish,
+                          onLike: () {
+                            context.read<MealsBloc>().add(LikeMeal(dish.id));
+                          },
+                          onRate: (rating) {
+                            context
+                                .read<MealsBloc>()
+                                .add(RateMeal(dish.id, rating));
+                          },
+                        ),
                       );
-
+                    },
+                  );
                 } else {
-                  return const Center(child: Text("Something went wrong!"));
+                  return const Center(child: Text("Error loading meals"));
                 }
               },
             ),

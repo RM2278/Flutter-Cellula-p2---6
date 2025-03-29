@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import '../../domain/entities/dish_entity.dart';
 
 class DishModel extends Dish {
@@ -24,12 +22,14 @@ class DishModel extends Dish {
       time: dish.time,
       imageUrl: dish.imageUrl,
       diffeculty: dish.diffeculty,
-      ingredients: dish.ingredients.map((i) => IngredientModel(
-        name: i.name,
-        quantity: i.quantity,
-        unit: i.unit,
-        imageUrl: i.imageUrl,
-      )).toList(),
+      ingredients: dish.ingredients
+          .map((i) => IngredientModel(
+                name: i.name,
+                quantity: i.quantity,
+                unit: i.unit,
+                imageUrl: i.imageUrl,
+              ))
+          .toList(),
       nutrition: NutritionModel(
         calories: dish.nutrition.calories,
         protein: dish.nutrition.protein,
@@ -44,7 +44,6 @@ class DishModel extends Dish {
       ),
     );
   }
-
 
   factory DishModel.fromJson(Map<String, dynamic> json) {
     return DishModel(
@@ -65,14 +64,15 @@ class DishModel extends Dish {
 
   Map<String, dynamic> toJson() {
     return {
-      'id':id,
+      'id': id,
       'name': name,
       'summary': summary,
       "Diffeculty": diffeculty,
       'typeOfMeal': typeOfMeal,
       'time': time,
       'imageUrl': imageUrl,
-      'ingredients': ingredients.map((i) => (i as IngredientModel).toJson()).toList(),
+      'ingredients':
+          ingredients.map((i) => (i as IngredientModel).toJson()).toList(),
       'nutrition': (nutrition as NutritionModel).toJson(),
       'directions': (directions as DirectionsModel).toJson(),
     };

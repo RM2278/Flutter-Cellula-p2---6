@@ -9,7 +9,7 @@ import '../manager/bloc/favorite_bloc.dart';
 import '../manager/bloc/favorite_event.dart';
 import '../widgets/favorite_view_body.dart';
 
-import '../../domain/repositories/meals_repository.dart'; // ✅ استيراد MealsRepository
+import '../../domain/repositories/meals_repository.dart';
 
 class FavoriteView extends StatelessWidget {
   const FavoriteView({super.key});
@@ -23,9 +23,7 @@ class FavoriteView extends StatelessWidget {
         body: SafeArea(
           child: FavoriteViewBody(),
         ),
-
       ),
     );
   }
 }
-

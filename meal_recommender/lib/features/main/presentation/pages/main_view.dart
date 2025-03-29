@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
+import 'package:meal_recommender/core/services/Gemini_service.dart';
 import '../../../../core/dl/Dependency_Injection.dart';
 import '../../../../core/services/firebase_service.dart';
 import '../../data/repositories/meals_repository_impl.dart';
@@ -26,8 +28,7 @@ class _MainViewState extends State<MainView> {
   final List<Widget> _pages = [
     Home(),
     FavoriteView(),
-    Scaffold(
-        body: Center(child: Text("Profile Page (Coming Soon)"))), // صفحة مؤقتة
+    Scaffold(body: Center(child: Text("Profile Page (Coming Soon)"))),
   ];
 
   void _onItemTapped(int index) {
@@ -38,40 +39,37 @@ class _MainViewState extends State<MainView> {
 
   @override
   Widget build(BuildContext context) {
-    return  MultiRepositoryProvider(
+    return MultiRepositoryProvider(
       providers: [
-
         RepositoryProvider<FirebaseService>(
-          create: (context) => sl<FirebaseService>(), // ✅ استرجاع `FirebaseService` من GetIt
+          create: (context) => sl<FirebaseService>(),
         ),
-
         RepositoryProvider<MealsRepository>(
-          create: (context) => MealsRepositoryImpl(FirebaseFirestore.instance),
-        ),
-
+          create: (context) => MealsRepositoryImpl(
+            GetIt.instance<GeminiApiService>(),
+          ),
+        )
       ],
-
       child: MultiBlocProvider(
         providers: [
           BlocProvider<MealsBloc>(
             create: (context) => MealsBloc(
-              getMeals: GetMeals(context.read<MealsRepository>()), // ✅ تمرير GetMeals
+              getMeals: GetMeals(context.read<MealsRepository>()),
               repository: context.read<MealsRepository>(),
-            )..add(LoadMeals()), // ✅ تحميل الوجبات عند بدء التطبيق
+            )..add(LoadMeals()),
           ),
           BlocProvider<FavoritesBloc>(
-            create: (context) => sl<FavoritesBloc>(),),
+            create: (context) => sl<FavoritesBloc>(),
+          ),
         ],
-        child:Scaffold(
+        child: Scaffold(
           body: _pages[_currentIndex],
           bottomNavigationBar: CustomBottomNavBar(
             currentIndex: _currentIndex,
             onTap: _onItemTapped,
           ),
-        )
-        ,
+        ),
       ),
     );
-
   }
 }
