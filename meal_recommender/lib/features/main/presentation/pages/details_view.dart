@@ -14,46 +14,43 @@ import '../../../ai/presentation/manager/dish_event.dart';
 import '../widgets/details_body.dart';
 
 class DetailsView extends StatefulWidget {
-  final DishModel dish = DishModel(
-    name: "Shawerma",
-    summary: "A delicious meat-based dish wrapped in soft bread.",
-    diffeculty: "Easy",
-    typeOfMeal: "Dinner",
-    time: 14,
-    imageUrl:
-        "https://playswellwithbutter.com/wp-content/uploads/2021/03/Shawarma-Marinade-12.jpg",
-    ingredients: [
-      IngredientModel(name: "Bread", quantity: "2", unit: "pcs", imageUrl: ""),
-      IngredientModel(name: "Tomato", quantity: "2", unit: "pcs", imageUrl: ""),
-      IngredientModel(name: "Carrot", quantity: "2", unit: "pcs", imageUrl: ""),
-      IngredientModel(name: "Meat", quantity: "200", unit: "g", imageUrl: ""),
-      IngredientModel(name: "Meat", quantity: "200", unit: "g", imageUrl: ""),
-    ],
-    nutrition: NutritionModel(
-      calories: "400 kcal",
-      protein: "40g",
-      carbs: "40g",
-      fat: "40g",
-      vitamins: ["Vitamin A", "Vitamin C", "Vitamin D"],
-    ),
-    directions: DirectionsModel(
-      firstStep: "Marinate the meat for at least 2 hours.",
-      secondStep: "Grill the meat until fully cooked.",
-      additionalSteps: [
-        "Slice the meat into thin strips.",
-        "Toast the bread slightly.",
-        "Add vegetables and sauce to the wrap.",
-        "Roll and serve hot."
-      ],
-    ),
-    id: '5454657658768',
-  );
-
+  // final DishModel dish = DishModel(
+  //   name: "Shawerma",
+  //   summary: "A delicious meat-based dish wrapped in soft bread.",
+  //   diffeculty: "Easy",
+  //   typeOfMeal: "Dinner",
+  //   time: 14,
+  //   imageUrl:
+  //       "https://playswellwithbutter.com/wp-content/uploads/2021/03/Shawarma-Marinade-12.jpg",
+  //   ingredients: [
+  //     IngredientModel(name: "Bread", quantity: "2", unit: "pcs", imageUrl: ""),
+  //     IngredientModel(name: "Tomato", quantity: "2", unit: "pcs", imageUrl: ""),
+  //     IngredientModel(name: "Carrot", quantity: "2", unit: "pcs", imageUrl: ""),
+  //     IngredientModel(name: "Meat", quantity: "200", unit: "g", imageUrl: ""),
+  //     IngredientModel(name: "Meat", quantity: "200", unit: "g", imageUrl: ""),
+  //   ],
+  //   nutrition: NutritionModel(
+  //     calories: "400 kcal",
+  //     protein: "40g",
+  //     carbs: "40g",
+  //     fat: "40g",
+  //     vitamins: ["Vitamin A", "Vitamin C", "Vitamin D"],
+  //   ),
+  //   directions: DirectionsModel(
+  //     firstStep: "Marinate the meat for at least 2 hours.",
+  //     secondStep: "Grill the meat until fully cooked.",
+  //     additionalSteps: [
+  //       "Slice the meat into thin strips.",
+  //       "Toast the bread slightly.",
+  //       "Add vegetables and sauce to the wrap.",
+  //       "Roll and serve hot."
+  //     ],
+  //   ),
+  //   id: '5454657658768',
+  // );
+  late DishModel dish;
   DetailsView({
     super.key,
-    //  required this.dish,
-    //  required this.userId,
-    // required Dish data,
   });
 
   @override
@@ -79,7 +76,7 @@ class _DetailsViewState extends State<DetailsView>
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-
+    widget.dish = ModalRoute.of(context)!.settings.arguments as DishModel;
     return Scaffold(
       appBar: _appBar(context, theme),
       body: FadeInDown(
