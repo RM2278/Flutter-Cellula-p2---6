@@ -2,6 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meal_recommender/core/errors/firebase_failure.dart';
 
+import '../../features/profile/data/models/profile_model.dart';
+import '../constants/constants.dart';
+
 class FirebaseService{
   FirebaseAuth _auth;
   FirebaseFirestore store;
@@ -154,6 +157,45 @@ return user;
         .get();
     return snapshot.docs.map((doc) => doc.data()).toList();
   }
+
+
+  Future<ProfileModel?> getProfile() async {
+    // User? user = _auth.currentUser;
+    UserCredential credential = await _auth.signInWithEmailAndPassword(
+        email: "ahmeddarwesh317@yahoo.com", password: 'Ahmed@123');
+    //return credential;
+    User? user = credential.user;
+    if (user != null) {
+      DocumentSnapshot userProfile = await store.collection(Constants.user).doc(user.uid).get();
+      if (userProfile.exists) {
+        final data = userProfile.data() as Map<String, dynamic>;
+        return ProfileModel(
+          name: data[Constants.name] ?? '',
+          email: data[Constants.email] ?? '',
+          phone: data[Constants.phone]??'',
+          profileImageUrl: data[Constants.profileImageUrl] ?? '',
+          password: user.uid,
+        );
+      }
+    }
+
+    return null;
+  }
+
+  Future<void> updateUserProfile(ProfileModel profile) async {
+    User? user = _auth.currentUser;
+    if (user != null) {
+      await store.collection(Constants.user).doc(user.uid).update({
+        Constants.name: profile.name,
+        Constants.email: profile.email,
+        Constants.profileImageUrl: profile.profileImageUrl,
+        Constants.phone:profile.phone
+      });
+    }
+  }
+
+
+
 
   Future sign_out() async {
     try{

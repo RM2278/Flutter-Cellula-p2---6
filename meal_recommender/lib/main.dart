@@ -5,12 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:meal_recommender/core/routes/app_router.dart';
 import 'package:meal_recommender/core/themes/application_theme_manager.dart';
-import 'package:meal_recommender/features/ai/presentation/manager/dish_bloc.dart';
 import 'package:meal_recommender/features/main/presentation/manager/bloc/meals_bloc.dart';
 import 'core/dl/Dependency_Injection.dart';
 import 'core/routes/app_views.dart';
 import 'core/services/cubit_observer.dart';
 import 'core/services/shared_preferences_storage_services.dart';
+import 'features/main/presentation/ai/manager/dish_bloc.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -18,7 +18,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  intl();
+  await intl();
   Bloc.observer = AppCubitObserver();
   await SharedPreferencesHelper.init();
   runApp(const MyApp());

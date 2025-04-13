@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../ai/data/models/dish_model.dart';
-import '../../../ai/domain/entities/dish_entity.dart';
+import '../../domain/entities/dish_entity.dart';
+
+
+
 
 Widget buildIngredientsTab(ThemeData theme, Dish dish) {
   return Padding(

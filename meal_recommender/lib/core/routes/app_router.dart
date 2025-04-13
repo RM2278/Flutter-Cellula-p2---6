@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:meal_recommender/core/routes/app_views.dart';
 import 'package:meal_recommender/features/main/presentation/pages/see_all_view.dart';
 
-import '../../features/ai/domain/entities/dish_entity.dart';
-import '../../features/ai/presentation/pages/ai_view.dart';
+
+import '../../features/main/domain/entities/dish_entity.dart';
+import '../../features/main/presentation/ai/pages/ai_view.dart';
 import '../../features/main/presentation/pages/main_view.dart';
+import '../../features/main/presentation/pages/see_all_screen.dart';
 
 class AppRouter {
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {

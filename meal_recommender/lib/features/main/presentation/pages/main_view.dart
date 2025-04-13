@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:meal_recommender/core/services/Gemini_service.dart';
+import 'package:meal_recommender/features/main/domain/repositories/dish_repository.dart';
 import '../../../../core/dl/Dependency_Injection.dart';
 import '../../../../core/services/firebase_service.dart';
-import '../../data/repositories/meals_repository_impl.dart';
-import '../../domain/repositories/meals_repository.dart';
-import '../../domain/usecases/get_meals.dart';
+
+import '../../../profile/presentation/screens/profile_screen.dart';
+import '../../data/repositories/dish_repository_impl.dart';
+import '../../domain/usecases/Recommend_meals.dart';
 import '../manager/bloc/favorite_bloc.dart';
 import '../manager/bloc/meals_bloc.dart';
 import '../manager/bloc/meals_event.dart';
@@ -26,9 +28,9 @@ class _MainViewState extends State<MainView> {
   int _currentIndex = 0;
 
   final List<Widget> _pages = [
-    Home(),
-    FavoriteView(),
-    Scaffold(body: Center(child: Text("Profile Page (Coming Soon)"))),
+    const Home(),
+    const FavoriteView(),
+    ProfileScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -44,18 +46,14 @@ class _MainViewState extends State<MainView> {
         RepositoryProvider<FirebaseService>(
           create: (context) => sl<FirebaseService>(),
         ),
-        RepositoryProvider<MealsRepository>(
-          create: (context) => MealsRepositoryImpl(
-            GetIt.instance<GeminiApiService>(),
-          ),
+        RepositoryProvider<DishRepository>(
+          create: (context) => sl(),
         )
       ],
       child: MultiBlocProvider(
         providers: [
           BlocProvider<MealsBloc>(
-            create: (context) => MealsBloc(
-              getMeals: GetMeals(context.read<MealsRepository>()),
-              repository: context.read<MealsRepository>(),
+            create: (context) => sl<MealsBloc>(
             )..add(LoadMeals()),
           ),
           BlocProvider<FavoritesBloc>(

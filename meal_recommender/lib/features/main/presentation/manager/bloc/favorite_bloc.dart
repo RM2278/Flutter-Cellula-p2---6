@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:meal_recommender/features/main/data/models/meal_model.dart';
-import 'package:meal_recommender/features/main/domain/repositories/favorite_repository.dart';
+
+
 import 'package:meal_recommender/features/main/domain/usecases/GetMeals_Usecase.dart';
 import 'package:meal_recommender/features/main/presentation/manager/bloc/favorite_event.dart';
 import 'package:meal_recommender/features/main/presentation/manager/bloc/favorite_state.dart';
 
 import '../../../../../core/services/firebase_service.dart';
-import '../../../domain/entities/meals.dart';
-import '../../../domain/repositories/meals_repository.dart';
+import '../../../data/models/dish_model.dart';
+import '../../../domain/entities/dish_entity.dart';
+
+
 
 /*class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
   final FavoritesRepository favoritesRepository;
@@ -96,9 +98,9 @@ final GetMealsUseCase getMealsUseCase;
       try {
         await firebaseService.removeFavorite(event.dishId);
         
-        List<MealDishModel> updatedFavorites =
+        List<Dish> updatedFavorites =
             (await firebaseService.getFavorites())
-                .map((data) => MealDishModel.fromJson(data))
+                .map((data) => DishModel.fromJson(data))
                 .toList();
 
         emit(FavoritesLoaded(updatedFavorites));

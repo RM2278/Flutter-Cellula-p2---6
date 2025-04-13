@@ -1,5 +1,8 @@
 import 'package:equatable/equatable.dart';
-import 'package:meal_recommender/features/ai/data/models/dish_model.dart';
+
+
+import '../../../domain/entities/dish_entity.dart';
+
 
 abstract class MealsState extends Equatable {
   const MealsState();
@@ -13,7 +16,7 @@ class MealsInitial extends MealsState {}
 class MealsLoading extends MealsState {}
 
 class MealsLoaded extends MealsState {
-  final List<DishModel> dishes;
+  final List<Dish> dishes;
 
   MealsLoaded(this.dishes);
 }

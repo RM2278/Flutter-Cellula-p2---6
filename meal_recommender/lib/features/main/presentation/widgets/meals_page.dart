@@ -41,7 +41,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meal_recommender/features/main/presentation/manager/bloc/meals_bloc.dart';
 import 'package:meal_recommender/features/main/presentation/manager/bloc/meals_event.dart';
 import 'package:meal_recommender/features/main/presentation/manager/bloc/meals_state.dart';
-import 'package:meal_recommender/features/ai/data/models/dish_model.dart'; // Correct import for DishModel
+// Correct import for DishModel
 import 'recpie_card.dart';
 
 class MealsPage extends StatelessWidget {

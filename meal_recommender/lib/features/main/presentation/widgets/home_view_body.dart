@@ -86,12 +86,9 @@
 // }
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meal_recommender/features/main/presentation/manager/bloc/meals_bloc.dart';
-import 'package:meal_recommender/features/main/presentation/manager/bloc/meals_event.dart';
-import 'package:meal_recommender/features/main/presentation/manager/bloc/meals_state.dart';
+
 import 'package:meal_recommender/features/main/presentation/widgets/meals_page.dart';
-import 'package:meal_recommender/features/main/presentation/widgets/recpie_card.dart';
+
 
 import 'app_bar.dart';
 import 'button_add.dart';

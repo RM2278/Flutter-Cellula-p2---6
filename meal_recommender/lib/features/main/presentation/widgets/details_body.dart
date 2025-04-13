@@ -1,10 +1,11 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:meal_recommender/features/ai/data/models/dish_model.dart';
+
 import 'package:meal_recommender/features/main/presentation/widgets/build_direction_tab.dart';
 
-import '../../../ai/domain/entities/dish_entity.dart';
+
+import '../../domain/entities/dish_entity.dart';
 import 'build_ingredients_tab.dart';
 import 'build_summary_tab.dart';
 

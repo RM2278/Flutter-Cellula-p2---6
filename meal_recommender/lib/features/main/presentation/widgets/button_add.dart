@@ -1,5 +1,5 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:meal_recommender/core/routes/app_views.dart';
 
 import '../../../../core/themes/color_palette.dart';
 
@@ -15,24 +15,24 @@ class Button_Add extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FadeInDownBig(
-      child: Align(
-        alignment: Alignment.centerRight,
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: BaseColorPalette.mainColor,
-            padding: EdgeInsets.symmetric(
-                horizontal: screenWidth * 0.09, vertical: screenHeight * 0.010),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(24),
-            ),
+    return Align(
+      alignment: Alignment.centerRight,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: BaseColorPalette.mainColor,
+          padding: EdgeInsets.symmetric(
+              horizontal: screenWidth * 0.09, vertical: screenHeight * 0.010),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
           ),
-          onPressed: () {},
-          child: Text(
-            "add your ingredients",
-            style: TextStyle(
-                fontSize: screenWidth * 0.04, color: BaseColorPalette.white),
-          ),
+        ),
+        onPressed: () {
+          Navigator.pushNamed(context, PageRouteName.AiView);
+        },
+        child: Text(
+          "add your ingredients",
+          style: TextStyle(
+              fontSize: screenWidth * 0.04, color: BaseColorPalette.white),
         ),
       ),
     );
