@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../ai/data/models/dish_model.dart';
-import '../../../ai/domain/entities/dish_entity.dart';
+
+import '../../domain/entities/dish_entity.dart';
 import 'build_nutrition_item.dart';
 
 Widget buildSummaryTab(ThemeData theme, Dish dish) {

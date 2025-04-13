@@ -154,6 +154,52 @@ return user;
       }
     }
 
+
+  Future<List<Map<String, dynamic>>> getFavorites() async {
+
+    User? user = await _auth.currentUser;
+    if (user == null) {
+      UserCredential credential = await _auth.signInWithEmailAndPassword(
+        email: "ahmeddarwesh317@yahoo.com",
+        password: "Ahmed@123",
+      );
+      user = credential.user;
+    }
+
+    if (user == null) {
+      throw Exception("Failed to authenticate user");
+    }
+    var userId = user!.uid;
+    final snapshot = await store
+        .collection('users')
+        .doc(userId)
+        .collection('favorites')
+        .get();
+    return snapshot.docs.map((doc) => doc.data()).toList();
+  }
+
+
+  Future<ProfileModel?> getProfile() async {
+    // User? user = _auth.currentUser;
+    UserCredential credential = await _auth.signInWithEmailAndPassword(
+        email: "ahmeddarwesh317@yahoo.com", password: 'Ahmed@123');
+    //return credential;
+    User? user = credential.user;
+    if (user != null) {
+      DocumentSnapshot userProfile = await store.collection(Constants.user).doc(user.uid).get();
+      if (userProfile.exists) {
+        final data = userProfile.data() as Map<String, dynamic>;
+        return ProfileModel(
+          name: data[Constants.name] ?? '',
+          email: data[Constants.email] ?? '',
+          phone: data[Constants.phone]??'',
+          profileImageUrl: data[Constants.profileImageUrl] ?? '',
+          password: user.uid,
+        );
+      }
+    }
+
+
     return null;
   }
 
@@ -168,6 +214,7 @@ return user;
       });
     }
   }
+
   Future sign_out() async {
     try{
       await _auth.signOut();

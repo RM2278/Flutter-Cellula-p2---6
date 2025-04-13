@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:meal_recommender/features/main/presentation/pages/details_view.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 import '../../../../../../core/routes/page_route_name.dart';
@@ -22,7 +23,8 @@ class LoginViewBlocConsumer extends StatelessWidget {
     return BlocConsumer<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state is LoginSuccess) {
-          Navigator.pushNamed(context, PageRouteName.homeView);
+          Navigator.pushNamed(context, PageRouteName.mainView);
+
           //navigate
         }
 
@@ -33,17 +35,15 @@ class LoginViewBlocConsumer extends StatelessWidget {
       builder: (context, state) {
         return ModalProgressHUD(
           inAsyncCall: state is LoginLoading ? true : false,
-          child: const LoginPageBody(
-             ),
+          child: const LoginPageBody(),
         );
       },
     );
   }
 }
+
 void buildErrorBar(BuildContext context, String massage) {
-     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(massage),
-      )
-    );
-  }
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    content: Text(massage),
+  ));
+}

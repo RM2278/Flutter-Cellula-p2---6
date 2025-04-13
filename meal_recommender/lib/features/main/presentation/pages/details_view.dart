@@ -1,18 +1,24 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meal_recommender/core/constants/icon_paths.dart';
+import 'package:meal_recommender/core/dl/Dependency_Injection.dart';
 import 'package:meal_recommender/core/services/snackbar_service.dart';
-import '../../../ai/data/models/dish_model.dart';
-import '../../../ai/domain/entities/dish_entity.dart';
+
+import 'package:meal_recommender/features/main/domain/entities/dish_entity.dart';
+
+import '../ai/manager/dish_bloc.dart';
+import '../ai/manager/dish_event.dart';
+import '../ai/manager/dish_state.dart';
 import '../widgets/details_body.dart';
 
 class DetailsView extends StatefulWidget {
-  // final DishModel dish;
-   DetailsView({
+  late Dish dish;
+  DetailsView({
     super.key,
-    required this.data
   });
-Dish data;
+
   @override
   State<DetailsView> createState() => _DetailsViewState();
 }
@@ -20,8 +26,7 @@ Dish data;
 class _DetailsViewState extends State<DetailsView>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  bool _isFavorite = false;
-
+  Set<String> favoriteDishes = {};
   @override
   void initState() {
     super.initState();
@@ -34,55 +39,65 @@ class _DetailsViewState extends State<DetailsView>
     super.dispose();
   }
 
-  void _toggleFavorite(BuildContext context) {
-    setState(() {
-      _isFavorite = !_isFavorite;
-    });
-
-    _isFavorite
-        ? SnackBarService.showSuccessMessage("Added to Favorites! ❤️")
-        : SnackBarService.showErrorMessage("remove from Favorites! 💔");
-  }
-
   @override
   Widget build(BuildContext context) {
-    Dish testDish = widget.data;
     var theme = Theme.of(context);
-    return Scaffold(
-      appBar: _appBar(context, testDish, theme),
-      body: _mealDetailsBody(theme, testDish),
+    widget.dish = ModalRoute.of(context)!.settings.arguments as Dish;
+    return BlocProvider(
+      create: (context) => sl<DishBloc>(),
+      child: Scaffold(
+        appBar: _appBar(context, theme),
+        body: FadeInDown(
+          child: DetailsBody(
+            theme: theme,
+            tabController: _tabController,
+            dish: widget.dish,
+          ),
+        ),
+      ),
     );
   }
 
-  FadeInDown _mealDetailsBody(ThemeData theme, Dish testDish) {
-    return FadeInDown(
-        child: DetailsBody(
-      theme: theme,
-      tabController: _tabController,
-      dish: testDish,
-    ));
-  }
-
-  AppBar _appBar(BuildContext context, Dish testDish, ThemeData theme) {
+  AppBar _appBar(BuildContext context, ThemeData theme) {
     return AppBar(
       leading: IconButton(
         icon: const Icon(Icons.arrow_back),
         onPressed: () => Navigator.pop(context),
       ),
       centerTitle: true,
-      title: Text(
-        testDish.name,
-        style: theme.textTheme.titleLarge,
-      ),
+      title: Text(widget.dish.name, style: theme.textTheme.titleLarge),
       actions: [
-        IconButton(
-          icon: Image.asset(
-            _isFavorite ? IconPaths.heart2 : IconPaths.heart1,
-          ),
-          onPressed: () => _toggleFavorite(context),
+        BlocBuilder<DishBloc, DishState>(
+          builder: (context, state) {
+            bool isFavorite = false;
+
+            if (state is DishLoaded) {
+              isFavorite = favoriteDishes.contains(widget.dish.id);
+            }
+
+            return IconButton(
+              icon:
+                  Image.asset(isFavorite ? IconPaths.heart2 : IconPaths.heart1),
+              onPressed: () {
+                final user = FirebaseAuth.instance.currentUser;
+                if (user == null) return;
+
+                if (isFavorite) {
+                  favoriteDishes.remove(widget.dish.id);
+                  BlocProvider.of<DishBloc>(context)
+                      .add(RemoveFavoriteDishEvent(widget.dish.id!));
+                  SnackBarService.showErrorMessage(
+                      "Removed from Favorites! 💔");
+                } else {
+                  favoriteDishes.add(widget.dish.id!);
+                  BlocProvider.of<DishBloc>(context)
+                      .add(AddFavoriteDishEvent(widget.dish));
+                  SnackBarService.showSuccessMessage("Added to Favorites! ❤");
+                }
+              },
+            );
+          },
         ),
-        const SizedBox(width: 10),
-        
       ],
     );
   }
