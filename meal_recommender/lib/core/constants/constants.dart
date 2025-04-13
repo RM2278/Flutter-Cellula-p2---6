@@ -34,4 +34,5 @@ class Constants {
   static const String imageUploadError = " Error uploading image:";
   static const String imageSaveFirestoreError = "Error saving image URL to Firestore:";
   static const String imageUrlSaved = " Image URL saved to Firestore:";
+
 }

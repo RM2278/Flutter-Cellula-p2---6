@@ -1,18 +1,28 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:meal_recommender/core/constants/constants.dart';
 
 import 'package:meal_recommender/features/auth/data/datasources/RegisterDataRemote.dart';
+
 import 'package:meal_recommender/features/main/domain/usecases/Recommend_meals.dart';
 import 'package:meal_recommender/features/main/presentation/manager/bloc/meals_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 
 import '../../features/auth/data/repositories/login_repo_impl.dart';
 import '../../features/auth/domain/repositories/login_repo.dart';
 import '../../features/auth/domain/usecases/Register_usecase.dart';
 import '../../features/auth/domain/usecases/Reload_UseCase.dart';
 import '../../features/auth/presentation/register/cubit/register_cubit.dart';
+import '../../features/profile/data/datasource/profile_local_data_source.dart';
+import '../../features/profile/data/datasource/profile_remote_data_source.dart';
+import '../../features/profile/data/repositories/profile_repository_impl.dart';
+import '../../features/profile/domain/repositories/profile_repository.dart';
+import '../../features/profile/domain/usecase/get_profile_usecase.dart';
+import '../../features/profile/domain/usecase/update_profile_usecase.dart';
+import '../../features/profile/presentation/cubit/profile_cubit.dart';
 
 
 import '../../features/main/data/datasources/dish_remote_data_source.dart';
@@ -44,11 +54,9 @@ Future<void> intl() async {
   //Register
   sl.registerLazySingleton(() => FirebaseFirestore.instance);
   sl.registerLazySingleton(() => FirebaseAuth.instance);
-  sl.registerLazySingleton<FirebaseService>(
-      () => FirebaseService(sl<FirebaseAuth>(), sl<FirebaseFirestore>()));
+  sl.registerLazySingleton<FirebaseService>(() => FirebaseService(sl<FirebaseAuth>(),sl<FirebaseFirestore>()));
   sl.registerLazySingleton(() => RegisterDataRemote(sl<FirebaseService>()));
-  sl.registerSingleton<AuthRepo>(
-      LoginRepoImpl(sl<FirebaseService>(), sl<RegisterDataRemote>()));
+  sl.registerSingleton<AuthRepo>(LoginRepoImpl(sl<FirebaseService>(),sl<RegisterDataRemote>()));
 
   sl.registerLazySingleton(() => RegisterUsecase(sl<AuthRepo>()));
   sl.registerLazySingleton(() => ReloadUsecase(sl<AuthRepo>()));
@@ -72,11 +80,11 @@ Future<void> intl() async {
       addFavoriteUseCase: sl(),
       removeFavoriteUseCase: sl()));
   sl.registerFactory(
+
           () => FavoritesBloc(firebaseService: sl(), getMealsUseCase: sl()));
   sl.registerLazySingleton(() => RecommendMeals(sl()));
   sl.registerFactory(() => MealsBloc(getMeals: sl(), repository: sl(), addFavoriteUseCase: sl(), removeFavoriteUseCase: sl(),));
   sl.registerFactory(() => SeeAllBloc( getRecommendedDishes: sl(), addFavoriteUseCase: sl(), removeFavoriteUseCase: sl()));
-  ////
   //Profile
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton(() => sharedPreferences);
@@ -98,6 +106,8 @@ Future<void> intl() async {
   sl.registerFactory(() => UpdateProfileUseCase(sl()));
 
 
+  
+
 
   // Cubit
   sl.registerFactory(() => ProfileCubit(
@@ -105,4 +115,6 @@ Future<void> intl() async {
     sl<UpdateProfileUseCase>(),
 
   ));
+
 }
+

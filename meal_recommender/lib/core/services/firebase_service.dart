@@ -134,6 +134,26 @@ return user;
         .doc(mealId)
         .delete();
   }
+  Future<ProfileModel?> getProfile() async {
+    // User? user = _auth.currentUser;
+    UserCredential credential = await _auth.signInWithEmailAndPassword(
+        email: "ahmeddarwesh317@yahoo.com", password: 'Ahmed@123');
+    //return credential;
+    User? user = credential.user;
+    if (user != null) {
+      DocumentSnapshot userProfile = await store.collection(Constants.user).doc(user.uid).get();
+      if (userProfile.exists) {
+        final data = userProfile.data() as Map<String, dynamic>;
+        return ProfileModel(
+          name: data[Constants.name] ?? '',
+          email: data[Constants.email] ?? '',
+          phone: data[Constants.phone]??'',
+          profileImageUrl: data[Constants.profileImageUrl] ?? '',
+          password: user.uid,
+        );
+      }
+    }
+
 
   Future<List<Map<String, dynamic>>> getFavorites() async {
 
@@ -179,6 +199,7 @@ return user;
       }
     }
 
+
     return null;
   }
 
@@ -193,9 +214,6 @@ return user;
       });
     }
   }
-
-
-
 
   Future sign_out() async {
     try{
